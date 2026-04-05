@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ET 出勤管理</title>
+<title>ET 出勤管理 v3</title>
 <style>
 :root{--bg:#F3F5FA;--sur:#FFF;--bdr:#E2E6F0;--txt:#1C2340;--muted:#8892A4;--acc:#4F6EF7;--r:12px;}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Microsoft JhengHei','PingFang TC',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+body{background:#F3F5FA;color:#1C2340;font-family:'Microsoft JhengHei','PingFang TC',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
 /* INPUT */
-#vi{max-width:660px;margin:0 auto;padding:48px 20px}
-.logo{font-size:26px;font-weight:700;margin-bottom:6px;color:var(--acc)}
+#vi{background:#F3F5FA;max-width:660px;margin:0 auto;padding:48px 20px}
+.logo{font-size:26px;font-weight:700;margin-bottom:6px;color:#4F6EF7}
 .logo span{color:var(--txt)}
 .sub{font-size:14px;color:var(--muted);margin-bottom:28px}
-.card{background:var(--sur);border-radius:var(--r);padding:24px;border:1px solid var(--bdr)}
+.card{background:#ffffff;border-radius:var(--r);padding:24px;border:1px solid var(--bdr)}
 .lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
 .hint{background:#EEF2FF;border-left:3px solid var(--acc);border-radius:0 8px 8px 0;padding:8px 12px;font-size:12px;color:#334;line-height:1.7;margin:10px 0 14px}
 textarea{width:100%;min-height:160px;border:1.5px solid var(--bdr);border-radius:8px;padding:10px 12px;font-family:monospace;font-size:12px;color:var(--txt);background:var(--bg);resize:vertical;line-height:1.6}
@@ -134,7 +134,7 @@ textarea:focus{outline:none;border-color:var(--acc)}
 </div>
 
 <script>
-var PAL=[
+console.log("ET script loaded v3");var PAL=[
   {av:'#E74C3C',bg:'#FFECEC'},{av:'#2980B9',bg:'#EBF5FB'},{av:'#27AE60',bg:'#EAFAF1'},
   {av:'#F39C12',bg:'#FEF9E7'},{av:'#8E44AD',bg:'#F5EEF8'},{av:'#16A085',bg:'#E8F8F5'},
   {av:'#D35400',bg:'#FDF2E9'},{av:'#1A5276',bg:'#EAF2FF'},{av:'#196F3D',bg:'#EAFAF1'},
@@ -376,5 +376,6 @@ function showPersonPanel(idx){
 function setst(msg,cls){var e=document.getElementById('st');e.className=cls||'';e.textContent=msg;}
 </script>
 
+<noscript><div style="padding:40px;text-align:center;font-size:18px">請啟用 JavaScript</div></noscript>
 </body>
 </html>
