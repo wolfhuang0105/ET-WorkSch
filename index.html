@@ -96,7 +96,7 @@ function go(){
 }
 function back(){el('vc').style.display='none';el('vi').style.display='';selP=null;selD=null;}
 function showCal(){
-  el('vi').style.display='none';el('vc').style.display='';
+  el('vi').style.display='none';el('vc').style.display='block';
   var S=SC;
   el('ctitle').textContent=S.year+'\u5e74'+S.month+'\u6708\u51fa\u52e4\u8868';
   el('warnbox').innerHTML=S.partial?'<div class="warn">&#9888; \u7d14\u6587\u5b57\u683c\u5f0f\uff08\u7121 Tab\uff09\u2014 \u50c5\u986f\u793a\u4eba\u54e1\u540d\u55ae\u8207\u6708\u5de5\u4f5c\u5929\u6578\u3002\u5f9e Excel \u76f4\u63a5 Ctrl+C \u8907\u88fd\u53ef\u53d6\u5f97\u6bcf\u65e5\u660e\u7d30\u3002</div>':'';
