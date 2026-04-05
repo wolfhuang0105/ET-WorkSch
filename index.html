@@ -3,379 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ET 出勤管理 v3</title>
+<title>ET 出勤管理 v5</title>
 <style>
-:root{--bg:#F3F5FA;--sur:#FFF;--bdr:#E2E6F0;--txt:#1C2340;--muted:#8892A4;--acc:#4F6EF7;--r:12px;}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#F3F5FA;color:#1C2340;font-family:'Microsoft JhengHei','PingFang TC',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
-/* INPUT */
-#vi{background:#F3F5FA;max-width:660px;margin:0 auto;padding:48px 20px}
-.logo{font-size:26px;font-weight:700;margin-bottom:6px;color:#4F6EF7}
-.logo span{color:var(--txt)}
-.sub{font-size:14px;color:var(--muted);margin-bottom:28px}
-.card{background:#ffffff;border-radius:var(--r);padding:24px;border:1px solid var(--bdr)}
-.lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
-.hint{background:#EEF2FF;border-left:3px solid var(--acc);border-radius:0 8px 8px 0;padding:8px 12px;font-size:12px;color:#334;line-height:1.7;margin:10px 0 14px}
-textarea{width:100%;min-height:160px;border:1.5px solid var(--bdr);border-radius:8px;padding:10px 12px;font-family:monospace;font-size:12px;color:var(--txt);background:var(--bg);resize:vertical;line-height:1.6}
-textarea:focus{outline:none;border-color:var(--acc)}
-.btn{display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
-.btn:hover{opacity:.9}
-#st{font-size:13px;margin-top:8px;color:var(--muted);min-height:20px}
-#st.err{color:#C0392B}
-/* CALENDAR */
-#vc{padding:20px;max-width:1080px;margin:0 auto;display:none}
-.topbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.ctitle{font-size:20px;font-weight:700}
-.pills{display:flex;gap:6px;flex-wrap:wrap}
-.pill{background:var(--sur);border:1px solid var(--bdr);border-radius:20px;padding:3px 11px;font-size:12px;color:var(--muted)}
-.pill b{color:var(--txt);font-weight:700}
-.bk{margin-left:auto;background:transparent;border:1px solid var(--bdr);border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--muted)}
-.bk:hover{color:var(--txt);border-color:var(--muted)}
-/* person strip */
-.strip{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);padding:12px 16px;margin-bottom:12px}
-.slbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:8px}
-.chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:40px;border:1.5px solid var(--bdr);cursor:pointer;user-select:none;background:var(--sur);transition:box-shadow .12s,transform .12s}
-.chip:hover{box-shadow:0 2px 8px rgba(0,0,0,.1);transform:translateY(-1px)}
-.chip.on{border-width:2px;transform:translateY(-1px)}
-.cav{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
-.ccn{font-size:12px;font-weight:500}
-.cen{font-size:10px;color:var(--muted)}
-.cwk{font-size:10px;font-weight:700;padding:1px 5px;border-radius:6px;margin-left:2px}
-/* legend */
-.leg-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.leg{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
-.ld{width:8px;height:8px;border-radius:2px}
-/* grid */
-.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}
-.gh{text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0}
-.gh.wk{color:#C0392B}
-.day{background:var(--sur);border:1px solid var(--bdr);border-radius:8px;padding:7px 5px 5px;min-height:76px;display:flex;flex-direction:column;cursor:pointer;transition:border-color .1s,transform .1s}
-.day:hover{border-color:#BCC5DC;transform:translateY(-1px)}
-.day.sel{border:2px solid var(--acc)!important}
-.day.emp{border:none;background:transparent;cursor:default;pointer-events:none;min-height:0}
-.day.hol{background:#FFF0F0;border-color:#FFCCCC}
-.day.mkup{background:#FFF5EE;border-color:#FFD4A0}
-.day.wknd{background:#FFFAF4;border-color:#FFE4BF}
-.day.spc{background:#F6F0FF;border-color:#D9CCFF}
-.day.tod{background:#EEF3FF;border-color:var(--acc);border-width:2px}
-.day.pon{border-width:2px!important}
-.day.poff{opacity:.2;filter:grayscale(.5);transform:none!important}
-.dn{font-size:13px;font-weight:700;line-height:1}
-.day.hol .dn{color:#C0392B}.day.mkup .dn{color:#D35400}
-.day.wknd .dn{color:#B7600A}.day.spc .dn{color:#7D3C98}.day.tod .dn{color:var(--acc)}
-.hlb{font-size:8px;font-weight:700;line-height:1.4;margin-top:1px}
-.day.hol .hlb{color:#C0392B}.day.mkup .hlb{color:#D35400}
-.day.spc .hlb{color:#7D3C98}.day.tod .hlb{color:var(--acc)}
-.dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;flex:1}
-.dot{width:6px;height:6px;border-radius:50%}
-.dfoot{margin-top:auto;font-size:10px;color:var(--muted);font-weight:600;padding-top:2px}
-/* panel */
-.panel{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);padding:16px 18px;min-height:80px}
-.ptitle{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;font-size:14px;font-weight:600}
-.bdg{font-size:10px;padding:2px 8px;border-radius:16px;font-weight:700}
-.bh{background:#FFECEC;color:#C0392B}.bm{background:#FFF0E0;color:#D35400}
-.bs{background:#F0ECFF;color:#7D3C98}.bt{background:#EEF3FF;color:var(--acc)}.bw{background:#FFF5EC;color:#B7600A}
-.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
-.pc{display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:8px;padding:7px 9px}
-.pav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
-.pcn{font-size:12px;font-weight:500}.pen{font-size:10px;color:var(--muted)}
-/* person summary */
-.psh{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:10px;border-bottom:1px solid var(--bdr)}
-.psav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
-.psn{font-size:17px;font-weight:700}.pse{font-size:11px;color:var(--muted)}
-.pss{display:flex;gap:16px;margin-left:auto;flex-wrap:wrap}
-.ps{text-align:center}.psnum{font-size:22px;font-weight:700}.pslb{font-size:10px;color:var(--muted)}
-.pdlbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px}
-.pdlist{display:flex;flex-wrap:wrap;gap:4px}
-.pdtag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;color:#fff}
-.warn{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400E;margin-bottom:10px}
-.est{text-align:center;padding:32px 0;color:var(--muted);font-size:13px}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Microsoft JhengHei","PingFang TC",Arial,sans-serif;background:#F0F2F8;color:#1C2340;min-height:100vh}#vi{max-width:640px;margin:0 auto;padding:48px 20px}.logo{font-size:26px;font-weight:700;color:#4F6EF7;margin-bottom:6px}.logo span{color:#1C2340}.tagline{font-size:14px;color:#6B7A99;margin-bottom:28px}.box{background:#ffffff;border-radius:12px;padding:24px;border:1px solid #DDE2F0}.lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8892A4;margin-bottom:8px}.hint{background:#EEF2FF;border-left:3px solid #4F6EF7;padding:8px 12px;font-size:12px;color:#334480;line-height:1.7;margin:10px 0 14px;border-radius:0 6px 6px 0}textarea{width:100%;min-height:150px;border:1.5px solid #DDE2F0;border-radius:8px;padding:10px 12px;font-family:monospace;font-size:12px;color:#1C2340;background:#F0F2F8;resize:vertical;line-height:1.6}textarea:focus{outline:none;border-color:#4F6EF7}.btn{display:inline-flex;align-items:center;gap:6px;background:#4F6EF7;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}.btn:hover{background:#3A5AE8}#st{font-size:13px;margin-top:8px;color:#6B7A99;min-height:20px}#st.err{color:#C0392B}#vc{padding:20px;max-width:1080px;margin:0 auto;display:none}.topbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}.ctitle{font-size:20px;font-weight:700}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{background:#fff;border:1px solid #DDE2F0;border-radius:20px;padding:3px 11px;font-size:12px;color:#6B7A99}.pill b{color:#1C2340;font-weight:700}.bk{margin-left:auto;background:transparent;border:1px solid #DDE2F0;border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;color:#6B7A99}.bk:hover{color:#1C2340;border-color:#6B7A99}.strip{background:#fff;border:1px solid #DDE2F0;border-radius:12px;padding:12px 16px;margin-bottom:12px}.slbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#8892A4;margin-bottom:8px}.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:40px;border:1.5px solid #DDE2F0;cursor:pointer;background:#fff;transition:box-shadow .12s,transform .12s}.chip:hover{box-shadow:0 2px 8px rgba(0,0,0,.1);transform:translateY(-1px)}.chip.on{border-width:2px;transform:translateY(-1px)}.cav{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}.ccn{font-size:12px;font-weight:500}.cen{font-size:10px;color:#8892A4}.cwk{font-size:10px;font-weight:700;padding:1px 5px;border-radius:6px;margin-left:2px}.leg-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}.leg{display:flex;align-items:center;gap:4px;font-size:11px;color:#8892A4}.ld{width:8px;height:8px;border-radius:2px}.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}.gh{text-align:center;font-size:11px;font-weight:700;color:#8892A4;padding:4px 0}.gh.wk{color:#C0392B}.day{background:#fff;border:1px solid #DDE2F0;border-radius:8px;padding:7px 5px 5px;min-height:76px;display:flex;flex-direction:column;cursor:pointer;transition:border-color .1s,transform .1s}.day:hover{border-color:#B0BCDC;transform:translateY(-1px)}.day.sel{border:2px solid #4F6EF7!important}.day.emp{border:none;background:transparent;cursor:default;pointer-events:none;min-height:0}.day.hol{background:#FFF0F0;border-color:#FFCCCC}.day.mkup{background:#FFF5EE;border-color:#FFD4A0}.day.wknd{background:#FFFAF4;border-color:#FFE4BF}.day.spc{background:#F6F0FF;border-color:#D9CCFF}.day.tod{background:#EEF3FF;border-color:#4F6EF7;border-width:2px}.day.pon{border-width:2px!important}.day.poff{opacity:.2;filter:grayscale(.5);transform:none!important}.dn{font-size:13px;font-weight:700;line-height:1;color:#1C2340}.day.hol .dn{color:#C0392B}.day.mkup .dn{color:#D35400}.day.wknd .dn{color:#B7600A}.day.spc .dn{color:#7D3C98}.day.tod .dn{color:#4F6EF7}.hlb{font-size:8px;font-weight:700;line-height:1.4;margin-top:1px}.day.hol .hlb{color:#C0392B}.day.mkup .hlb{color:#D35400}.day.spc .hlb{color:#7D3C98}.day.tod .hlb{color:#4F6EF7}.dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;flex:1}.dot{width:6px;height:6px;border-radius:50%}.dfoot{margin-top:auto;font-size:10px;color:#8892A4;font-weight:600;padding-top:2px}.panel{background:#fff;border:1px solid #DDE2F0;border-radius:12px;padding:16px 18px;min-height:80px}.ptitle{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;font-size:14px;font-weight:600}.bdg{font-size:10px;padding:2px 8px;border-radius:16px;font-weight:700}.bh{background:#FFECEC;color:#C0392B}.bm{background:#FFF0E0;color:#D35400}.bs{background:#F0ECFF;color:#7D3C98}.bt{background:#EEF3FF;color:#4F6EF7}.bw{background:#FFF5EC;color:#B7600A}.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}.pc{display:flex;align-items:center;gap:8px;background:#F0F2F8;border-radius:8px;padding:7px 9px}.pav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}.pcn{font-size:12px;font-weight:500;color:#1C2340}.pen{font-size:10px;color:#8892A4}.psh{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:10px;border-bottom:1px solid #DDE2F0}.psav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}.psn{font-size:17px;font-weight:700;color:#1C2340}.pse{font-size:11px;color:#8892A4}.pss{display:flex;gap:16px;margin-left:auto}.ps{text-align:center}.psnum{font-size:22px;font-weight:700}.pslb{font-size:10px;color:#8892A4}.pdlbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#8892A4;margin-bottom:6px}.pdlist{display:flex;flex-wrap:wrap;gap:4px}.pdtag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;color:#fff}.warn{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400E;margin-bottom:10px}.est{text-align:center;padding:32px 0;color:#8892A4;font-size:13px}
 </style>
 </head>
 <body>
-
 <div id="vi">
-  <div class="logo">ET <span>出勤管理</span></div>
-  <div class="sub">從 Excel 複製班表，即時產生互動日曆</div>
-  <div class="card">
-    <div class="lbl">操作方式</div>
-    <div class="hint">
-      ① 在 Excel 框選整份班表（含標題列）→ ② Ctrl+C → ③ 貼入下方 → ④ 點「產生」<br>
-      <b>注意：</b>請直接從 Excel 複製，勿先貼記事本，否則 Tab 消失，每日出勤無法解析。
-    </div>
-    <div class="lbl">貼入班表</div>
-    <textarea id="pa" placeholder="在此貼上班表（直接從 Excel 複製）…"></textarea>
-    <div><button class="btn" id="gobtn" onclick="go()">產生當月班表</button></div>
+  <div class="logo">ET <span>&#20986;&#21202;&#31649;&#29702;</span></div>
+  <div class="tagline">&#24478; Excel &#35430;&#21512;&#29677;&#34920;&#65292;&#21363;&#26178;&#29986;&#29986;&#20104;&#21160;&#26085;&#26310;</div>
+  <div class="box">
+    <div class="lbl">&#25805;&#20316;&#26041;&#24335;</div>
+    <div class="hint">&#9312; &#22312; Excel &#26694;&#36984;&#25972;&#20221;&#29677;&#34920;&#8594; &#9313; Ctrl+C &#8594; &#9314; &#36157;&#20837;&#19979;&#26041; &#8594; &#9315; &#9651;&#12300;&#29986;&#29986;&#12301;<br><b>&#27880;&#24847;&#65306;</b>&#35531;&#30452;&#25509;&#24478; Excel &#35430;&#21512;&#65292;&#21029;&#20808;&#36157;&#35352;&#20107;&#26412;&#65292;&#21542;&#21063; Tab &#28040;&#22833;&#65292;&#27599;&#26085;&#20986;&#21202;&#28961;&#27861;&#35299;&#26512;&#12290;</div>
+    <div class="lbl">&#36157;&#20837;&#29677;&#34920;</div>
+    <textarea id="pa" placeholder="&#22312;&#27492;&#36157;&#19978;&#29677;&#34920;&#65288;&#30452;&#25509;&#24478; Excel &#35430;&#21512;&#65289;&#8230;"></textarea>
+    <div><button class="btn" id="gobtn" onclick="go()">&#9654; &#29986;&#29986;&#24403;&#26376;&#29677;&#34920;</button></div>
     <div id="st"></div>
   </div>
 </div>
-
 <div id="vc" style="display:none">
-  <div class="topbar">
-    <div class="ctitle" id="ctitle"></div>
-    <div class="pills" id="pills"></div>
-    <button class="bk" onclick="back()">← 重新貼上</button>
-  </div>
+  <div class="topbar"><div class="ctitle" id="ctitle"></div><div class="pills" id="pills"></div><button class="bk" onclick="back()">&#8592; &#37325;&#26032;&#36157;&#19978;</button></div>
   <div id="warnbox"></div>
-  <div class="strip">
-    <div class="slbl">人員篩選</div>
-    <div class="chips" id="chips"></div>
-  </div>
+  <div class="strip"><div class="slbl">&#20154;&#21592;&#31968;&#36984; &#8212; &#9651;&#36984;&#26597;&#30475;&#20491;&#20154;&#29677;&#34920;</div><div class="chips" id="chips"></div></div>
   <div class="leg-row">
-    <div class="leg"><div class="ld" style="background:#FFCCCC"></div>國定假日</div>
-    <div class="leg"><div class="ld" style="background:#FFD4A0"></div>補假</div>
-    <div class="leg"><div class="ld" style="background:#FFE4BF"></div>週末</div>
-    <div class="leg"><div class="ld" style="background:#D9CCFF"></div>特殊紀念日</div>
-    <div class="leg"><div class="ld" style="background:#BDD4FF;border:1px solid #4F6EF7"></div>今日</div>
+    <div class="leg"><div class="ld" style="background:#FFCCCC"></div>&#22283;&#23450;&#20551;&#26085;</div>
+    <div class="leg"><div class="ld" style="background:#FFD4A0"></div>&#35069;&#20551;</div>
+    <div class="leg"><div class="ld" style="background:#FFE4BF"></div>&#36123;&#26411;</div>
+    <div class="leg"><div class="ld" style="background:#D9CCFF"></div>&#29305;&#27578;&#32000;&#24565;&#26085;</div>
+    <div class="leg"><div class="ld" style="background:#BDD4FF;border:1px solid #4F6EF7"></div>&#20170;&#26085;</div>
   </div>
   <div class="grid" id="cal"></div>
-  <div class="panel" id="panel"><div class="est">點選日期或人員查看出勤明細</div></div>
+  <div class="panel" id="panel"><div class="est">&#9651;&#36984;&#26085;&#26399;&#25110;&#20154;&#21592;&#26597;&#30475;&#20986;&#21202;&#26126;&#32048;</div></div>
 </div>
-
 <script>
-console.log("ET script loaded v3");var PAL=[
-  {av:'#E74C3C',bg:'#FFECEC'},{av:'#2980B9',bg:'#EBF5FB'},{av:'#27AE60',bg:'#EAFAF1'},
-  {av:'#F39C12',bg:'#FEF9E7'},{av:'#8E44AD',bg:'#F5EEF8'},{av:'#16A085',bg:'#E8F8F5'},
-  {av:'#D35400',bg:'#FDF2E9'},{av:'#1A5276',bg:'#EAF2FF'},{av:'#196F3D',bg:'#EAFAF1'},
-  {av:'#7D6608',bg:'#FEFDE7'},{av:'#4A235A',bg:'#F5EEF8'},{av:'#0E6655',bg:'#E8F8F5'}
-];
-var FIXED={'1-1':{t:'h',l:'元旦'},'2-14':{t:'s',l:'情人節'},'2-28':{t:'h',l:'和平紀念日'},
-  '3-8':{t:'s',l:'婦女節'},'4-4':{t:'h',l:'兒童節'},'5-1':{t:'h',l:'勞動節'},
-  '8-8':{t:'s',l:'父親節'},'9-28':{t:'s',l:'教師節'},'10-10':{t:'h',l:'國慶日'},
-  '12-24':{t:'s',l:'平安夜'},'12-25':{t:'h',l:'聖誕/行憲'},'12-31':{t:'s',l:'跨年夜'}};
+console.log('ET v5 loaded');
+var PAL=[{av:'#E74C3C',bg:'#FFECEC'},{av:'#2980B9',bg:'#EBF5FB'},{av:'#27AE60',bg:'#EAFAF1'},{av:'#F39C12',bg:'#FEF9E7'},{av:'#8E44AD',bg:'#F5EEF8'},{av:'#16A085',bg:'#E8F8F5'},{av:'#D35400',bg:'#FDF2E9'},{av:'#1A5276',bg:'#EAF2FF'},{av:'#196F3D',bg:'#EAFAF1'},{av:'#7D6608',bg:'#FEFDE7'},{av:'#4A235A',bg:'#F5EEF8'},{av:'#0E6655',bg:'#E8F8F5'}];
+var FIXED={'1-1':{t:'h',l:'元旦'},'2-14':{t:'s',l:'情人節'},'2-28':{t:'h',l:'和平紀念日'},'3-8':{t:'s',l:'婦女節'},'4-4':{t:'h',l:'兒童節'},'5-1':{t:'h',l:'勞動節'},'8-8':{t:'s',l:'父親節'},'9-28':{t:'s',l:'教師節'},'10-10':{t:'h',l:'國慶日'},'12-24':{t:'s',l:'平安夺'},'12-25':{t:'h',l:'聖誤/行憲'},'12-31':{t:'s',l:'跨年夺'}};
 var QINGMING={2024:4,2025:4,2026:5,2027:5,2028:4};
-var LUNAR={
-  2025:{'1-27':{t:'h',l:'除夕'},'1-28':{t:'h',l:'初一'},'1-29':{t:'h',l:'初二'},'1-30':{t:'h',l:'初三'},'1-31':{t:'h',l:'初四'},'5-31':{t:'h',l:'端午節'},'10-6':{t:'h',l:'中秋節'}},
-  2026:{'2-16':{t:'h',l:'除夕'},'2-17':{t:'h',l:'初一'},'2-18':{t:'h',l:'初二'},'2-19':{t:'h',l:'初三'},'2-20':{t:'h',l:'初四'},'2-21':{t:'h',l:'初五'},'6-19':{t:'h',l:'端午節'},'9-25':{t:'h',l:'中秋節'}},
-  2027:{'2-5':{t:'h',l:'除夕'},'2-6':{t:'h',l:'初一'},'2-7':{t:'h',l:'初二'},'2-8':{t:'h',l:'初三'},'2-9':{t:'h',l:'初四'},'2-10':{t:'h',l:'初五'},'5-20':{t:'h',l:'端午節'},'10-3':{t:'h',l:'中秋節'}}
-};
-var MAKEUP={
-  '2026-4':{'3':{t:'m',l:'兒童節補假'},'6':{t:'m',l:'清明補假'}},
-  '2026-10':{'9':{t:'m',l:'國慶補假'}},
-  '2025-1':{'31':{t:'m',l:'元旦補假'}}
-};
+var LUNAR={2025:{'1-27':{t:'h',l:'除夕'},'1-28':{t:'h',l:'初一'},'1-29':{t:'h',l:'初二'},'1-30':{t:'h',l:'初三'},'1-31':{t:'h',l:'初四'},'5-31':{t:'h',l:'端午節'},'10-6':{t:'h',l:'中秋節'}},2026:{'2-16':{t:'h',l:'除夕'},'2-17':{t:'h',l:'初一'},'2-18':{t:'h',l:'初二'},'2-19':{t:'h',l:'初三'},'2-20':{t:'h',l:'初四'},'2-21':{t:'h',l:'初五'},'6-19':{t:'h',l:'端午節'},'9-25':{t:'h',l:'中秋節'}},2027:{'2-5':{t:'h',l:'除夕'},'2-6':{t:'h',l:'初一'},'2-7':{t:'h',l:'初二'},'2-8':{t:'h',l:'初三'},'2-9':{t:'h',l:'初四'},'2-10':{t:'h',l:'初五'},'5-20':{t:'h',l:'端午節'},'10-3':{t:'h',l:'中秋節'}}};
+var MAKEUP={'2026-4':{'3':{t:'m',l:'兒童節補假'},'6':{t:'m',l:'清明補假'}},'2026-10':{'9':{t:'m',l:'國慶補假'}},'2025-1':{'31':{t:'m',l:'元旦補假'}}};
 var QIXI={2025:[8,29],2026:[8,19],2027:[8,9]};
 var WDMAP={'星期一':1,'星期二':2,'星期三':3,'星期四':4,'星期五':5,'星期六':6,'星期日':7};
-
 function nthSun(y,m,n){var d=new Date(y,m-1,1);while(d.getDay()!==0)d.setDate(d.getDate()+1);d.setDate(d.getDate()+(n-1)*7);return d.getDate();}
-
-function holMeta(y,m){
-  var r={};
-  Object.keys(FIXED).forEach(function(k){var p=k.split('-');if(parseInt(p[0])===m)r[parseInt(p[1])]=FIXED[k];});
-  if(m===4&&QINGMING[y]&&!r[QINGMING[y]])r[QINGMING[y]]={t:'h',l:'清明節'};
-  if(m===5){var ms=nthSun(y,5,2);if(!r[ms])r[ms]={t:'s',l:'母親節'};}
-  if(QIXI[y]&&QIXI[y][0]===m&&!r[QIXI[y][1]])r[QIXI[y][1]]={t:'s',l:'七夕情人節'};
-  var ly=LUNAR[y];
-  if(ly)Object.keys(ly).forEach(function(k){var p=k.split('-');if(parseInt(p[0])===m)r[parseInt(p[1])]=ly[k];});
-  var mk=MAKEUP[y+'-'+m];
-  if(mk)Object.keys(mk).forEach(function(d){r[parseInt(d)]=mk[d];});
-  return r;
-}
-
+function holMeta(y,m){var r={};Object.keys(FIXED).forEach(function(k){var p=k.split('-');if(+p[0]===m)r[+p[1]]=FIXED[k];});if(m===4&&QINGMING[y]&&!r[QINGMING[y]])r[QINGMING[y]]={t:'h',l:'清明節'};if(m===5){var ms=nthSun(y,5,2);if(!r[ms])r[ms]={t:'s',l:'母親節'};}if(QIXI[y]&&QIXI[y][0]===m&&!r[QIXI[y][1]])r[QIXI[y][1]]={t:'s',l:'七夕情人節'};var ly=LUNAR[y];if(ly)Object.keys(ly).forEach(function(k){var p=k.split('-');if(+p[0]===m)r[+p[1]]=ly[k];});var mk=MAKEUP[y+'-'+m];if(mk)Object.keys(mk).forEach(function(d){r[+d]=mk[d];});return r;}
 function parseSched(raw){
   var hasTabs=(raw.indexOf('\t')>=0);
-  var m1=raw.match(/(\d{1,2})月.{0,3}(\d{4})/);
-  if(!m1)throw '找不到月份年份';
-  var m2=raw.match(/總天數\D{0,2}(\d+)/);
-  var totalDays=m2?parseInt(m2[1]):0;
-  if(!totalDays){
-    var dms=raw.match(/\d+月(\d+)日/g)||[];
-    dms.forEach(function(s){var n=parseInt(s.match(/月(\d+)日/)[1]);if(n>totalDays)totalDays=n;});
-  }
-  if(!totalDays)throw '找不到總天數';
-  var month=parseInt(m1[1]),year=parseInt(m1[2]);
-  var firstDayWeekday=1,employees=[],partial=false;
-
+  var m1=raw.match(/(\d{1,2})\u6708.{0,3}(\d{4})/);
+  if(!m1)throw '\u627e\u4e0d\u5230\u6708\u4efd\u5e74\u4efd';
+  var m2=raw.match(/\u7e3d\u5929\u6578\D{0,2}(\d+)/),totalDays=m2?+m2[1]:0;
+  if(!totalDays){var dms=raw.match(/\d+\u6708(\d+)\u65e5/g)||[];dms.forEach(function(s){var n=+s.match(/\u6708(\d+)\u65e5/)[1];if(n>totalDays)totalDays=n;});}
+  if(!totalDays)throw '\u627e\u4e0d\u5230\u7e3d\u5929\u6578';
+  var month=+m1[1],year=+m1[2],fdw=1,emps=[],partial=false;
   if(hasTabs){
     var rows=raw.split(/\r?\n/).map(function(r){return r.split('\t');});
     var dsc=-1;
-    for(var ri=0;ri<rows.length&&dsc<0;ri++){
-      for(var ci=0;ci<rows[ri].length;ci++){
-        if(WDMAP[rows[ri][ci].trim()]){firstDayWeekday=WDMAP[rows[ri][ci].trim()];dsc=ci;break;}
-      }
-    }
+    for(var ri=0;ri<rows.length&&dsc<0;ri++)for(var ci=0;ci<rows[ri].length;ci++)if(WDMAP[rows[ri][ci].trim()]){fdw=WDMAP[rows[ri][ci].trim()];dsc=ci;break;}
     if(dsc<0)dsc=4;
     var cnRe=/^[\u4e00-\u9fff]{2,5}$/,enRe=/^[A-Za-z]{2,15}$/;
     for(var ri2=0;ri2<rows.length;ri2++){
-      var row=rows[ri2];
-      var hasWork=false;
-      for(var x=0;x<row.length;x++){if(row[x].trim()==='12點半'){hasWork=true;break;}}
-      if(!hasWork)continue;
+      var row=rows[ri2],hasW=false;
+      for(var x=0;x<row.length;x++)if(row[x].trim()==='12\u9ede\u534a'){hasW=true;break;}
+      if(!hasW)continue;
       var ci2=-1;
-      for(var i=0;i<Math.min(row.length-1,10);i++){
-        if(cnRe.test(row[i].trim())&&enRe.test((row[i+1]||'').trim())&&row[i].trim()!=='姓名'){ci2=i;break;}
-      }
+      for(var i=0;i<Math.min(row.length-1,10);i++)if(cnRe.test(row[i].trim())&&enRe.test((row[i+1]||'').trim())&&row[i].trim()!=='\u59d3\u540d'){ci2=i;break;}
       if(ci2<0)continue;
-      var chn=row[ci2].trim(),eng=row[ci2+1].trim();
-      var attStart=(ci2+2>dsc)?ci2+2:dsc;
-      var att=[];
+      var attStart=(ci2+2>dsc)?ci2+2:dsc,att=[];
       for(var d=0;d<totalDays;d++)att.push((row[attStart+d]||'').trim()?1:0);
-      if(att.indexOf(1)>=0)employees.push({chn:chn,eng:eng,att:att,wkCount:0});
+      if(att.indexOf(1)>=0)emps.push({chn:row[ci2].trim(),eng:row[ci2+1].trim(),att:att,wkCount:0});
     }
-    if(!employees.length)throw 'Tab 格式找不到員工資料，請確認複製範圍含員工列';
-  } else {
+    if(!emps.length)throw '\u627e\u4e0d\u5230\u54e1\u5de5\u8cc7\u6599\uff08Tab\u683c\u5f0f\uff09';
+  }else{
     partial=true;
-    var wdm=raw.match(/英文名(星期[一二三四五六日])/);
-    if(wdm)firstDayWeekday=WDMAP[wdm[1]]||1;
-    var empRe=/(WH\d+\s*)?(OK)([\u4e00-\u9fff]{2,5})([A-Za-z]{2,15})((?:12點半)*)/g;
-    var em;
-    while((em=empRe.exec(raw))!==null){
-      if(em[3]==='姓名')continue;
-      employees.push({chn:em[3],eng:em[4],att:null,wkCount:em[5].split('12點半').length-1});
-    }
-    if(!employees.length)throw '找不到員工資料';
+    var wdm=raw.match(/\u82f1\u6587\u540d(\u661f\u671f[\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u65e5])/);if(wdm)fdw=WDMAP[wdm[1]]||1;
+    var er=/(WH\d+\s*)?(OK)([\u4e00-\u9fff]{2,5})([A-Za-z]{2,15})((?:12\u9ede\u534a)*)/g,em;
+    while((em=er.exec(raw))!==null)if(em[3]!=='\u59d3\u540d')emps.push({chn:em[3],eng:em[4],att:null,wkCount:em[5].split('12\u9ede\u534a').length-1});
+    if(!emps.length)throw '\u627e\u4e0d\u5230\u54e1\u5de5\u8cc7\u6599';
   }
-  return{month:month,year:year,totalDays:totalDays,firstDayWeekday:firstDayWeekday,employees:employees,partial:partial};
+  return{month:month,year:year,totalDays:totalDays,fdw:fdw,emps:emps,partial:partial};
 }
-
-var SC=null,selPerson=null,selDay=null;
-
+var SC=null,selP=null,selD=null;
+function el(id){return document.getElementById(id);}
+function setst(msg,cls){var e=el('st');e.className=cls||'';e.textContent=msg;}
 function go(){
-  var raw=(document.getElementById('pa').value||'').trim();
-  if(!raw){setst('請先貼入班表資料','err');return;}
-  document.getElementById('gobtn').disabled=true;
+  var raw=(el('pa').value||'').trim();
+  if(!raw){setst('\u8acb\u5148\u8cbc\u5165\u73ed\u8868\u8cc7\u6599','err');return;}
+  el('gobtn').disabled=true;
   var sched;
-  try{
-    sched=parseSched(raw);
-  }catch(e){
-    setst('解析失敗：'+e,'err');
-    document.getElementById('gobtn').disabled=false;
-    return;
-  }
-  SC=sched;
-  selPerson=null;selDay=null;
-  try{showCal();}catch(e){
-    // restore input view if render fails
-    document.getElementById('vc').style.display='none';
-    document.getElementById('vi').style.display='';
-    setst('渲染失敗：'+e,'err');
-  }
-  document.getElementById('gobtn').disabled=false;
+  try{sched=parseSched(raw);}catch(e){setst('\u89e3\u6790\u5931\u6557\uff1a'+e,'err');el('gobtn').disabled=false;return;}
+  SC=sched;selP=null;selD=null;
+  try{showCal();}catch(e){el('vc').style.display='none';el('vi').style.display='';setst('\u986f\u793a\u5931\u6557\uff1a'+e,'err');console.error('showCal err:',e);}
+  el('gobtn').disabled=false;
 }
-
-function back(){
-  document.getElementById('vc').style.display='none';
-  document.getElementById('vi').style.display='';
-  selPerson=null;selDay=null;
-}
-
+function back(){el('vc').style.display='none';el('vi').style.display='';selP=null;selD=null;}
 function showCal(){
-  document.getElementById('vi').style.display='none';
-  document.getElementById('vc').style.display='';
-  var S=SC,month=S.month,year=S.year,totalDays=S.totalDays,emps=S.employees,partial=S.partial;
-  document.getElementById('ctitle').textContent=year+'年'+month+'月出勤表';
-  document.getElementById('warnbox').innerHTML=partial
-    ?'<div class="warn">⚠️ 純文字格式（無 Tab）— 僅顯示人員名單與月工作天數。從 Excel 直接 Ctrl+C 可取得每日明細。</div>':'' ;
-  var pillHtml='';
-  if(!partial){
-    var cnts=[];for(var d=0;d<totalDays;d++)cnts.push(emps.reduce(function(s,e){return s+e.att[d];},0));
-    var avg=(cnts.reduce(function(a,b){return a+b;},0)/totalDays).toFixed(1);
-    pillHtml='<div class="pill">平均 <b>'+avg+'</b> 人</div><div class="pill">最多 <b>'+Math.max.apply(null,cnts)+'</b></div><div class="pill">最少 <b>'+Math.min.apply(null,cnts)+'</b></div>';
-  }
-  document.getElementById('pills').innerHTML=pillHtml;
-  buildChips();buildGrid();
-  document.getElementById('panel').innerHTML='<div class="est">點選日期或人員查看出勤明細</div>';
-  if(!partial){
-    var td=new Date(),ti=(td.getFullYear()===year&&td.getMonth()===month-1)?td.getDate()-1:-1;
-    if(ti>=0)setTimeout(function(){var cs=document.querySelectorAll('.day:not(.emp)');if(cs[ti])clickDay(ti,cs[ti]);},80);
-  }
+  el('vi').style.display='none';el('vc').style.display='';
+  var S=SC;
+  el('ctitle').textContent=S.year+'\u5e74'+S.month+'\u6708\u51fa\u52e4\u8868';
+  el('warnbox').innerHTML=S.partial?'<div class="warn">&#9888; \u7d14\u6587\u5b57\u683c\u5f0f\uff08\u7121 Tab\uff09\u2014 \u50c5\u986f\u793a\u4eba\u54e1\u540d\u55ae\u8207\u6708\u5de5\u4f5c\u5929\u6578\u3002\u5f9e Excel \u76f4\u63a5 Ctrl+C \u8907\u88fd\u53ef\u53d6\u5f97\u6bcf\u65e5\u660e\u7d30\u3002</div>':'';
+  if(!S.partial){var cnts=[];for(var d=0;d<S.totalDays;d++)cnts.push(S.emps.reduce(function(s,e){return s+e.att[d];},0));var avg=(cnts.reduce(function(a,b){return a+b;},0)/S.totalDays).toFixed(1);el('pills').innerHTML='<div class="pill">\u5e73\u5747 <b>'+avg+'</b> \u4eba</div><div class="pill">\u6700\u591a <b>'+Math.max.apply(null,cnts)+'</b></div><div class="pill">\u6700\u5c11 <b>'+Math.min.apply(null,cnts)+'</b></div>';}else{el('pills').innerHTML='';}
+  buildChips();buildGrid();el('panel').innerHTML='<div class="est">\u9ede\u9078\u65e5\u671f\u6216\u4eba\u54e1\u67e5\u770b\u51fa\u52e4\u660e\u7d30</div>';
+  if(!S.partial){var td=new Date(),ti=(td.getFullYear()===S.year&&td.getMonth()===S.month-1)?td.getDate()-1:-1;if(ti>=0)setTimeout(function(){var cs=document.querySelectorAll('.day:not(.emp)');if(cs[ti])clickDay(ti,cs[ti]);},80);}
 }
-
 function buildChips(){
-  var emps=SC.employees,partial=SC.partial,el=document.getElementById('chips');
-  el.innerHTML='';
-  emps.forEach(function(emp,i){
+  var S=SC,cont=el('chips');cont.innerHTML='';
+  S.emps.forEach(function(emp,i){
     var c=PAL[i%PAL.length];emp.color=c;
-    var wk=partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
+    var wk=S.partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
     var ch=document.createElement('div');ch.className='chip';
-    ch.innerHTML='<div class="cav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div>'
-      +'<div><div class="ccn">'+emp.chn+'</div><div class="cen">'+emp.eng+'</div></div>'
-      +'<span class="cwk" style="background:'+c.bg+';color:'+c.av+'">'+wk+'天</span>';
+    ch.innerHTML='<div class="cav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div><div><div class="ccn">'+emp.chn+'</div><div class="cen">'+emp.eng+'</div></div><span class="cwk" style="background:'+c.bg+';color:'+c.av+'">'+wk+'\u5929</span>';
     ch.onclick=(function(idx){return function(){clickChip(idx);};})(i);
-    el.appendChild(ch);
+    cont.appendChild(ch);
   });
 }
-
 function buildGrid(){
-  var S=SC,month=S.month,year=S.year,totalDays=S.totalDays,fdw=S.firstDayWeekday,emps=S.employees,partial=S.partial;
-  var hm=holMeta(year,month);
-  var td=new Date(),ti=(td.getFullYear()===year&&td.getMonth()===month-1)?td.getDate()-1:-1;
-  var cal=document.getElementById('cal');cal.innerHTML='';
-  ['一','二','三','四','五','六','日'].forEach(function(h,i){var d=document.createElement('div');d.className='gh'+(i>=5?' wk':'');d.textContent=h;cal.appendChild(d);});
-  for(var e=0;e<fdw-1;e++){var ec=document.createElement('div');ec.className='day emp';cal.appendChild(ec);}
-  var cnts=partial?null:[];
-  if(!partial)for(var dc=0;dc<totalDays;dc++)cnts.push(emps.reduce(function(s,e){return s+e.att[dc];},0));
-  for(var d=0;d<totalDays;d++){
-    var meta=hm[d+1],isToday=(d===ti),wdIdx=(fdw-1+d)%7,isWknd=(wdIdx>=5&&!meta);
+  var S=SC,hm=holMeta(S.year,S.month),td=new Date(),ti=(td.getFullYear()===S.year&&td.getMonth()===S.month-1)?td.getDate()-1:-1;
+  var cal=el('cal');cal.innerHTML='';
+  ['\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d','\u65e5'].forEach(function(h,i){var d=document.createElement('div');d.className='gh'+(i>=5?' wk':'');d.textContent=h;cal.appendChild(d);});
+  for(var e=0;e<S.fdw-1;e++){var ec=document.createElement('div');ec.className='day emp';cal.appendChild(ec);}
+  var cnts=S.partial?null:[];
+  if(!S.partial)for(var dc=0;dc<S.totalDays;dc++)cnts.push(S.emps.reduce(function(s,e){return s+e.att[dc];},0));
+  for(var d=0;d<S.totalDays;d++){
+    var meta=hm[d+1],isT=(d===ti),wdi=(S.fdw-1+d)%7,isW=(wdi>=5&&!meta);
     var cls='day';
-    if(isToday)cls+=' tod';
-    else if(meta)cls+=(meta.t==='h'?' hol':meta.t==='m'?' mkup':' spc');
-    else if(isWknd)cls+=' wknd';
-    if(selPerson!==null&&!partial)cls+=(emps[selPerson].att[d]?' pon':' poff');
-    if(selDay===d)cls+=' sel';
-    var lbl=meta?'<div class="hlb">'+meta.l+'</div>':'';
-    if(isToday)lbl+='<div class="hlb">今日</div>';
-    var dots='';
-    if(!partial)dots=emps.map(function(emp,i){return emp.att[d]?'<div class="dot" style="background:'+PAL[i%PAL.length].av+'"></div>':'';}).join('');
-    var cntHtml=cnts?'<div class="dfoot">'+cnts[d]+' 人</div>':'';
+    if(isT)cls+=' tod';else if(meta)cls+=(meta.t==='h'?' hol':meta.t==='m'?' mkup':' spc');else if(isW)cls+=' wknd';
+    if(selP!==null&&!S.partial)cls+=(S.emps[selP].att[d]?' pon':' poff');
+    if(selD===d)cls+=' sel';
+    var lbl=meta?'<div class="hlb">'+meta.l+'</div>':'';if(isT)lbl+='<div class="hlb">\u4eca\u65e5</div>';
+    var dots=S.partial?'':S.emps.map(function(emp,i){return emp.att[d]?'<div class="dot" style="background:'+PAL[i%PAL.length].av+';"></div>':'';}).join('');
+    var cntH=cnts?'<div class="dfoot">'+cnts[d]+' \u4eba</div>':'';
     var cell=document.createElement('div');cell.className=cls;
-    cell.innerHTML='<div class="dn">'+(d+1)+'</div>'+lbl+'<div class="dots">'+dots+'</div>'+cntHtml;
-    if(!partial)(function(idx,c){c.onclick=function(){if(selPerson===null)clickDay(idx,c);};})(d,cell);
+    cell.innerHTML='<div class="dn">'+(d+1)+'</div>'+lbl+'<div class="dots">'+dots+'</div>'+cntH;
+    if(!S.partial)(function(idx,c){c.onclick=function(){if(selP===null)clickDay(idx,c);};})(d,cell);
     cal.appendChild(cell);
   }
 }
-
 function clickChip(idx){
-  if(selPerson===idx){
-    selPerson=null;
-    document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');c.style.borderColor='';});
-    buildGrid();
-    document.getElementById('panel').innerHTML='<div class="est">點選日期或人員查看出勤明細</div>';
-    return;
-  }
-  selPerson=idx;selDay=null;
-  var c=PAL[idx%PAL.length];
+  if(selP===idx){selP=null;document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');c.style.borderColor='';});buildGrid();el('panel').innerHTML='<div class="est">\u9ede\u9078\u65e5\u671f\u6216\u4eba\u54e1\u67e5\u770b\u51fa\u52e4\u660e\u7d30</div>';return;}
+  selP=idx;selD=null;var c=PAL[idx%PAL.length];
   document.querySelectorAll('.chip').forEach(function(ch,i){ch.classList.toggle('on',i===idx);ch.style.borderColor=(i===idx)?c.av:'';});
   buildGrid();showPersonPanel(idx);
 }
-
-function clickDay(di,cell){
-  selDay=di;
-  document.querySelectorAll('.day').forEach(function(c){c.classList.remove('sel');});
-  cell.classList.add('sel');showDayPanel(di);
-}
-
+function clickDay(di,cell){selD=di;document.querySelectorAll('.day').forEach(function(c){c.classList.remove('sel');});cell.classList.add('sel');showDayPanel(di);}
 function showDayPanel(idx){
-  var S=SC,month=S.month,year=S.year,fdw=S.firstDayWeekday,emps=S.employees;
-  var hm=holMeta(year,month)[idx+1];
-  var td=new Date(),isToday=(td.getFullYear()===year&&td.getMonth()===month-1&&td.getDate()===idx+1);
-  var wdn=['一','二','三','四','五','六','日'],wdi=(fdw-1+idx)%7,isWknd=(wdi>=5);
-  var present=emps.filter(function(e){return e.att&&e.att[idx]===1;});
-  var badges=isToday?'<span class="bdg bt">今日</span>':'';
+  var S=SC,hm=holMeta(S.year,S.month)[idx+1],td=new Date(),isT=(td.getFullYear()===S.year&&td.getMonth()===S.month-1&&td.getDate()===idx+1);
+  var wdn=['\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d','\u65e5'],wdi=(S.fdw-1+idx)%7,isW=(wdi>=5);
+  var present=S.emps.filter(function(e){return e.att&&e.att[idx]===1;});
+  var badges=isT?'<span class="bdg bt">\u4eca\u65e5</span>':'';
   if(hm)badges+='<span class="bdg '+(hm.t==='h'?'bh':hm.t==='m'?'bm':'bs')+'">'+hm.l+'</span>';
-  else if(isWknd)badges+='<span class="bdg bw">週末</span>';
-  var cards=present.map(function(p){var ei=emps.indexOf(p);var c=PAL[ei%PAL.length];return'<div class="pc"><div class="pav" style="background:'+c.av+';color:#fff">'+p.chn.slice(-1)+'</div><div><div class="pcn">'+p.chn+'</div><div class="pen">'+p.eng+'</div></div></div>';}).join('');
-  document.getElementById('panel').innerHTML='<div class="ptitle">'+month+'月'+(idx+1)+'日（星期'+wdn[wdi]+'）'+badges+'<span style="margin-left:auto;font-size:12px;font-weight:400;color:var(--muted)">共'+present.length+'人</span></div><div class="pgrid">'+cards+'</div>';
+  else if(isW)badges+='<span class="bdg bw">\u9031\u672b</span>';
+  var cards=present.map(function(p){var ei=S.emps.indexOf(p);var c=PAL[ei%PAL.length];return'<div class="pc"><div class="pav" style="background:'+c.av+';color:#fff">'+p.chn.slice(-1)+'</div><div><div class="pcn">'+p.chn+'</div><div class="pen">'+p.eng+'</div></div></div>';}).join('');
+  el('panel').innerHTML='<div class="ptitle">'+S.month+'\u6708'+(idx+1)+'\u65e5\uff08\u661f\u671f'+wdn[wdi]+'\uff09'+badges+'<span style="margin-left:auto;font-size:12px;font-weight:400;color:#6B7A99">\u5171'+present.length+'\u4eba</span></div><div class="pgrid">'+cards+'</div>';
 }
-
 function showPersonPanel(idx){
-  var S=SC,month=S.month,totalDays=S.totalDays,fdw=S.firstDayWeekday,emps=S.employees,partial=S.partial;
-  var emp=emps[idx],c=PAL[idx%PAL.length];
-  var wk=partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
-  var wdn=['一','二','三','四','五','六','日'];
-  var tags=partial?'':emp.att.map(function(v,d){if(!v)return'';return'<span class="pdtag" style="background:'+c.av+'">'+(d+1)+'('+wdn[(fdw-1+d)%7]+')</span>';}).join('');
-  document.getElementById('panel').innerHTML=
-    '<div class="psh"><div class="psav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div>'
-    +'<div><div class="psn">'+emp.chn+'</div><div class="pse">'+emp.eng+'</div></div>'
-    +'<div class="pss"><div class="ps"><div class="psnum" style="color:'+c.av+'">'+wk+'</div><div class="pslb">出勤天數</div></div>'
-    +'<div class="ps"><div class="psnum">'+(totalDays-wk)+'</div><div class="pslb">休假天數</div></div></div></div>'
-    +(partial?'<div class="warn">純文字格式無法顯示每日出勤日</div>':'<div class="pdlbl">'+month+'月出勤日</div><div class="pdlist">'+tags+'</div>');
+  var S=SC,emp=S.emps[idx],c=PAL[idx%PAL.length];
+  var wk=S.partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
+  var wdn=['\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d','\u65e5'];
+  var tags=S.partial?'':emp.att.map(function(v,d){if(!v)return'';return'<span class="pdtag" style="background:'+c.av+'">'+(d+1)+'('+wdn[(S.fdw-1+d)%7]+')</span>';}).join('');
+  el('panel').innerHTML='<div class="psh"><div class="psav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div><div><div class="psn">'+emp.chn+'</div><div class="pse">'+emp.eng+'</div></div><div class="pss"><div class="ps"><div class="psnum" style="color:'+c.av+'">'+wk+'</div><div class="pslb">\u51fa\u52e4\u5929\u6578</div></div><div class="ps"><div class="psnum">'+(S.totalDays-wk)+'</div><div class="pslb">\u4f11\u5047\u5929\u6578</div></div></div></div>'+(S.partial?'<div class="warn">\u7d14\u6587\u5b57\u683c\u5f0f\u7121\u6cd5\u986f\u793a\u6bcf\u65e5\u51fa\u52e4\u65e5</div>':'<div class="pdlbl">'+S.month+'\u6708\u51fa\u52e4\u65e5</div><div class="pdlist">'+tags+'</div>');
 }
-
-function setst(msg,cls){var e=document.getElementById('st');e.className=cls||'';e.textContent=msg;}
 </script>
-
-<noscript><div style="padding:40px;text-align:center;font-size:18px">請啟用 JavaScript</div></noscript>
 </body>
 </html>
