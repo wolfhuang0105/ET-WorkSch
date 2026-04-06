@@ -3,56 +3,293 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ETalking 台北班表 2026年4月</title>
+<title>ETalking 台北班表</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Microsoft JhengHei","PingFang TC",Arial,sans-serif;background:#F0F2F8;color:#1C2340;min-height:100vh}#vi{max-width:640px;margin:0 auto;padding:48px 20px}.logo{font-size:26px;font-weight:700;color:#4F6EF7;margin-bottom:6px}.logo span{color:#1C2340}.tagline{font-size:14px;color:#6B7A99;margin-bottom:28px}.box{background:#ffffff;border-radius:12px;padding:24px;border:1px solid #DDE2F0}.lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8892A4;margin-bottom:8px}.hint{background:#EEF2FF;border-left:3px solid #4F6EF7;padding:8px 12px;font-size:12px;color:#334480;line-height:1.7;margin:10px 0 14px;border-radius:0 6px 6px 0}textarea{width:100%;min-height:150px;border:1.5px solid #DDE2F0;border-radius:8px;padding:10px 12px;font-family:monospace;font-size:12px;color:#1C2340;background:#F0F2F8;resize:vertical;line-height:1.6}textarea:focus{outline:none;border-color:#4F6EF7}.btn{display:inline-flex;align-items:center;gap:6px;background:#4F6EF7;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}.btn:hover{background:#3A5AE8}#st{font-size:13px;margin-top:8px;color:#6B7A99;min-height:20px}#st.err{color:#C0392B}#vc{padding:20px;max-width:1080px;margin:0 auto;display:none}.topbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}.ctitle{font-size:20px;font-weight:700}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{background:#fff;border:1px solid #DDE2F0;border-radius:20px;padding:3px 11px;font-size:12px;color:#6B7A99}.pill b{color:#1C2340;font-weight:700}.bk{margin-left:auto;background:transparent;border:1px solid #DDE2F0;border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;color:#6B7A99}.bk:hover{color:#1C2340;border-color:#6B7A99}.strip{background:#fff;border:1px solid #DDE2F0;border-radius:12px;padding:12px 16px;margin-bottom:12px}.slbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#8892A4;margin-bottom:8px}.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:40px;border:1.5px solid #DDE2F0;cursor:pointer;background:#fff;transition:box-shadow .12s,transform .12s}.chip:hover{box-shadow:0 2px 8px rgba(0,0,0,.1);transform:translateY(-1px)}.chip.on{border-width:2px;transform:translateY(-1px)}.cav{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}.ccn{font-size:12px;font-weight:500}.cen{font-size:10px;color:#8892A4}.cwk{font-size:10px;font-weight:700;padding:1px 5px;border-radius:6px;margin-left:2px}.leg-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}.leg{display:flex;align-items:center;gap:4px;font-size:11px;color:#8892A4}.ld{width:8px;height:8px;border-radius:2px}.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}.gh{text-align:center;font-size:11px;font-weight:700;color:#8892A4;padding:4px 0}.gh.wk{color:#C0392B}.day{background:#fff;border:1px solid #DDE2F0;border-radius:8px;padding:7px 5px 5px;min-height:76px;display:flex;flex-direction:column;cursor:pointer;transition:border-color .1s,transform .1s}.day:hover{border-color:#B0BCDC;transform:translateY(-1px)}.day.sel{border:2px solid #4F6EF7!important}.day.emp{border:none;background:transparent;cursor:default;pointer-events:none;min-height:0}.day.hol{background:#FFF0F0;border-color:#FFCCCC}.day.mkup{background:#FFF5EE;border-color:#FFD4A0}.day.wknd{background:#FFFAF4;border-color:#FFE4BF}.day.spc{background:#F6F0FF;border-color:#D9CCFF}.day.tod{background:#EEF3FF;border-color:#4F6EF7;border-width:2px}.day.pon{border-width:2px!important}.day.poff{opacity:.2;filter:grayscale(.5);transform:none!important}.dn{font-size:13px;font-weight:700;line-height:1;color:#1C2340}.day.hol .dn{color:#C0392B}.day.mkup .dn{color:#D35400}.day.wknd .dn{color:#B7600A}.day.spc .dn{color:#7D3C98}.day.tod .dn{color:#4F6EF7}.hlb{font-size:8px;font-weight:700;line-height:1.4;margin-top:1px}.day.hol .hlb{color:#C0392B}.day.mkup .hlb{color:#D35400}.day.spc .hlb{color:#7D3C98}.day.tod .hlb{color:#4F6EF7}.dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;flex:1}.dot{width:6px;height:6px;border-radius:50%}.dfoot{margin-top:auto;font-size:10px;color:#8892A4;font-weight:600;padding-top:2px}.panel{background:#fff;border:1px solid #DDE2F0;border-radius:12px;padding:16px 18px;min-height:80px}.ptitle{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;font-size:14px;font-weight:600}.bdg{font-size:10px;padding:2px 8px;border-radius:16px;font-weight:700}.bh{background:#FFECEC;color:#C0392B}.bm{background:#FFF0E0;color:#D35400}.bs{background:#F0ECFF;color:#7D3C98}.bt{background:#EEF3FF;color:#4F6EF7}.bw{background:#FFF5EC;color:#B7600A}.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}.pc{display:flex;align-items:center;gap:8px;background:#F0F2F8;border-radius:8px;padding:7px 9px}.pav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}.pcn{font-size:12px;font-weight:500;color:#1C2340}.pen{font-size:10px;color:#8892A4}.psh{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:10px;border-bottom:1px solid #DDE2F0}.psav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}.psn{font-size:17px;font-weight:700;color:#1C2340}.pse{font-size:11px;color:#8892A4}.pss{display:flex;gap:16px;margin-left:auto}.ps{text-align:center}.psnum{font-size:22px;font-weight:700}.pslb{font-size:10px;color:#8892A4}.pdlbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#8892A4;margin-bottom:6px}.pdlist{display:flex;flex-wrap:wrap;gap:4px}.pdtag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;color:#fff}.warn{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400E;margin-bottom:10px}.est{text-align:center;padding:32px 0;color:#8892A4;font-size:13px}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Microsoft JhengHei","PingFang TC",Arial,sans-serif;background:#F0F2F8;color:#1C2340;min-height:100vh}#vi{max-width:640px;margin:0 auto;padding:48px 20px}.logo{font-size:26px;font-weight:700;color:#4F6EF7;margin-bottom:6px}.logo span{color:#1C2340}.tagline{font-size:14px;color:#6B7A99;margin-bottom:28px}.box{background:#ffffff;border-radius:12px;padding:24px;border:1px solid #DDE2F0;margin-bottom:12px}.lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8892A4;margin-bottom:8px}.hint{background:#EEF2FF;border-left:3px solid #4F6EF7;padding:8px 12px;font-size:12px;color:#334480;line-height:1.7;margin:10px 0 14px;border-radius:0 6px 6px 0}textarea{width:100%;min-height:150px;border:1.5px solid #DDE2F0;border-radius:8px;padding:10px 12px;font-family:monospace;font-size:12px;color:#1C2340;background:#F0F2F8;resize:vertical;line-height:1.6}textarea:focus{outline:none;border-color:#4F6EF7}.btn{display:inline-flex;align-items:center;gap:6px;background:#4F6EF7;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}.btn:hover{background:#3A5AE8}.btn-sm{display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid #DDE2F0;border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;color:#6B7A99}.btn-sm:hover{color:#1C2340;border-color:#6B7A99}.btn-sm.warn-btn{border-color:#F39C12;color:#D35400}.btn-sm.warn-btn:hover{background:#FFF5EE}#st{font-size:13px;margin-top:8px;color:#6B7A99;min-height:20px}#st.err{color:#C0392B}#hst{font-size:11px;color:#6B7A99;margin-top:6px;min-height:16px}#hst.err{color:#C0392B}
+/* 月份警告條 */
+.month-alert{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:14px 16px;margin-bottom:12px;display:none}.month-alert.show{display:block}.month-alert-title{font-size:13px;font-weight:700;color:#92400E;margin-bottom:8px}.month-alert input[type=text]{width:100%;border:1.5px solid #FDE68A;border-radius:7px;padding:7px 10px;font-size:12px;background:#FFFFF8;color:#1C2340;outline:none}.month-alert input[type=text]:focus{border-color:#F39C12}.month-alert-row{display:flex;gap:8px;margin-top:8px;align-items:center}.month-alert-skip{font-size:11px;color:#B7791F;cursor:pointer;text-decoration:underline;white-space:nowrap}
+/* sheets input 區塊（正常狀態）*/
+.sheets-row{display:flex;gap:8px;margin-top:8px;align-items:stretch}.sheets-inp{flex:1;border:1.5px solid #DDE2F0;border-radius:7px;padding:7px 10px;font-size:12px;background:#F0F2F8;color:#1C2340;outline:none}.sheets-inp:focus{border-color:#4F6EF7}
+/* 行事曆區 */
+#vc{padding:20px;max-width:1080px;margin:0 auto;display:none}.topbar{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}.ctitle{font-size:20px;font-weight:700}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{background:#fff;border:1px solid #DDE2F0;border-radius:20px;padding:3px 11px;font-size:12px;color:#6B7A99}.pill b{color:#1C2340;font-weight:700}.bk{background:transparent;border:1px solid #DDE2F0;border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;color:#6B7A99;margin-left:auto}.bk:hover{color:#1C2340;border-color:#6B7A99}.strip{background:#fff;border:1px solid #DDE2F0;border-radius:12px;padding:12px 16px;margin-bottom:12px}.slbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#8892A4;margin-bottom:8px}.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:40px;border:1.5px solid #DDE2F0;cursor:pointer;background:#fff;transition:box-shadow .12s,transform .12s}.chip:hover{box-shadow:0 2px 8px rgba(0,0,0,.1);transform:translateY(-1px)}.chip.on{border-width:2px;transform:translateY(-1px)}.cav{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}.ccn{font-size:12px;font-weight:500}.cen{font-size:10px;color:#8892A4}.cwk{font-size:10px;font-weight:700;padding:1px 5px;border-radius:6px;margin-left:2px}.leg-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}.leg{display:flex;align-items:center;gap:4px;font-size:11px;color:#8892A4}.ld{width:8px;height:8px;border-radius:2px}.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}.gh{text-align:center;font-size:11px;font-weight:700;color:#8892A4;padding:4px 0}.gh.wk{color:#C0392B}.day{background:#fff;border:1px solid #DDE2F0;border-radius:8px;padding:7px 5px 5px;min-height:76px;display:flex;flex-direction:column;cursor:pointer;transition:border-color .1s,transform .1s}.day:hover{border-color:#B0BCDC;transform:translateY(-1px)}.day.sel{border:2px solid #4F6EF7!important}.day.emp{border:none;background:transparent;cursor:default;pointer-events:none;min-height:0}.day.hol{background:#FFF0F0;border-color:#FFCCCC}.day.mkup{background:#FFF5EE;border-color:#FFD4A0}.day.wknd{background:#FFFAF4;border-color:#FFE4BF}.day.spc{background:#F6F0FF;border-color:#D9CCFF}.day.tod{background:#EEF3FF;border-color:#4F6EF7;border-width:2px}.day.pon{border-width:2px!important}.day.poff{opacity:.2;filter:grayscale(.5);transform:none!important}.dn{font-size:13px;font-weight:700;line-height:1;color:#1C2340}.day.hol .dn{color:#C0392B}.day.mkup .dn{color:#D35400}.day.wknd .dn{color:#B7600A}.day.spc .dn{color:#7D3C98}.day.tod .dn{color:#4F6EF7}.hlb{font-size:8px;font-weight:700;line-height:1.4;margin-top:1px}.day.hol .hlb{color:#C0392B}.day.mkup .hlb{color:#D35400}.day.spc .hlb{color:#7D3C98}.day.tod .hlb{color:#4F6EF7}.dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;flex:1}.dot{width:6px;height:6px;border-radius:50%}.dfoot{margin-top:auto;font-size:10px;color:#8892A4;font-weight:600;padding-top:2px}.panel{background:#fff;border:1px solid #DDE2F0;border-radius:12px;padding:16px 18px;min-height:80px}.ptitle{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;font-size:14px;font-weight:600}.bdg{font-size:10px;padding:2px 8px;border-radius:16px;font-weight:700}.bh{background:#FFECEC;color:#C0392B}.bm{background:#FFF0E0;color:#D35400}.bs{background:#F0ECFF;color:#7D3C98}.bt{background:#EEF3FF;color:#4F6EF7}.bw{background:#FFF5EC;color:#B7600A}.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}.pc{display:flex;align-items:center;gap:8px;background:#F0F2F8;border-radius:8px;padding:7px 9px}.pav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}.pcn{font-size:12px;font-weight:500;color:#1C2340}.pen{font-size:10px;color:#8892A4}.psh{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:10px;border-bottom:1px solid #DDE2F0}.psav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}.psn{font-size:17px;font-weight:700;color:#1C2340}.pse{font-size:11px;color:#8892A4}.pss{display:flex;gap:16px;margin-left:auto}.ps{text-align:center}.psnum{font-size:22px;font-weight:700}.pslb{font-size:10px;color:#8892A4}.pdlbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#8892A4;margin-bottom:6px}.pdlist{display:flex;flex-wrap:wrap;gap:4px}.pdtag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;color:#fff}.warn{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400E;margin-bottom:10px}.est{text-align:center;padding:32px 0;color:#8892A4;font-size:13px}
 </style>
 </head>
 <body>
+
+<!-- ===== 輸入頁 ===== -->
 <div id="vi">
-  <div class="logo">ET <span>&#20986;&#21202;&#31649;&#29702;</span></div>
-  <div class="tagline">&#24478; Excel &#35430;&#21512;&#29677;&#34920;&#65292;&#21363;&#26178;&#29986;&#29986;&#20104;&#21160;&#26085;&#26310;</div>
+  <div class="logo">ET <span>出勤管理</span></div>
+  <div class="tagline">從 Google Sheets 自動抓取班表，即時產出預動日曆</div>
+
+  <!-- 月份不符警告條 -->
+  <div class="month-alert" id="monthAlert">
+    <div class="month-alert-title">📅 目前是 <span id="alertCurMonth"></span>，儲存的班表為 <span id="alertOldMonth"></span>，請更新班表</div>
+    <input type="text" id="alertSheetUrl" placeholder="貼上新月份的 Google Sheets 網址（含 gid）…">
+    <div class="month-alert-row">
+      <button class="btn-sm warn-btn" onclick="fetchSheetsFromAlert()">🔄 抓取新班表</button>
+      <span class="month-alert-skip" onclick="dismissAlert()">略過，使用舊資料</span>
+      <span id="alertSt" style="font-size:11px;color:#C0392B;margin-left:8px"></span>
+    </div>
+  </div>
+
+  <!-- Sheets 抓取區塊 -->
   <div class="box">
-    <div class="lbl">&#25805;&#20316;&#26041;&#24335;</div>
-    <div class="hint">&#9312; &#22312; Excel &#26694;&#36984;&#25972;&#20221;&#29677;&#34920;&#8594; &#9313; Ctrl+C &#8594; &#9314; &#36157;&#20837;&#19979;&#26041; &#8594; &#9315; &#9651;&#12300;&#29986;&#29986;&#12301;<br><b>&#27880;&#24847;&#65306;</b>&#35531;&#30452;&#25509;&#24478; Excel &#35430;&#21512;&#65292;&#21029;&#20808;&#36157;&#35352;&#20107;&#26412;&#65292;&#21542;&#21063; Tab &#28040;&#22833;&#65292;&#27599;&#26085;&#20986;&#21202;&#28961;&#27861;&#35299;&#26512;&#12290;</div>
-    <div class="lbl">&#36157;&#20837;&#29677;&#34920;</div>
-    <textarea id="pa" placeholder="&#22312;&#27492;&#36157;&#19978;&#29677;&#34920;&#65288;&#30452;&#25509;&#24478; Excel &#35430;&#21512;&#65289;&#8230;"></textarea>
-    <div><button class="btn" id="gobtn" onclick="go()">&#9654; &#29986;&#29986;&#24403;&#26376;&#29677;&#34920;</button></div>
+    <div class="lbl">從 Google Sheets 抓取班表</div>
+    <div class="hint">在 Google Sheets 點到對應月份的 sheet → 複製網址列完整網址 → 貼入下方 → 點抓取</div>
+    <div class="sheets-row">
+      <input type="text" class="sheets-inp" id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/…?gid=…">
+      <button class="btn" style="margin-top:0;white-space:nowrap" onclick="fetchSheets()">🔄 抓取班表</button>
+    </div>
+    <div id="shSt" style="font-size:12px;margin-top:6px;color:#6B7A99;min-height:18px"></div>
+  </div>
+
+  <!-- 手動貼上區塊 -->
+  <div class="box">
+    <div class="lbl">操作方式（手動貼上）</div>
+    <div class="hint">① 在 Excel 框選整份班表→ ② Ctrl+C → ③ 貼入下方 → ④ ▷「產產」<br><b>注意：</b>請直接從 Excel 複製，別先貼記事本，否則 Tab 消失，每日出勤無法解析。</div>
+    <div class="lbl">貼入班表</div>
+    <textarea id="pa" placeholder="在此貼上班表（直接從 Excel 複製）…"></textarea>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button class="btn" id="gobtn" onclick="go()">▷ 產產當月班表</button>
+    </div>
     <div id="st"></div>
   </div>
+
+  <!-- 假日資料區塊 -->
+  <div class="box">
+    <div class="lbl">假日資料</div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <button class="btn-sm" onclick="fetchHolidays()">🔄 更新假日資料</button>
+      <span id="hst"></span>
+    </div>
+  </div>
 </div>
+
+<!-- ===== 行事曆頁 ===== -->
 <div id="vc" style="display:none">
-  <div class="topbar"><div class="ctitle" id="ctitle"></div><div class="pills" id="pills"></div><button class="bk" onclick="back()">&#8592; &#37325;&#26032;&#36157;&#19978;</button></div>
+  <div class="topbar">
+    <div class="ctitle" id="ctitle"></div>
+    <div class="pills" id="pills"></div>
+    <button class="btn-sm" onclick="fetchHolidays()" style="margin-left:auto">🔄 更新假日</button>
+    <button class="bk" style="margin-left:8px" onclick="back()">← 重新貼上</button>
+  </div>
   <div id="warnbox"></div>
-  <div class="strip"><div class="slbl">&#20154;&#21592;&#31968;&#36984; &#8212; &#9651;&#36984;&#26597;&#30475;&#20491;&#20154;&#29677;&#34920;</div><div class="chips" id="chips"></div></div>
+  <div class="strip">
+    <div class="slbl">人員篩選 — ▲選查看個人班表</div>
+    <div class="chips" id="chips"></div>
+  </div>
   <div class="leg-row">
-    <div class="leg"><div class="ld" style="background:#FFCCCC"></div>&#22283;&#23450;&#20551;&#26085;</div>
-    <div class="leg"><div class="ld" style="background:#FFD4A0"></div>&#35069;&#20551;</div>
-    <div class="leg"><div class="ld" style="background:#FFE4BF"></div>&#36123;&#26411;</div>
-    <div class="leg"><div class="ld" style="background:#D9CCFF"></div>&#29305;&#27578;&#32000;&#24565;&#26085;</div>
-    <div class="leg"><div class="ld" style="background:#BDD4FF;border:1px solid #4F6EF7"></div>&#20170;&#26085;</div>
+    <div class="leg"><div class="ld" style="background:#FFCCCC"></div>國定假日</div>
+    <div class="leg"><div class="ld" style="background:#FFD4A0"></div>補假</div>
+    <div class="leg"><div class="ld" style="background:#FFE4BF"></div>週末</div>
+    <div class="leg"><div class="ld" style="background:#D9CCFF"></div>特殊紀念日</div>
+    <div class="leg"><div class="ld" style="background:#BDD4FF;border:1px solid #4F6EF7"></div>今日</div>
   </div>
   <div class="grid" id="cal"></div>
-  <div class="panel" id="panel"><div class="est">&#9651;&#36984;&#26085;&#26399;&#25110;&#20154;&#21592;&#26597;&#30475;&#20986;&#21202;&#26126;&#32048;</div></div>
+  <div class="panel" id="panel"><div class="est">▲選日期或人員查看出勤明細</div></div>
 </div>
+
 <script>
-console.log('ET v5 loaded');
+console.log('ET v6 loaded');
+
+// ─── 常數 ────────────────────────────────────────────────
 var PAL=[{av:'#E74C3C',bg:'#FFECEC'},{av:'#2980B9',bg:'#EBF5FB'},{av:'#27AE60',bg:'#EAFAF1'},{av:'#F39C12',bg:'#FEF9E7'},{av:'#8E44AD',bg:'#F5EEF8'},{av:'#16A085',bg:'#E8F8F5'},{av:'#D35400',bg:'#FDF2E9'},{av:'#1A5276',bg:'#EAF2FF'},{av:'#196F3D',bg:'#EAFAF1'},{av:'#7D6608',bg:'#FEFDE7'},{av:'#4A235A',bg:'#F5EEF8'},{av:'#0E6655',bg:'#E8F8F5'}];
-var FIXED={'1-1':{t:'h',l:'元旦'},'2-14':{t:'s',l:'情人節'},'2-28':{t:'h',l:'和平紀念日'},'3-8':{t:'s',l:'婦女節'},'4-4':{t:'h',l:'兒童節'},'5-1':{t:'h',l:'勞動節'},'8-8':{t:'s',l:'父親節'},'9-28':{t:'s',l:'教師節'},'10-10':{t:'h',l:'國慶日'},'12-24':{t:'s',l:'平安夺'},'12-25':{t:'h',l:'聖誤/行憲'},'12-31':{t:'s',l:'跨年夺'}};
+
+// 內建假日備援（已修正錯字）
+var FIXED={'1-1':{t:'h',l:'元旦'},'2-14':{t:'s',l:'情人節'},'2-28':{t:'h',l:'和平紀念日'},'3-8':{t:'s',l:'婦女節'},'4-4':{t:'h',l:'兒童節'},'5-1':{t:'h',l:'勞動節'},'8-8':{t:'s',l:'父親節'},'9-28':{t:'s',l:'教師節'},'10-10':{t:'h',l:'國慶日'},'10-25':{t:'h',l:'台灣光復節'},'12-24':{t:'s',l:'平安夜'},'12-25':{t:'h',l:'聖誕/行憲'},'12-31':{t:'s',l:'跨年夜'}};
 var QINGMING={2024:4,2025:4,2026:5,2027:5,2028:4};
 var LUNAR={2025:{'1-27':{t:'h',l:'除夕'},'1-28':{t:'h',l:'初一'},'1-29':{t:'h',l:'初二'},'1-30':{t:'h',l:'初三'},'1-31':{t:'h',l:'初四'},'5-31':{t:'h',l:'端午節'},'10-6':{t:'h',l:'中秋節'}},2026:{'2-16':{t:'h',l:'除夕'},'2-17':{t:'h',l:'初一'},'2-18':{t:'h',l:'初二'},'2-19':{t:'h',l:'初三'},'2-20':{t:'h',l:'初四'},'2-21':{t:'h',l:'初五'},'6-19':{t:'h',l:'端午節'},'9-25':{t:'h',l:'中秋節'}},2027:{'2-5':{t:'h',l:'除夕'},'2-6':{t:'h',l:'初一'},'2-7':{t:'h',l:'初二'},'2-8':{t:'h',l:'初三'},'2-9':{t:'h',l:'初四'},'2-10':{t:'h',l:'初五'},'5-20':{t:'h',l:'端午節'},'10-3':{t:'h',l:'中秋節'}}};
 var MAKEUP={'2026-4':{'3':{t:'m',l:'兒童節補假'},'6':{t:'m',l:'清明補假'}},'2026-10':{'9':{t:'m',l:'國慶補假'}},'2025-1':{'31':{t:'m',l:'元旦補假'}}};
 var QIXI={2025:[8,29],2026:[8,19],2027:[8,9]};
 var WDMAP={'星期一':1,'星期二':2,'星期三':3,'星期四':4,'星期五':5,'星期六':6,'星期日':7};
+
+// localStorage key
+var LS_HOL='et_holidays';      // {year: {"M-D":{t,l},...}, ...}
+var LS_HOL_TS='et_holidays_ts';
+var LS_SCHED='et_schedule';    // raw TSV
+var LS_SCHED_MON='et_sched_month'; // "YYYY-M"
+
+// ─── 假日邏輯 ────────────────────────────────────────────
+function getStoredHol(y){
+  try{var d=JSON.parse(localStorage.getItem(LS_HOL)||'{}');return d[y]||null;}catch(e){return null;}
+}
+
 function nthSun(y,m,n){var d=new Date(y,m-1,1);while(d.getDay()!==0)d.setDate(d.getDate()+1);d.setDate(d.getDate()+(n-1)*7);return d.getDate();}
-function holMeta(y,m){var r={};Object.keys(FIXED).forEach(function(k){var p=k.split('-');if(+p[0]===m)r[+p[1]]=FIXED[k];});if(m===4&&QINGMING[y]&&!r[QINGMING[y]])r[QINGMING[y]]={t:'h',l:'清明節'};if(m===5){var ms=nthSun(y,5,2);if(!r[ms])r[ms]={t:'s',l:'母親節'};}if(QIXI[y]&&QIXI[y][0]===m&&!r[QIXI[y][1]])r[QIXI[y][1]]={t:'s',l:'七夕情人節'};var ly=LUNAR[y];if(ly)Object.keys(ly).forEach(function(k){var p=k.split('-');if(+p[0]===m)r[+p[1]]=ly[k];});var mk=MAKEUP[y+'-'+m];if(mk)Object.keys(mk).forEach(function(d){r[+d]=mk[d];});return r;}
+
+function holMeta(y,m){
+  var r={};
+  // 先用內建資料
+  Object.keys(FIXED).forEach(function(k){var p=k.split('-');if(+p[0]===m)r[+p[1]]=FIXED[k];});
+  if(m===4&&QINGMING[y]&&!r[QINGMING[y]])r[QINGMING[y]]={t:'h',l:'清明節'};
+  if(m===5){var ms=nthSun(y,5,2);if(!r[ms])r[ms]={t:'s',l:'母親節'};}
+  if(QIXI[y]&&QIXI[y][0]===m&&!r[QIXI[y][1]])r[QIXI[y][1]]={t:'s',l:'七夕情人節'};
+  var ly=LUNAR[y];if(ly)Object.keys(ly).forEach(function(k){var p=k.split('-');if(+p[0]===m)r[+p[1]]=ly[k];});
+  var mk=MAKEUP[y+'-'+m];if(mk)Object.keys(mk).forEach(function(d){r[+d]=mk[d];});
+  // 用 localStorage 資料覆蓋（ruyut 來源）
+  var sh=getStoredHol(y);
+  if(sh){
+    Object.keys(sh).forEach(function(k){
+      var p=k.split('-');
+      if(+p[0]===m)r[+p[1]]=sh[k];
+    });
+  }
+  return r;
+}
+
+// ─── 更新假日按鈕 ────────────────────────────────────────
+function fetchHolidays(){
+  setHst('⏳ 正在從 ruyut/TaiwanCalendar 抓取假日資料…','');
+  var now=new Date(),curY=now.getFullYear(),nextY=curY+1;
+  var base='https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/';
+  Promise.all([
+    fetch(base+curY+'.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw r.status;return r.json();}),
+    fetch(base+nextY+'.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw r.status;return r.json();})
+  ]).then(function(results){
+    var stored={};
+    [curY,nextY].forEach(function(y,i){
+      stored[y]={};
+      results[i].forEach(function(item){
+        if(item.isHoliday!=='2')return; // 2=放假
+        var ds=String(item.date); // "20260101"
+        var mo=+ds.slice(4,6),da=+ds.slice(6,8);
+        var key=mo+'-'+da;
+        stored[y][key]={t:'h',l:item.description||'假日'};
+      });
+    });
+    localStorage.setItem(LS_HOL,JSON.stringify(stored));
+    var ts=new Date().toLocaleString('zh-TW',{hour12:false});
+    localStorage.setItem(LS_HOL_TS,ts);
+    setHst('✅ 假日資料已更新（'+ts+'）','');
+    if(SC)buildGrid(); // 若行事曆已顯示則刷新
+  }).catch(function(e){
+    var ts=new Date().toLocaleString('zh-TW',{hour12:false});
+    setHst('⚠️ 假日資料更新失敗，目前使用內建資料（'+ts+'）','err');
+    console.error('fetchHolidays err',e);
+  });
+}
+
+function setHst(msg,cls){var e=el('hst');if(!e)return;e.className=cls||'';e.textContent=msg;}
+
+// ─── Google Sheets 抓取 ──────────────────────────────────
+function parseSheetUrl(url){
+  var idM=url.match(/\/spreadsheets\/d\/([^\/\?#]+)/);
+  var gidM=url.match(/[?&#]gid=(\d+)/);
+  if(!idM)return null;
+  return{id:idM[1],gid:gidM?gidM[1]:'0'};
+}
+
+function buildSheetCsvUrl(id,gid){
+  return 'https://docs.google.com/spreadsheets/d/'+id+'/export?format=tsv&gid='+gid+'&t='+Date.now();
+}
+
+function doFetchSheets(url,stEl,onSuccess){
+  var parsed=parseSheetUrl(url);
+  if(!parsed){setElSt(stEl,'⚠️ 網址格式不正確，請確認包含試算表連結','err');return;}
+  setElSt(stEl,'⏳ 抓取中…','');
+  fetch(buildSheetCsvUrl(parsed.id,parsed.gid),{cache:'no-store'})
+    .then(function(r){
+      if(!r.ok)throw '伺服器回應 '+r.status+'，請確認試算表已公開分享';
+      return r.text();
+    })
+    .then(function(txt){
+      txt=txt.trim();
+      if(!txt)throw '抓回的資料是空的';
+      var sched;
+      try{sched=parseSched(txt);}catch(e){throw '班表解析失敗：'+e;}
+      localStorage.setItem(LS_SCHED,txt);
+      localStorage.setItem(LS_SCHED_MON,sched.year+'-'+sched.month);
+      el('pa').value=txt;
+      setElSt(stEl,'✅ 班表已抓取（'+sched.year+'年'+sched.month+'月）','');
+      onSuccess(sched);
+    })
+    .catch(function(e){
+      setElSt(stEl,'⚠️ '+e,'err');
+      console.error('fetchSheets err',e);
+    });
+}
+
+function fetchSheets(){
+  var url=(el('sheetUrl').value||'').trim();
+  if(!url){setElSt('shSt','請先貼上 Google Sheets 網址','err');return;}
+  doFetchSheets(url,'shSt',function(sched){
+    SC=sched;selPs=new Set();selD=null;
+    dismissAlert();
+    try{showCal();}catch(e){setElSt('shSt','顯示失敗：'+e,'err');console.error(e);}
+  });
+}
+
+function fetchSheetsFromAlert(){
+  var url=(el('alertSheetUrl').value||'').trim();
+  if(!url){el('alertSt').textContent='請貼上網址';return;}
+  doFetchSheets(url,'alertSt',function(sched){
+    SC=sched;selPs=new Set();selD=null;
+    dismissAlert();
+    try{showCal();}catch(e){console.error(e);}
+  });
+}
+
+function setElSt(id,msg,cls){var e=el(id)||document.getElementById(id);if(!e){if(id==='alertSt'){e=document.getElementById('alertSt');}if(!e)return;}e.className=cls||'';e.textContent=msg;}
+
+// ─── 月份檢查 ────────────────────────────────────────────
+function checkMonthAndLoad(){
+  var raw=localStorage.getItem(LS_SCHED);
+  var savedMon=localStorage.getItem(LS_SCHED_MON)||'';
+  var now=new Date(),curMon=now.getFullYear()+'-'+( now.getMonth()+1);
+  // 顯示 localStorage 假日更新時間
+  var ts=localStorage.getItem(LS_HOL_TS);
+  if(ts)setHst('假日資料最後更新：'+ts,'');
+  if(!raw){
+    showMonthAlert(curMon,null);
+    return;
+  }
+  if(savedMon!==curMon){
+    showMonthAlert(curMon,savedMon);
+    // 仍嘗試載入舊班表
+    tryLoadRaw(raw,true);
+    return;
+  }
+  // 當月資料存在，直接載入
+  tryLoadRaw(raw,false);
+}
+
+function tryLoadRaw(raw,isOld){
+  try{
+    var sched=parseSched(raw);
+    SC=sched;selPs=new Set();selD=null;
+    el('pa').value=raw;
+    if(!isOld){
+      try{showCal();setst('');}catch(e){setst('顯示失敗：'+e,'err');}
+    }else{
+      setst('⚠️ 目前顯示的是舊月份班表','');
+    }
+  }catch(e){
+    setst('班表解析失敗：'+e,'err');
+  }
+}
+
+function showMonthAlert(curMon,oldMon){
+  var a=el('monthAlert');
+  el('alertCurMonth').textContent=formatMon(curMon);
+  el('alertOldMonth').textContent=oldMon?formatMon(oldMon):'（無）';
+  a.classList.add('show');
+}
+
+function dismissAlert(){el('monthAlert').classList.remove('show');}
+
+function formatMon(s){var p=s.split('-');return p[0]+'年'+p[1]+'月';}
+
+// ─── 班表解析 ────────────────────────────────────────────
+var SC=null,selPs=new Set(),selD=null;
+function el(id){return document.getElementById(id);}
+function setst(msg,cls){var e=el('st');e.className=cls||'';e.textContent=msg;}
+
 function parseSched(raw){
   var hasTabs=(raw.indexOf('\t')>=0);
   var m1=raw.match(/(\d{1,2})\u6708.{0,3}(\d{4})/);
-  if(!m1)throw '\u627e\u4e0d\u5230\u6708\u4efd\u5e74\u4efd';
-  var m2=raw.match(/\u7e3d\u5929\u6578\D{0,2}(\d+)/),totalDays=m2?+m2[1]:0;
-  if(!totalDays){var dms=raw.match(/\d+\u6708(\d+)\u65e5/g)||[];dms.forEach(function(s){var n=+s.match(/\u6708(\d+)\u65e5/)[1];if(n>totalDays)totalDays=n;});}
-  if(!totalDays)throw '\u627e\u4e0d\u5230\u7e3d\u5929\u6578';
+  if(!m1)throw '找不到月份年份';
+  var m2=raw.match(/總天數\D{0,2}(\d+)/),totalDays=m2?+m2[1]:0;
+  if(!totalDays){var dms=raw.match(/\d+月(\d+)日/g)||[];dms.forEach(function(s){var n=+s.match(/月(\d+)日/)[1];if(n>totalDays)totalDays=n;});}
+  if(!totalDays)throw '找不到總天數';
   var month=+m1[1],year=+m1[2],fdw=1,emps=[],partial=false;
   if(hasTabs){
     var rows=raw.split(/\r?\n/).map(function(r){return r.split('\t');});
@@ -62,78 +299,72 @@ function parseSched(raw){
     var cnRe=/^[\u4e00-\u9fff]{2,5}$/,enRe=/^[A-Za-z]{2,15}$/;
     for(var ri2=0;ri2<rows.length;ri2++){
       var row=rows[ri2],hasW=false;
-      for(var x=0;x<row.length;x++)if(row[x].trim()==='12\u9ede\u534a'){hasW=true;break;}
+      for(var x=0;x<row.length;x++)if(row[x].trim()==='12點半'){hasW=true;break;}
       if(!hasW)continue;
       var ci2=-1;
-      for(var i=0;i<Math.min(row.length-1,10);i++)if(cnRe.test(row[i].trim())&&enRe.test((row[i+1]||'').trim())&&row[i].trim()!=='\u59d3\u540d'){ci2=i;break;}
+      for(var i=0;i<Math.min(row.length-1,10);i++)if(cnRe.test(row[i].trim())&&enRe.test((row[i+1]||'').trim())&&row[i].trim()!=='姓名'){ci2=i;break;}
       if(ci2<0)continue;
       var attStart=(ci2+2>dsc)?ci2+2:dsc,att=[];
       for(var d=0;d<totalDays;d++)att.push((row[attStart+d]||'').trim()?1:0);
       if(att.indexOf(1)>=0)emps.push({chn:row[ci2].trim(),eng:row[ci2+1].trim(),att:att,wkCount:0});
     }
-    if(!emps.length)throw '\u627e\u4e0d\u5230\u54e1\u5de5\u8cc7\u6599\uff08Tab\u683c\u5f0f\uff09';
+    if(!emps.length)throw '找不到員工資料（Tab格式）';
   }else{
     partial=true;
-    var wdm=raw.match(/\u82f1\u6587\u540d(\u661f\u671f[\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u65e5])/);if(wdm)fdw=WDMAP[wdm[1]]||1;
-    var er=/(WH\d+\s*)?(OK)([\u4e00-\u9fff]{2,5})([A-Za-z]{2,15})((?:12\u9ede\u534a)*)/g,em;
-    while((em=er.exec(raw))!==null)if(em[3]!=='\u59d3\u540d')emps.push({chn:em[3],eng:em[4],att:null,wkCount:em[5].split('12\u9ede\u534a').length-1});
-    if(!emps.length)throw '\u627e\u4e0d\u5230\u54e1\u5de5\u8cc7\u6599';
+    var wdm=raw.match(/英文名(星期[一二三四五六日])/);if(wdm)fdw=WDMAP[wdm[1]]||1;
+    var er=/(WH\d+\s*)?(OK)([\u4e00-\u9fff]{2,5})([A-Za-z]{2,15})((?:12點半)*)/g,em;
+    while((em=er.exec(raw))!==null)if(em[3]!=='姓名')emps.push({chn:em[3],eng:em[4],att:null,wkCount:em[5].split('12點半').length-1});
+    if(!emps.length)throw '找不到員工資料';
   }
   return{month:month,year:year,totalDays:totalDays,fdw:fdw,emps:emps,partial:partial};
 }
-var SC=null,selPs=new Set(),selD=null;
-function el(id){return document.getElementById(id);}
-function setst(msg,cls){var e=el('st');e.className=cls||'';e.textContent=msg;}
-function autoLoad(){
-  setst('\u23f3 \u8f09\u5165\u73ed\u8868\u4e2d\u2026');
-  fetch('schedule.txt?v='+Date.now())
-    .then(function(r){if(!r.ok)throw '\u627e\u4e0d\u5230 schedule.txt';return r.text();})
-    .then(function(txt){
-      txt=txt.trim();if(!txt)throw '\u6a94\u6848\u662f\u7a7a\u7684';
-      el('pa').value=txt;
-      var sched;
-      try{sched=parseSched(txt);}catch(e){setst('schedule.txt \u89e3\u6790\u5931\u6557\uff1a'+e,'err');return;}
-      SC=sched;selPs=new Set();selD=null;
-      try{showCal();setst('');}catch(e){setst('\u986f\u793a\u5931\u6557\uff1a'+e,'err');console.error(e);}
-    })
-    .catch(function(e){setst('');console.info('autoLoad skip:',e);});
-}
+
+// ─── 手動貼上 ────────────────────────────────────────────
 function go(){
   var raw=(el('pa').value||'').trim();
-  if(!raw){setst('\u8acb\u5148\u8cbc\u5165\u73ed\u8868\u8cc7\u6599','err');return;}
+  if(!raw){setst('請先貼入班表資料','err');return;}
   el('gobtn').disabled=true;
   var sched;
-  try{sched=parseSched(raw);}catch(e){setst('\u89e3\u6790\u5931\u6557\uff1a'+e,'err');el('gobtn').disabled=false;return;}
+  try{sched=parseSched(raw);}catch(e){setst('解析失敗：'+e,'err');el('gobtn').disabled=false;return;}
   SC=sched;selPs=new Set();selD=null;
-  try{showCal();}catch(e){el('vc').style.display='none';el('vi').style.display='';setst('\u986f\u793a\u5931\u6557\uff1a'+e,'err');console.error('showCal err:',e);}
+  localStorage.setItem(LS_SCHED,raw);
+  localStorage.setItem(LS_SCHED_MON,sched.year+'-'+sched.month);
+  dismissAlert();
+  try{showCal();}catch(e){el('vc').style.display='none';el('vi').style.display='';setst('顯示失敗：'+e,'err');console.error('showCal err:',e);}
   el('gobtn').disabled=false;
 }
+
 function back(){el('vc').style.display='none';el('vi').style.display='';selPs=new Set();selD=null;}
+
+// ─── 行事曆顯示 ──────────────────────────────────────────
 function showCal(){
   el('vi').style.display='none';el('vc').style.display='block';
   var S=SC;
-  el('ctitle').textContent=S.year+'\u5e74'+S.month+'\u6708\u51fa\u52e4\u8868';
-  el('warnbox').innerHTML=S.partial?'<div class="warn">&#9888; \u7d14\u6587\u5b57\u683c\u5f0f\uff08\u7121 Tab\uff09\u2014 \u50c5\u986f\u793a\u4eba\u54e1\u540d\u55ae\u8207\u6708\u5de5\u4f5c\u5929\u6578\u3002\u5f9e Excel \u76f4\u63a5 Ctrl+C \u8907\u88fd\u53ef\u53d6\u5f97\u6bcf\u65e5\u660e\u7d30\u3002</div>':'';
-  if(!S.partial){var cnts=[];for(var d=0;d<S.totalDays;d++)cnts.push(S.emps.reduce(function(s,e){return s+e.att[d];},0));var avg=(cnts.reduce(function(a,b){return a+b;},0)/S.totalDays).toFixed(1);el('pills').innerHTML='<div class="pill">\u5e73\u5747 <b>'+avg+'</b> \u4eba</div><div class="pill">\u6700\u591a <b>'+Math.max.apply(null,cnts)+'</b></div><div class="pill">\u6700\u5c11 <b>'+Math.min.apply(null,cnts)+'</b></div>';}else{el('pills').innerHTML='';}
-  buildChips();buildGrid();el('panel').innerHTML='<div class="est">\u9ede\u9078\u65e5\u671f\u6216\u4eba\u54e1\u67e5\u770b\u51fa\u52e4\u660e\u7d30</div>';
+  el('ctitle').textContent=S.year+'年'+S.month+'月出勤表';
+  el('warnbox').innerHTML=S.partial?'<div class="warn">⚠ 純文字格式（無 Tab）— 僅顯示人員名單與月工作天數。從 Excel 直接 Ctrl+C 複製可取得每日明細。</div>':'';
+  if(!S.partial){var cnts=[];for(var d=0;d<S.totalDays;d++)cnts.push(S.emps.reduce(function(s,e){return s+e.att[d];},0));var avg=(cnts.reduce(function(a,b){return a+b;},0)/S.totalDays).toFixed(1);el('pills').innerHTML='<div class="pill">平均 <b>'+avg+'</b> 人</div><div class="pill">最多 <b>'+Math.max.apply(null,cnts)+'</b></div><div class="pill">最少 <b>'+Math.min.apply(null,cnts)+'</b></div>';}else{el('pills').innerHTML='';}
+  buildChips();buildGrid();el('panel').innerHTML='<div class="est">點選日期或人員查看出勤明細</div>';
   if(!S.partial){var td=new Date(),ti=(td.getFullYear()===S.year&&td.getMonth()===S.month-1)?td.getDate()-1:-1;if(ti>=0)setTimeout(function(){var cs=document.querySelectorAll('.day:not(.emp)');if(cs[ti])clickDay(ti,cs[ti]);},80);}
 }
+
 function buildChips(){
   var S=SC,cont=el('chips');cont.innerHTML='';
   S.emps.forEach(function(emp,i){
     var c=PAL[i%PAL.length];emp.color=c;
     var wk=S.partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
     var ch=document.createElement('div');ch.className='chip';
-    ch.innerHTML='<div class="cav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div><div><div class="ccn">'+emp.chn+'</div><div class="cen">'+emp.eng+'</div></div><span class="cwk" style="background:'+c.bg+';color:'+c.av+'">'+wk+'\u5929</span>';
+    ch.innerHTML='<div class="cav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div><div><div class="ccn">'+emp.chn+'</div><div class="cen">'+emp.eng+'</div></div><span class="cwk" style="background:'+c.bg+';color:'+c.av+'">'+wk+'天</span>';
     ch.onclick=(function(idx){return function(){clickChip(idx);};})(i);
     cont.appendChild(ch);
   });
 }
+
 function allSelOn(d){var ok=true;selPs.forEach(function(i){if(!SC.emps[i].att[d])ok=false;});return ok;}
+
 function buildGrid(){
   var S=SC,hm=holMeta(S.year,S.month),td=new Date(),ti=(td.getFullYear()===S.year&&td.getMonth()===S.month-1)?td.getDate()-1:-1;
   var cal=el('cal');cal.innerHTML='';
-  ['\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d','\u65e5'].forEach(function(h,i){var d=document.createElement('div');d.className='gh'+(i>=5?' wk':'');d.textContent=h;cal.appendChild(d);});
+  ['一','二','三','四','五','六','日'].forEach(function(h,i){var d=document.createElement('div');d.className='gh'+(i>=5?' wk':'');d.textContent=h;cal.appendChild(d);});
   for(var e=0;e<S.fdw-1;e++){var ec=document.createElement('div');ec.className='day emp';cal.appendChild(ec);}
   var cnts=S.partial?null:[];
   if(!S.partial)for(var dc=0;dc<S.totalDays;dc++)cnts.push(S.emps.reduce(function(s,e){return s+e.att[dc];},0));
@@ -144,15 +375,16 @@ function buildGrid(){
     if(isT)cls+=' tod';else if(meta)cls+=(meta.t==='h'?' hol':meta.t==='m'?' mkup':' spc');else if(isW)cls+=' wknd';
     if(hasFilter)cls+=(allSelOn(d)?' pon':' poff');
     if(selD===d)cls+=' sel';
-    var lbl=meta?'<div class="hlb">'+meta.l+'</div>':'';if(isT)lbl+='<div class="hlb">\u4eca\u65e5</div>';
+    var lbl=meta?'<div class="hlb">'+meta.l+'</div>':'';if(isT)lbl+='<div class="hlb">今日</div>';
     var dots=S.partial?'':S.emps.map(function(emp,i){if(!emp.att[d])return'';if(hasFilter&&!selPs.has(i))return'';return'<div class="dot" style="background:'+PAL[i%PAL.length].av+';"></div>';}).join('');
-    var cntH=cnts?'<div class="dfoot">'+(hasFilter?([...selPs].filter(function(i){return S.emps[i].att[d];}).length+'/'+selPs.size):cnts[d])+' \u4eba</div>':'';
+    var cntH=cnts?'<div class="dfoot">'+(hasFilter?([...selPs].filter(function(i){return S.emps[i].att[d];}).length+'/'+selPs.size):cnts[d])+' 人</div>':'';
     var cell=document.createElement('div');cell.className=cls;
     cell.innerHTML='<div class="dn">'+(d+1)+'</div>'+lbl+'<div class="dots">'+dots+'</div>'+cntH;
     if(!S.partial)(function(idx,c){c.onclick=function(){clickDay(idx,c);};})(d,cell);
     cal.appendChild(cell);
   }
 }
+
 function clickChip(idx){
   if(selPs.has(idx)){selPs.delete(idx);}else{selPs.add(idx);}
   selD=null;
@@ -161,61 +393,61 @@ function clickChip(idx){
     else{ch.classList.remove('on');ch.style.borderColor='';}
   });
   buildGrid();
-  if(selPs.size===0){el('panel').innerHTML='<div class="est">\u9ede\u9078\u65e5\u671f\u6216\u4eba\u54e1\u67e5\u770b\u51fa\u52e4\u660e\u7d30</div>';}
+  if(selPs.size===0){el('panel').innerHTML='<div class="est">點選日期或人員查看出勤明細</div>';}
   else if(selPs.size===1){showPersonPanel([...selPs][0]);}
   else{showMultiPanel();}
 }
+
 function clickDay(di,cell){selD=di;document.querySelectorAll('.day').forEach(function(c){c.classList.remove('sel');});cell.classList.add('sel');showDayPanel(di);}
+
 function showDayPanel(idx){
   var S=SC,hm=holMeta(S.year,S.month)[idx+1],td=new Date(),isT=(td.getFullYear()===S.year&&td.getMonth()===S.month-1&&td.getDate()===idx+1);
-  var wdn=['\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d','\u65e5'],wdi=(S.fdw-1+idx)%7,isW=(wdi>=5);
+  var wdn=['一','二','三','四','五','六','日'],wdi=(S.fdw-1+idx)%7,isW=(wdi>=5);
   var present=S.emps.filter(function(e,i){return e.att&&e.att[idx]===1&&(selPs.size===0||selPs.has(i));});
-  var total=selPs.size===0?S.emps.filter(function(e){return e.att&&e.att[idx]===1;}).length:present.length;
-  var badges=isT?'<span class="bdg bt">\u4eca\u65e5</span>':'';
+  var badges=isT?'<span class="bdg bt">今日</span>':'';
   if(hm)badges+='<span class="bdg '+(hm.t==='h'?'bh':hm.t==='m'?'bm':'bs')+'">'+hm.l+'</span>';
-  else if(isW)badges+='<span class="bdg bw">\u9031\u672b</span>';
-  if(selPs.size>0)badges+='<span class="bdg" style="background:#EEF3FF;color:#4F6EF7">\u7b1b\u9078'+selPs.size+'\u4eba</span>';
+  else if(isW)badges+='<span class="bdg bw">週末</span>';
+  if(selPs.size>0)badges+='<span class="bdg" style="background:#EEF3FF;color:#4F6EF7">篩選'+selPs.size+'人</span>';
   var cards=present.map(function(p){var ei=S.emps.indexOf(p);var c=PAL[ei%PAL.length];return'<div class="pc"><div class="pav" style="background:'+c.av+';color:#fff">'+p.chn.slice(-1)+'</div><div><div class="pcn">'+p.chn+'</div><div class="pen">'+p.eng+'</div></div></div>';}).join('');
-  el('panel').innerHTML='<div class="ptitle">'+S.month+'\u6708'+(idx+1)+'\u65e5\uff08\u661f\u671f'+wdn[wdi]+'\uff09'+badges+'<span style="margin-left:auto;font-size:12px;font-weight:400;color:#6B7A99">\u5171'+present.length+'\u4eba</span></div><div class="pgrid">'+cards+'</div>';
+  el('panel').innerHTML='<div class="ptitle">'+S.month+'月'+(idx+1)+'日（星期'+wdn[wdi]+'）'+badges+'<span style="margin-left:auto;font-size:12px;font-weight:400;color:#6B7A99">共'+present.length+'人</span></div><div class="pgrid">'+cards+'</div>';
 }
-window.addEventListener('load',autoLoad);
+
 function showMultiPanel(){
-  var S=SC,wdn=['\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d','\u65e5'];
+  var S=SC,wdn=['一','二','三','四','五','六','日'];
   var idxs=[...selPs].sort(function(a,b){return a-b;});
-  // 計算交集日 Set
   var interSet=new Set();
-  if(!S.partial&&idxs.length>1){
-    for(var d=0;d<S.totalDays;d++){if(idxs.every(function(i){return S.emps[i].att[d]===1;}))interSet.add(d);}
-  }
+  if(!S.partial&&idxs.length>1){for(var d=0;d<S.totalDays;d++){if(idxs.every(function(i){return S.emps[i].att[d]===1;}))interSet.add(d);}}
   var rows=idxs.map(function(idx){
     var emp=S.emps[idx],c=PAL[idx%PAL.length];
     var wk=S.partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
     var tags=S.partial?'':emp.att.map(function(v,d){
       if(!v)return'';
-      var isInter=interSet.has(d);
-      var bg=isInter?'#C0392B':c.av;
-      var fw=isInter?'700':'600';
+      var isInter=interSet.has(d);var bg=isInter?'#C0392B':c.av;var fw=isInter?'700':'600';
       return'<span class="pdtag" style="background:'+bg+';font-weight:'+fw+'">'+(d+1)+'('+wdn[(S.fdw-1+d)%7]+')</span>';
     }).join('');
     return'<div style="background:#F8F9FF;border-radius:10px;padding:10px 12px;margin-bottom:8px">'+
       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'+
       '<div class="psav" style="background:'+c.av+';color:#fff;width:34px;height:34px;font-size:12px">'+emp.chn.slice(-1)+'</div>'+
       '<div style="flex:1"><div class="psn" style="font-size:14px">'+emp.chn+'</div><div class="pse">'+emp.eng+'</div></div>'+
-      '<div style="text-align:center"><div class="psnum" style="color:'+c.av+';font-size:20px">'+wk+'</div><div class="pslb">\u51fa\u52e4\u5929</div></div>'+
+      '<div style="text-align:center"><div class="psnum" style="color:'+c.av+';font-size:20px">'+wk+'</div><div class="pslb">出勤天</div></div>'+
       '</div>'+(S.partial?'':('<div class="pdlist" style="margin-top:2px">'+tags+'</div>'))+'</div>';
   }).join('');
   var common='';
-  if(interSet.size>0){common='<div style="background:#FFECEC;border:1px solid #FFAAAA;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;color:#C0392B;margin-bottom:8px">\ud83d\udcc5 \u5171\u540c\u51fa\u52e4 '+interSet.size+' \u5929\uff08\u4e0b\u65b9\u7d05\u5e95\u6a19\u793a\uff09</div>';}
-  else if(!S.partial&&idxs.length>1){common='<div style="background:#F8F9FF;border-radius:8px;padding:8px 14px;font-size:12px;color:#8892A4;margin-bottom:8px">\u7121\u5171\u540c\u51fa\u52e4\u65e5</div>';}
-  el('panel').innerHTML='<div class="ptitle">\u5df2\u9078 '+idxs.length+' \u4eba</div>'+common+rows;
+  if(interSet.size>0){common='<div style="background:#FFECEC;border:1px solid #FFAAAA;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;color:#C0392B;margin-bottom:8px">📅 共同出勤 '+interSet.size+' 天（下方紅底標示）</div>';}
+  else if(!S.partial&&idxs.length>1){common='<div style="background:#F8F9FF;border-radius:8px;padding:8px 14px;font-size:12px;color:#8892A4;margin-bottom:8px">無共同出勤日</div>';}
+  el('panel').innerHTML='<div class="ptitle">已選 '+idxs.length+' 人</div>'+common+rows;
 }
+
 function showPersonPanel(idx){
   var S=SC,emp=S.emps[idx],c=PAL[idx%PAL.length];
   var wk=S.partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
-  var wdn=['\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d','\u65e5'];
+  var wdn=['一','二','三','四','五','六','日'];
   var tags=S.partial?'':emp.att.map(function(v,d){if(!v)return'';return'<span class="pdtag" style="background:'+c.av+'">'+(d+1)+'('+wdn[(S.fdw-1+d)%7]+')</span>';}).join('');
-  el('panel').innerHTML='<div class="psh"><div class="psav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div><div><div class="psn">'+emp.chn+'</div><div class="pse">'+emp.eng+'</div></div><div class="pss"><div class="ps"><div class="psnum" style="color:'+c.av+'">'+wk+'</div><div class="pslb">\u51fa\u52e4\u5929\u6578</div></div><div class="ps"><div class="psnum">'+(S.totalDays-wk)+'</div><div class="pslb">\u4f11\u5047\u5929\u6578</div></div></div></div>'+(S.partial?'<div class="warn">\u7d14\u6587\u5b57\u683c\u5f0f\u7121\u6cd5\u986f\u793a\u6bcf\u65e5\u51fa\u52e4\u65e5</div>':'<div class="pdlbl">'+S.month+'\u6708\u51fa\u52e4\u65e5</div><div class="pdlist">'+tags+'</div>');
+  el('panel').innerHTML='<div class="psh"><div class="psav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div><div><div class="psn">'+emp.chn+'</div><div class="pse">'+emp.eng+'</div></div><div class="pss"><div class="ps"><div class="psnum" style="color:'+c.av+'">'+wk+'</div><div class="pslb">出勤天數</div></div><div class="ps"><div class="psnum">'+(S.totalDays-wk)+'</div><div class="pslb">休假天數</div></div></div></div>'+(S.partial?'<div class="warn">純文字格式無法顯示每日出勤日</div>':'<div class="pdlbl">'+S.month+'月出勤日</div><div class="pdlist">'+tags+'</div>');
 }
+
+// ─── 啟動 ────────────────────────────────────────────────
+window.addEventListener('load', checkMonthAndLoad);
 </script>
 </body>
 </html>
