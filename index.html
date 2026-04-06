@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ETalking 台北班表 v8.0</title>
+<title>ETalking 台北班表 v8.1</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Microsoft JhengHei","PingFang TC",Arial,sans-serif;background:#F0F2F8;color:#1C2340;min-height:100vh}
@@ -223,7 +223,7 @@ textarea:focus{outline:none;border-color:#4F6EF7}
   <!-- 行事曆頁獨立狀態列 -->
   <div id="calStatusWrap" style="display:none;flex-direction:column;gap:6px;margin-bottom:10px">
     <div class="src-bar" id="calSchedBar"></div>
-    <div class="src-bar" id="calHolBar" style="display:none"></div>
+    <div class="src-bar" id="calHolBar"></div>
   </div>
   <div class="strip">
     <div class="slbl">人員篩選 — ▲ 選查看個人班表</div>
@@ -312,13 +312,12 @@ function renderHolSwitcher(){
 }
 
 function renderCalHolBar(){
-  // 只更新行事曆頁的假日狀態列（只在 LS 有資料時顯示）
+  // 永遠顯示假日狀態列，讓使用者清楚知道目前吃哪個來源
   var cb=el('calHolBar');if(!cb)return;
   var apiOk=hasHolApi();
   var apiTs=localStorage.getItem(LS_HOL_TS)||'';
-  if(!apiOk){cb.style.display='none';return;} // LS 無資料時整列隱藏
-  cb.style.display='flex';
   var fileOk=HOL_FILE&&Object.keys(HOL_FILE).length>0;
+  cb.style.display='flex';
   var mkBtn=function(src,label,hasData){
     var cls='src-opt'+(src===HOL_SRC?' active':'')+(hasData?'':' nodata');
     return '<span class="'+cls+'" onclick="calSwitchHol(\''+src+'\')">'+label+'</span>';
@@ -327,7 +326,7 @@ function renderCalHolBar(){
     ?'<button class="btn-sm dl-btn" onclick="downloadHolidays()" style="padding:2px 8px;font-size:10px;margin-left:4px">⬇ 下載</button>':'';
   cb.innerHTML='<span style="color:#8892A4;white-space:nowrap;margin-right:2px">🗓 假日：</span>'
     +mkBtn('file','📄 .txt'+(fileOk?'':' (無)'),fileOk)
-    +mkBtn('api','🌐 LS'+(apiTs?' ('+apiTs+')':''),apiOk)
+    +mkBtn('api','🌐 LS'+(apiTs?' ('+apiTs+')':' (無快取)'),apiOk)
     +dlBtn;
 }
 
