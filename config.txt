@@ -1,5 +1,5 @@
 {
   "holiday_api": "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/",
   "sheet_url": "https://docs.google.com/spreadsheets/d/13SrI50MGBAJHcRqFXa2TT5EDki3EGd0YL5wAGKXzPuw/edit?gid=1292390544#gid=1292390544",
-  "sched_label": "本表最後更新日 = 2026/04/01"
+  "sched_label": "本表最後更新日 = 2026/04/03"
 }
