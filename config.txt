@@ -1,0 +1,3 @@
+{
+  "holiday_api": "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/"
+}
