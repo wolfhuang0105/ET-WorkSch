@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ETalking 台北班表 v18</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","PingFang TC",Arial,sans-serif;background:#F0F2F8;color:#1C2340;min-height:100vh}
+#vi{max-width:640px;margin:0 auto;padding:48px 20px}
+.logo{font-size:26px;font-weight:700;color:#4F6EF7;margin-bottom:6px}.logo span{color:#1C2340}
+.tagline{font-size:14px;color:#6B7A99;margin-bottom:28px}
+.box{background:#fff;border-radius:12px;padding:24px;border:1px solid #DDE2F0;margin-bottom:12px}
+.lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8892A4;margin-bottom:8px}
+.hint{background:#EEF2FF;border-left:3px solid #4F6EF7;padding:8px 12px;font-size:12px;color:#334480;line-height:1.7;margin:10px 0 14px;border-radius:0 6px 6px 0}
+textarea{width:100%;min-height:150px;border:1.5px solid #DDE2F0;border-radius:8px;padding:10px 12px;font-family:monospace;font-size:12px;color:#1C2340;background:#F0F2F8;resize:vertical;line-height:1.6}
+textarea:focus{outline:none;border-color:#4F6EF7}
+.btn{display:inline-flex;align-items:center;gap:6px;background:#4F6EF7;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
+.btn:hover{background:#3A5AE8}.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-sm{display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid #DDE2F0;border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;color:#6B7A99}
+.btn-sm:hover{color:#1C2340;border-color:#6B7A99}
+.btn-sm.warn-btn{border-color:#F39C12;color:#D35400}.btn-sm.warn-btn:hover{background:#FFF5EE}
+.btn-sm.dl-btn{border-color:#27AE60;color:#1E8449}.btn-sm.dl-btn:hover{background:#EAFAF1}
+.stxt{font-size:12px;margin-top:6px;min-height:18px;display:block}
+.stxt.err{color:#C0392B}
+.month-alert{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:16px;margin-bottom:12px;display:none}
+.month-alert.show{display:block}
+.month-alert-title{font-size:13px;font-weight:700;color:#92400E;margin-bottom:10px}
+.month-alert input{width:100%;border:1.5px solid #FDE68A;border-radius:7px;padding:7px 10px;font-size:12px;background:#FFFFF8;color:#1C2340;outline:none;margin-bottom:8px}
+.month-alert input:focus{border-color:#F39C12}
+.mal-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mal-skip{font-size:11px;color:#B7791F;cursor:pointer;text-decoration:underline}
+.sheets-row{display:flex;gap:8px;margin-top:8px}
+.sheets-inp{flex:1;border:1.5px solid #DDE2F0;border-radius:7px;padding:7px 10px;font-size:12px;background:#F0F2F8;color:#1C2340;outline:none}
+.sheets-inp:focus{border-color:#4F6EF7}
+.divider{border:none;border-top:1px solid #EEF0F6;margin:16px 0}
+#vc{padding:20px;max-width:1080px;margin:0 auto;display:none}
+.topbar{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.ctitle{font-size:20px;font-weight:700}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{background:#fff;border:1px solid #DDE2F0;border-radius:20px;padding:3px 11px;font-size:12px;color:#6B7A99}
+.pill b{color:#1C2340;font-weight:700}
+.topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:wrap}
+.bk{background:transparent;border:1px solid #DDE2F0;border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;color:#6B7A99}
+.bk:hover{color:#1C2340;border-color:#6B7A99}
+.strip{background:#fff;border:1px solid #DDE2F0;border-radius:12px;padding:12px 16px;margin-bottom:12px}
+.slbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#8892A4;margin-bottom:8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:40px;border:1.5px solid #DDE2F0;cursor:pointer;background:#fff;transition:box-shadow .12s,transform .12s}
+.chip:hover{box-shadow:0 2px 8px rgba(0,0,0,.1);transform:translateY(-1px)}.chip.on{border-width:2px;transform:translateY(-1px)}
+.cav{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
+.ccn{font-size:12px;font-weight:500}.cen{font-size:10px;color:#8892A4}
+.cwk{font-size:10px;font-weight:700;padding:1px 5px;border-radius:6px;margin-left:2px}
+.leg-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.leg{display:flex;align-items:center;gap:4px;font-size:11px;color:#8892A4}
+.ld{width:8px;height:8px;border-radius:2px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px}
+.gh{text-align:center;font-size:11px;font-weight:700;color:#8892A4;padding:4px 0}.gh.wk{color:#C0392B}
+.day{background:#fff;border:1px solid #DDE2F0;border-radius:8px;padding:7px 5px 5px;min-height:76px;display:flex;flex-direction:column;cursor:pointer;transition:border-color .1s,transform .1s}
+/* 跨日遮罩 bands */
+.exam-band{position:absolute;z-index:5;pointer-events:none;border-radius:5px;display:flex;align-items:center;padding:0 8px;box-sizing:border-box;overflow:hidden}
+.exam-band-label{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.3px}
+.exam-band-cont{font-size:9px;font-weight:600;white-space:nowrap;opacity:.7}
+.eb-exam{background:rgba(231,76,60,.18);border:1.5px solid rgba(231,76,60,.55)}
+.eb-exam .exam-band-label{color:#922B21}
+.eb-major{background:rgba(142,68,173,.18);border:1.5px solid rgba(142,68,173,.55)}
+.eb-major .exam-band-label{color:#6C3483}
+.eb-good{background:rgba(39,174,96,.12);border:1.5px dashed rgba(39,174,96,.45)}
+.eb-good .exam-band-label{color:#1E8449}
+/* 設定頁-學生行事曆卡片 */
+.strat-card{background:#fff;border-radius:12px;padding:20px;border:1px solid #DDE2F0;margin-bottom:12px}
+.strat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.strat-title{font-size:13px;font-weight:700;color:#1C2340;display:flex;align-items:center;gap:6px}
+.strat-table{width:100%;border-collapse:collapse;font-size:11px}
+.strat-table th{background:#F0F2F8;color:#8892A4;font-weight:700;padding:5px 7px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+.strat-table td{padding:5px 7px;border-bottom:1px solid #F0F2F8;color:#1C2340;vertical-align:top}
+.strat-table tr:last-child td{border-bottom:none}
+.strat-table tr:hover td{background:#F8F9FF}
+.stag{display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;border-radius:4px}
+.stag-r{background:#FFECEC;color:#C0392B}.stag-p{background:#F5EEF8;color:#7D3C98}.stag-g{background:#EAFAF1;color:#1E8449}.stag-o{background:#FEF9E7;color:#D35400}
+.strat-toggle{font-size:11px;color:#4F6EF7;cursor:pointer;text-decoration:underline;margin-top:6px;display:inline-block}
+/* 行事曆欄位編輯器 */
+.ef-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px}
+.ef-table th{background:#F0F2F8;color:#8892A4;font-weight:700;padding:5px 5px;text-align:center;font-size:10px;letter-spacing:.4px;white-space:nowrap}
+.ef-table td{padding:3px 3px;border-bottom:1px solid #F0F2F8;vertical-align:middle}
+.ef-table tr:last-child td{border-bottom:none}
+.ef-table tr:hover td{background:#F8F9FF}
+.ef-inp{width:100%;border:1px solid #DDE2F0;border-radius:5px;padding:4px 5px;font-size:12px;color:#1C2340;background:#fff;outline:none;text-align:center}
+.ef-inp:focus{border-color:#4F6EF7;background:#F0F4FF}
+.ef-inp.ef-label-inp{text-align:left;min-width:70px}
+.ef-sel{width:100%;border:1px solid #DDE2F0;border-radius:5px;padding:4px 4px;font-size:11px;color:#1C2340;background:#fff;outline:none;cursor:pointer}
+.ef-sel:focus{border-color:#4F6EF7}
+.ef-del{background:none;border:1px solid #FFCCCC;border-radius:5px;color:#E74C3C;cursor:pointer;padding:3px 7px;font-size:13px;line-height:1}
+.ef-del:hover{background:#FFECEC}
+.ef-add{display:inline-flex;align-items:center;gap:4px;background:#EEF3FF;border:1px dashed #4F6EF7;border-radius:7px;color:#4F6EF7;font-size:12px;padding:5px 12px;cursor:pointer;margin-bottom:8px}
+.ef-add:hover{background:#D9E8FF}
+.ef-row-new td{background:#EAFAF1!important}
+.ef-st{font-size:11px;display:block;margin:4px 0 8px;min-height:16px}
+.day:hover{border-color:#B0BCDC;transform:translateY(-1px)}.day.sel{border:2px solid #4F6EF7!important}
+.day.emp{border:none;background:transparent;cursor:default;pointer-events:none;min-height:0}
+.day.hol{background:#FFF0F0;border-color:#FFCCCC}.day.mkup{background:#FFF5EE;border-color:#FFD4A0}
+.day.wknd{background:#FFFAF4;border-color:#FFE4BF}.day.spc{background:#F6F0FF;border-color:#D9CCFF}
+.day.tod{background:#EEF3FF;border-color:#4F6EF7;border-width:2px}
+.day.pon{border-width:2px!important}.day.poff{opacity:.2;filter:grayscale(.5);transform:none!important}
+.dn{font-size:13px;font-weight:700;line-height:1;color:#1C2340}
+.day.hol .dn{color:#C0392B}.day.mkup .dn{color:#D35400}.day.wknd .dn{color:#B7600A}.day.spc .dn{color:#7D3C98}.day.tod .dn{color:#4F6EF7}
+.hlb{font-size:8px;font-weight:700;line-height:1.4;margin-top:1px}
+.day.hol .hlb{color:#C0392B}.day.mkup .hlb{color:#D35400}.day.spc .hlb{color:#7D3C98}.day.tod .hlb{color:#4F6EF7}
+.dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;flex:1}
+.dot{width:6px;height:6px;border-radius:50%}
+.dfoot{margin-top:auto;font-size:10px;color:#8892A4;font-weight:600;padding-top:2px}
+.panel{background:#fff;border:1px solid #DDE2F0;border-radius:12px;padding:16px 18px;min-height:80px}
+.ptitle{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px;font-size:14px;font-weight:600}
+.bdg{font-size:10px;padding:2px 8px;border-radius:16px;font-weight:700}
+.bh{background:#FFECEC;color:#C0392B}.bm{background:#FFF0E0;color:#D35400}.bs{background:#F0ECFF;color:#7D3C98}.bt{background:#EEF3FF;color:#4F6EF7}.bw{background:#FFF5EC;color:#B7600A}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
+.pc{display:flex;align-items:center;gap:8px;background:#F0F2F8;border-radius:8px;padding:7px 9px}
+.pav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.pcn{font-size:12px;font-weight:500;color:#1C2340}.pen{font-size:10px;color:#8892A4}
+.psh{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:10px;border-bottom:1px solid #DDE2F0}
+.psav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
+.psn{font-size:17px;font-weight:700;color:#1C2340}.pse{font-size:11px;color:#8892A4}
+.pss{display:flex;gap:16px;margin-left:auto}.ps{text-align:center}
+.psnum{font-size:22px;font-weight:700}.pslb{font-size:10px;color:#8892A4}
+.pdlbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#8892A4;margin-bottom:6px}
+.pdlist{display:flex;flex-wrap:wrap;gap:4px}
+.pdtag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;color:#fff}
+.warn{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:8px 12px;font-size:12px;color:#92400E;margin-bottom:10px}
+.est{text-align:center;padding:32px 0;color:#8892A4;font-size:13px}
+/* 資料來源標籤 */
+.src-bar{display:flex;align-items:center;gap:6px;font-size:11px;color:#6B7A99;margin-bottom:10px;padding:6px 10px;background:#F8F9FF;border-radius:7px;border:1px solid #E8EAFF;flex-wrap:wrap}
+.src-bar b{color:#4F6EF7}
+/* 來源切換器 */
+.src-switch{background:#F0F2F8;border-radius:10px;padding:10px 14px;margin-bottom:10px;border:1px solid #DDE2F0}
+.src-switch-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#8892A4;margin-bottom:8px}
+.src-opts{display:flex;gap:6px;flex-wrap:wrap}
+.src-opt{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;border:1.5px solid #DDE2F0;font-size:12px;cursor:pointer;background:#fff;color:#6B7A99;transition:all .12s}
+.src-opt:hover{border-color:#4F6EF7;color:#4F6EF7}
+.src-opt.active{border-color:#4F6EF7;background:#EEF3FF;color:#4F6EF7;font-weight:600}
+.src-opt.nodata{border-color:#FFCCCC;color:#C0392B;background:#FFF0F0}
+.src-opt.nodata.active{background:#FFECEC}
+.src-warn{font-size:11px;color:#C0392B;margin-top:6px;display:none}
+.src-warn.show{display:block}
+/* 浮動開發者工具 */
+#devFloat{position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+#devToggleBtn{background:#1C2340;color:#6B7A99;border:1px solid #3A4570;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+#devToggleBtn:hover{color:#fff}
+#devPanel{background:#1C2340;border:1px solid #3A4570;border-radius:10px;padding:14px;min-width:300px;display:none}
+#devPanel.open{display:block}
+.dev-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.btn-dev{display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid #3A4570;border-radius:7px;padding:5px 12px;font-size:12px;cursor:pointer;color:#8892A4}
+.btn-dev:hover{border-color:#6B7A99;color:#fff}
+.btn-dev.danger{border-color:#C0392B;color:#E74C3C}
+.btn-dev.danger:hover{background:#C0392B;color:#fff}
+#devSt{font-size:11px;color:#6B7A99;margin-top:8px;display:block;font-family:monospace;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow-y:auto}
+/* Config 資訊列 */
+#configInfoBar{display:none;align-items:flex-start;gap:8px;background:#EEF3FF;border:1px solid #C5D5FF;border-radius:9px;padding:9px 13px;margin-bottom:12px;font-size:12px;color:#334480;line-height:1.6}
+#configInfoBar.show{display:flex}
+.cfg-icon{font-size:15px;flex-shrink:0;margin-top:1px}
+.cfg-body{flex:1;min-width:0}
+.cfg-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cfg-label{font-weight:700;color:#4F6EF7;white-space:nowrap}
+.cfg-mon{font-weight:700;color:#1C2340}
+.cfg-mon.mismatch{color:#C0392B}
+.cfg-url{display:inline-flex;align-items:center;gap:4px;color:#4F6EF7;text-decoration:none;font-family:monospace;font-size:11px;word-break:break-all;background:#D9E6FF;border-radius:5px;padding:1px 7px;border:1px solid #B0C8FF}
+.cfg-url:hover{background:#C5D5FF;text-decoration:underline}
+.cfg-warn{font-size:11px;color:#C0392B;margin-top:3px;display:none}
+.cfg-warn.show{display:block}
+/* Loading overlay */
+#loadingOverlay{position:fixed;inset:0;background:#F0F2F8;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .3s}
+#loadingOverlay.fade{opacity:0;pointer-events:none}
+.spinner{width:40px;height:40px;border:3px solid #DDE2F0;border-top-color:#4F6EF7;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:13px;color:#6B7A99}
+</style>
+</head>
+<body>
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">載入中…</div>
+</div>
+
+<!-- ═══ 浮動開發者工具（全頁面共用）═══ -->
+<div id="devFloat">
+  <div id="devPanel">
+    <div style="font-size:11px;font-weight:700;color:#6B7A99;margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px">🛠 開發者工具</div>
+    <div class="dev-row">
+      <button class="btn-dev" onclick="devShowLS()">📋 查看 LS</button>
+      <button class="btn-dev" onclick="devResetMonth()">🕐 重置月份</button>
+      <button class="btn-dev danger" onclick="devClearLS()">🗑 清除 LS</button>
+    </div>
+    <span id="devSt"></span>
+  </div>
+  <button id="devToggleBtn" onclick="devToggle()">🛠 Dev</button>
+</div>
+
+<!-- ═══ 輸入頁 ═══ -->
+<div id="vi">
+  <div class="logo">ETalking <span>台北班表 v18</span></div>
+  <div class="tagline">抓取班表，即時產出互動日曆</div>
+
+  <!-- Config 資訊列（開發用）-->
+  <div id="configInfoBar">
+    <div class="cfg-icon">🔗</div>
+    <div class="cfg-body">
+      <div class="cfg-row">
+        <span class="cfg-label">Config 月份</span>
+        <span id="cfgMon" class="cfg-mon">—</span>
+        <span id="cfgMonHint" style="font-size:11px;color:#8892A4"></span>
+      </div>
+      <div class="cfg-row" style="margin-top:4px">
+        <span class="cfg-label">Config URL</span>
+        <a id="cfgUrlLink" class="cfg-url" href="#" target="_blank" rel="noopener">—</a>
+      </div>
+      <div id="cfgWarn" class="cfg-warn"></div>
+    </div>
+  </div>
+
+  <!-- 月份警告卡片 -->
+  <div class="month-alert" id="monthAlert">
+    <div class="month-alert-title">📅 目前是 <span id="alertCurMonth"></span>，儲存的班表為 <span id="alertOldMonth"></span>，請更新班表</div>
+    <input type="text" id="alertSheetUrl" placeholder="貼上新月份的 Google Sheets 網址（含 gid）…">
+    <div class="mal-row">
+      <button class="btn-sm warn-btn" onclick="fetchSheetsFromAlert()">🔄 抓取新班表</button>
+      <span class="mal-skip" onclick="dismissAlertLoadFile()">略過，使用舊資料</span>
+      <span id="alertSt" class="stxt" style="margin-top:0"></span>
+    </div>
+  </div>
+
+  <!-- 班表來源管理 -->
+  <div class="box">
+    <div class="lbl">班表來源</div>
+    <div class="src-switch" id="schedSwitcher">
+      <div class="src-switch-title">目前使用的班表來源</div>
+      <div class="src-opts" id="schedOpts"></div>
+      <div class="src-warn" id="schedWarn"></div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- A. Sheets 抓取 -->
+    <div class="lbl" style="margin-bottom:4px;color:#4F6EF7">A. 從 Google Sheets 抓取</div>
+    <div class="hint">在 Google Sheets 點到對應月份的 sheet → 複製網址列完整網址 → 貼入下方 → 點抓取</div>
+    <div class="sheets-row">
+      <input type="text" class="sheets-inp" id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/…?gid=…">
+      <button class="btn" style="margin-top:0;white-space:nowrap" id="shBtn" onclick="fetchSheets()">🔄 抓取班表</button>
+    </div>
+    <span id="shSt" class="stxt"></span>
+
+    <hr class="divider">
+
+    <!-- B. 手動貼上 -->
+    <div class="lbl" style="margin-bottom:4px;color:#4F6EF7">B. 手動貼上（從 Excel 直接 Ctrl+C）</div>
+    <div class="hint">① 在 Excel 框選整份班表 → ② Ctrl+C → ③ 貼入下方 → ④ 點產出<br><b>注意：</b>別先貼記事本，否則 Tab 消失無法解析每日出勤。</div>
+    <textarea id="pa" placeholder="在此貼上班表…"></textarea>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button class="btn" id="gobtn" onclick="go()">▷ 產出當月班表</button>
+      <button class="btn-sm dl-btn" id="dlSchedBtn" style="display:none;margin-top:10px" onclick="downloadSched()">⬇ 下載 schedule.txt</button>
+    </div>
+    <span id="st" class="stxt"></span>
+  </div>
+
+  <!-- 假日資料 -->
+  <div class="box">
+    <div class="lbl">假日資料</div>
+    <div class="src-switch" id="holSwitcher">
+      <div class="src-switch-title">目前使用的假日來源</div>
+      <div class="src-opts" id="holOpts"></div>
+      <div class="src-warn" id="holWarn"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn-sm" onclick="fetchHolidays()">🔄 更新假日資料（ruyut API）</button>
+      <button class="btn-sm dl-btn" id="dlHolBtn" style="display:none" onclick="downloadHolidays()">⬇ 下載 holidays.txt</button>
+    </div>
+    <span id="hst" class="stxt"></span>
+  </div>
+
+  <!-- 學生常年重要行事曆 -->
+  <div class="strat-card">
+    <div class="strat-header">
+      <div class="strat-title">📅 學生常年重要行事曆 <span style="font-size:10px;font-weight:400;color:#8892A4">114學年度・2025–2026・僅供銷售參考</span></div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <button class="btn-sm" onclick="stratOpenJson()" style="border-color:#4F6EF7;color:#4F6EF7">✏️ 編輯設定</button>
+        <span class="strat-toggle" id="stratToggleLink" onclick="stratToggle()">▼ 展開</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center">
+      <span class="stag stag-r">🔴 段考週</span>
+      <span class="stag stag-p">🟣 升學大考</span>
+      <span class="stag stag-g">🟢 黃金期</span>
+      <span style="font-size:11px;color:#8892A4">共 <span id="examCount">—</span> 筆・儲存於 localStorage</span>
+    </div>
+    <!-- 欄位編輯器（預設隱藏）-->
+    <div id="jsonEditorWrap" style="display:none;margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+        <div style="font-size:11px;font-weight:700;color:#8892A4;text-transform:uppercase;letter-spacing:.7px">欄位編輯器</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
+          <button class="btn-sm warn-btn" onclick="examFormReset()">↺ 重置預設</button>
+          <button class="btn-sm dl-btn" onclick="downloadStrategyJson()">⬇ JSON</button>
+          <button class="btn-sm dl-btn" onclick="downloadStrategy()">⬇ TXT</button>
+          <button class="btn-sm" onclick="stratCloseJson()">✕ 收合</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="ef-table">
+          <thead><tr>
+            <th>年</th><th>月</th><th>起日</th><th>迄日</th><th>類型</th><th style="text-align:left;padding-left:6px">標籤</th><th></th>
+          </tr></thead>
+          <tbody id="examFormBody"></tbody>
+        </table>
+      </div>
+      <button class="ef-add" onclick="examFormAddRow()">＋ 新增一列</button>
+      <span id="jsonEditorSt" class="ef-st"></span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn" style="padding:7px 18px;font-size:13px" onclick="examFormSave()">💾 儲存並套用遮罩</button>
+      </div>
+    </div>
+    <div id="stratDetail" style="display:none">
+      <table class="strat-table">
+        <thead><tr><th>時段</th><th>事件</th><th>類型</th><th>銷售建議</th></tr></thead>
+        <tbody>
+          <tr><td>9/1</td><td>開學</td><td><span class="stag stag-g">黃金</span></td><td>全力衝，家長最焦慮</td></tr>
+          <tr><td>10/7–17</td><td>第1次段考（南北梯次）</td><td><span class="stag stag-r">地雷</span></td><td>避考試週，考後追</td></tr>
+          <tr><td>11/4–7</td><td>國小2次制第1次段考</td><td><span class="stag stag-r">地雷</span></td><td>國小年齡層避開</td></tr>
+          <tr><td>11/24–28</td><td>國中高中期中考</td><td><span class="stag stag-r">地雷</span></td><td>月中空窗可打，月底避</td></tr>
+          <tr><td>12/2–5</td><td>第2次段考（部分縣市）</td><td><span class="stag stag-r">地雷</span></td><td>12/8後長空窗衝刺</td></tr>
+          <tr><td>12/8–31</td><td>考後 + 耶誕跨年</td><td><span class="stag stag-g">黃金</span></td><td>家長放鬆，全力衝</td></tr>
+          <tr><td>1/13–16</td><td>各級期末考</td><td><span class="stag stag-r">地雷</span></td><td>期末全面封鎖</td></tr>
+          <tr><td>1/17–19</td><td>大學學測</td><td><span class="stag stag-p">升學</span></td><td>高三家庭不接觸</td></tr>
+          <tr><td>1/20–23</td><td>期末後 → 寒假前</td><td><span class="stag stag-g">黃金</span></td><td>最後衝刺好時機</td></tr>
+          <tr><td>2/23</td><td>下學期開學</td><td><span class="stag stag-g">黃金</span></td><td>開學後重新開火</td></tr>
+          <tr><td>3/1–22</td><td>下學期熱身期</td><td><span class="stag stag-g">黃金</span></td><td>最好打的空窗</td></tr>
+          <tr><td>3/23–27</td><td>下學期第1次段考</td><td><span class="stag stag-r">地雷</span></td><td>月底避開</td></tr>
+          <tr><td>4/1–20</td><td>考後空窗 + 清明連假</td><td><span class="stag stag-g">黃金</span></td><td>清明前後好打</td></tr>
+          <tr><td>4/21–24</td><td>國小2次制第1次段考</td><td><span class="stag stag-r">地雷</span></td><td>國小年齡層避開</td></tr>
+          <tr><td>4/25–26</td><td>四技二專統測</td><td><span class="stag stag-p">升學</span></td><td>高職家庭避開</td></tr>
+          <tr><td>5/4–8</td><td>第2次段考 + 國中畢業考</td><td><span class="stag stag-r">地雷</span></td><td>全面最難打</td></tr>
+          <tr><td>5/16–17</td><td>國中教育會考</td><td><span class="stag stag-p">升學</span></td><td>國三家庭整月壓力大</td></tr>
+          <tr><td>6/1–5</td><td>國小畢業考</td><td><span class="stag stag-r">地雷</span></td><td>國小高年級避開</td></tr>
+          <tr><td>6/22–30</td><td>期末考 + 結業式</td><td><span class="stag stag-r">地雷</span></td><td>全月封鎖</td></tr>
+          <tr><td>7/1+</td><td>暑假開始</td><td><span class="stag stag-g">黃金</span></td><td>全年第二黃金期，爆衝</td></tr>
+          <tr><td>7/11–12</td><td>分科測驗</td><td><span class="stag stag-p">升學</span></td><td>高考生除外，其餘可打</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:10px;color:#B0BCDC;margin-top:8px">※ 各縣市段考前後差異約一週，4–6歲幼兒園全年可打。清除瀏覽器快取後資料重置為預設值。</div>
+  </div>
+</div>
+
+<!-- ═══ 行事曆頁 ═══ -->
+<div id="vc" style="display:none">
+  <div class="topbar">
+    <div class="ctitle" id="ctitle"></div>
+    <div class="pills" id="pills"></div>
+    <div class="topbar-right">
+      <button class="btn-sm" onclick="fetchHolidays()">🔄 更新假日</button>
+      <button class="btn-sm dl-btn" id="dlHolBtnCal" style="display:none" onclick="downloadHolidays()">⬇ 假日.txt</button>
+      <span id="holCalSt" style="font-size:11px;color:#6B7A99;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></span>
+      <button class="btn-sm" id="examToggleBtn" onclick="toggleExamOverlay()" style="border-color:#E74C3C;color:#C0392B">📅 段考遮罩</button>
+      <button class="bk" onclick="back()">← 重新貼上</button>
+    </div>
+  </div>
+  <div id="warnbox"></div>
+  <!-- 行事曆頁獨立狀態列 -->
+  <div id="calStatusWrap" style="display:none;flex-direction:column;gap:6px;margin-bottom:10px">
+    <div id="calConfigInfoBar" style="display:none;align-items:flex-start;gap:8px;background:#EEF3FF;border:1px solid #C5D5FF;border-radius:9px;padding:9px 13px;font-size:12px;color:#334480;line-height:1.6">
+      <div class="cfg-icon">🔗</div>
+      <div class="cfg-body">
+        <div class="cfg-row">
+          <span class="cfg-label">Config 月份</span>
+          <span id="calCfgMon" class="cfg-mon">—</span>
+          <span id="calCfgMonHint" style="font-size:11px;color:#8892A4"></span>
+        </div>
+        <div class="cfg-row" style="margin-top:4px">
+          <span class="cfg-label">Config URL</span>
+          <a id="calCfgUrlLink" class="cfg-url" href="#" target="_blank" rel="noopener">—</a>
+        </div>
+      </div>
+    </div>
+    <div class="src-bar" id="calSchedBar"></div>
+    <div class="src-bar" id="calHolBar"></div>
+  </div>
+  <div class="strip">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div class="slbl" style="margin-bottom:0">人員篩選 — ▲ 選查看個人班表</div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <button class="btn-sm" id="clearSelBtn" onclick="clickClearChips()" style="display:none;padding:3px 10px;font-size:11px;border-color:#F39C12;color:#D35400">✕ 取消所有已選</button>
+        <button class="btn-sm" id="selAllBtn" onclick="clickAllChips()" style="padding:3px 10px;font-size:11px">全選</button>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+  <div class="leg-row">
+    <div class="leg"><div class="ld" style="background:#FFCCCC"></div>國定假日</div>
+    <div class="leg"><div class="ld" style="background:#FFD4A0"></div>補假</div>
+    <div class="leg"><div class="ld" style="background:#FFE4BF"></div>週末</div>
+    <div class="leg"><div class="ld" style="background:#D9CCFF"></div>特殊紀念日</div>
+    <div class="leg"><div class="ld" style="background:#BDD4FF;border:1px solid #4F6EF7"></div>今日</div>
+    <div class="leg" id="examLegend" style="display:none"><div class="ld" style="background:#FFBBBB;border:1px solid #E74C3C"></div>段考週</div>
+    <div class="leg" id="examLegend2" style="display:none"><div class="ld" style="background:#D7AAFF;border:1px solid #8E44AD"></div>升學大考</div>
+    <div class="leg" id="examLegend3" style="display:none"><div class="ld" style="background:#A9DFBF;border:1px solid #27AE60"></div>銷售黃金期</div>
+  </div>
+  <div id="calWrapper" style="position:relative">
+    <div class="grid" id="cal"></div>
+  </div>
+  <div class="panel" id="panel"><div class="est">▲ 點選日期或人員查看出勤明細</div></div>
+</div>
+
+<script>
+console.log('ET v10.4 loaded');
+
+// ╔══════════════════════════════════════════════════════════╗
+// ║         📋 每月維護區 — 每月只需更新以下兩行             ║
+// ║  亦可改寫 config.txt（sheet_url / sched_label 欄位）     ║
+// ╚══════════════════════════════════════════════════════════╝
+  /*
+  var DEFAULT_SHEET_URL = 'https://docs.google.com/spreadsheets/d/13SrI50MGBAJHcRqFXa2TT5EDki3EGd0YL5wAGKXzPuw/edit?gid=1292390544#gid=1292390544';
+  var SCHED_LABEL       = '本表最後更新日 = 2026/04/06';  
+  */
+var DEFAULT_SHEET_URL = '';
+var SCHED_LABEL       = '';
+// ──────────────────────────────────────────────────────────
+
+var PAL=[{av:'#E74C3C',bg:'#FFECEC'},{av:'#2980B9',bg:'#EBF5FB'},{av:'#27AE60',bg:'#EAFAF1'},{av:'#F39C12',bg:'#FEF9E7'},{av:'#8E44AD',bg:'#F5EEF8'},{av:'#16A085',bg:'#E8F8F5'},{av:'#D35400',bg:'#FDF2E9'},{av:'#1A5276',bg:'#EAF2FF'},{av:'#196F3D',bg:'#EAFAF1'},{av:'#7D6608',bg:'#FEFDE7'},{av:'#4A235A',bg:'#F5EEF8'},{av:'#0E6655',bg:'#E8F8F5'}];
+var WDMAP={'星期一':1,'星期二':2,'星期三':3,'星期四':4,'星期五':5,'星期六':6,'星期日':7};
+var LS_HOL='et_holidays',LS_HOL_TS='et_holidays_ts',LS_SCHED='et_schedule',LS_SCHED_MON='et_sched_month';
+
+// 內建假日（最底層）
+var FIXED={'1-1':{t:'h',l:'元旦'},'2-14':{t:'s',l:'情人節'},'2-28':{t:'h',l:'和平紀念日'},'3-8':{t:'s',l:'婦女節'},'4-4':{t:'h',l:'兒童節'},'5-1':{t:'h',l:'勞動節'},'8-8':{t:'s',l:'父親節'},'9-28':{t:'s',l:'教師節'},'10-10':{t:'h',l:'國慶日'},'10-25':{t:'h',l:'台灣光復節'},'12-24':{t:'s',l:'平安夜'},'12-25':{t:'h',l:'聖誕／行憲'},'12-31':{t:'s',l:'跨年夜'}};
+var QINGMING={2024:4,2025:4,2026:5,2027:5,2028:4};
+var LUNAR={2025:{'1-27':{t:'h',l:'除夕'},'1-28':{t:'h',l:'初一'},'1-29':{t:'h',l:'初二'},'1-30':{t:'h',l:'初三'},'1-31':{t:'h',l:'初四'},'5-31':{t:'h',l:'端午節'},'10-6':{t:'h',l:'中秋節'}},2026:{'2-16':{t:'h',l:'除夕'},'2-17':{t:'h',l:'初一'},'2-18':{t:'h',l:'初二'},'2-19':{t:'h',l:'初三'},'2-20':{t:'h',l:'初四'},'2-21':{t:'h',l:'初五'},'6-19':{t:'h',l:'端午節'},'9-25':{t:'h',l:'中秋節'}},2027:{'2-5':{t:'h',l:'除夕'},'2-6':{t:'h',l:'初一'},'2-7':{t:'h',l:'初二'},'2-8':{t:'h',l:'初三'},'2-9':{t:'h',l:'初四'},'2-10':{t:'h',l:'初五'},'5-20':{t:'h',l:'端午節'},'10-3':{t:'h',l:'中秋節'}}};
+var MAKEUP={'2026-4':{'3':{t:'m',l:'兒童節補假'},'6':{t:'m',l:'清明補假'}},'2026-10':{'9':{t:'m',l:'國慶補假'}},'2025-1':{'31':{t:'m',l:'元旦補假'}},'2025-9':{'29':{t:'m',l:'教師節補假'}},'2025-10':{'24':{t:'m',l:'台灣光復節補假'}}};
+var QIXI={2025:[8,29],2026:[8,19],2027:[8,9]};
+
+// ─── 狀態變數 ────────────────────────────────────────────
+var HOL_FILE={};               // 從 holidays.txt 載入
+var HOL_API_URL='https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/';
+var HOL_SRC='file';            // 'file' | 'api' — 目前使用哪個假日來源
+var FILE_SCHED_RAW=null;       // schedule.txt 的原始資料
+var FILE_SCHED_MON=null;       // schedule.txt 的月份 "YYYY-M"
+var LS_SCHED_RAW=null;         // localStorage 的班表原始資料
+var LS_SCHED_MON_VAL=null;     // localStorage 的班表月份
+var LS_SCHED_SUBSRC='';        // LS 子來源：'manual' | 'sheets'
+var MANUAL_SCHED_RAW=null;     // 用戶明確手動產出的資料（只由 go() 設值，不被 _tryLoad 污染）
+var SCHED_SRC='file';          // 'file' | 'ls' | 'manual' | 'config'
+var CONFIG_LOADED=false;       // config.txt 是否成功載入且含有效 sheet_url
+var CONFIG_SCHED_MON=null;     // config URL fetch 後 parse 到的班表月份 "YYYY-M"
+var latestHolJson=null;
+var latestSchedRaw=null,latestSchedSource='manual';
+var SC=null,selPs=new Set(),selD=null;
+
+// ─── 學生行事曆（段考遮罩）────────────────────────────────
+var SHOW_EXAM=true;
+var LS_EXAM='et_exam_periods'; // localStorage key
+
+// 預設資料（JSON 格式，可前端編輯）
+var DEFAULT_EXAM_PERIODS=[
+  {"year":2025,"month":9,"d1":1,"d2":26,"type":"good","label":"黃金期"},
+  {"year":2025,"month":10,"d1":7,"d2":9,"type":"exam","label":"段考"},
+  {"year":2025,"month":10,"d1":14,"d2":17,"type":"exam","label":"段考"},
+  {"year":2025,"month":11,"d1":4,"d2":7,"type":"exam","label":"國小段考"},
+  {"year":2025,"month":11,"d1":24,"d2":28,"type":"exam","label":"期中考"},
+  {"year":2025,"month":12,"d1":2,"d2":5,"type":"exam","label":"段考"},
+  {"year":2025,"month":12,"d1":8,"d2":31,"type":"good","label":"黃金期"},
+  {"year":2026,"month":1,"d1":13,"d2":16,"type":"exam","label":"期末考"},
+  {"year":2026,"month":1,"d1":17,"d2":19,"type":"major","label":"學測"},
+  {"year":2026,"month":1,"d1":20,"d2":23,"type":"good","label":"黃金期"},
+  {"year":2026,"month":2,"d1":23,"d2":28,"type":"good","label":"黃金期"},
+  {"year":2026,"month":3,"d1":1,"d2":22,"type":"good","label":"黃金期"},
+  {"year":2026,"month":3,"d1":23,"d2":27,"type":"exam","label":"段考"},
+  {"year":2026,"month":4,"d1":1,"d2":20,"type":"good","label":"黃金期"},
+  {"year":2026,"month":4,"d1":21,"d2":24,"type":"exam","label":"國小段考"},
+  {"year":2026,"month":4,"d1":25,"d2":26,"type":"major","label":"統測"},
+  {"year":2026,"month":5,"d1":4,"d2":8,"type":"exam","label":"期中考"},
+  {"year":2026,"month":5,"d1":16,"d2":17,"type":"major","label":"會考"},
+  {"year":2026,"month":6,"d1":1,"d2":5,"type":"exam","label":"畢業考"},
+  {"year":2026,"month":6,"d1":22,"d2":30,"type":"exam","label":"期末考"},
+  {"year":2026,"month":7,"d1":1,"d2":10,"type":"good","label":"黃金期"},
+  {"year":2026,"month":7,"d1":11,"d2":12,"type":"major","label":"分科測驗"},
+  {"year":2026,"month":7,"d1":13,"d2":31,"type":"good","label":"黃金期"}
+];
+
+// 執行期資料（啟動時從 LS 載入，或用預設）
+var EXAM_PERIODS=[];
+var STRATEGY_FILE_PERIODS=null; // 從 Strategy.txt 讀進來的原始資料（reset 時用）
+
+// 同步初始化：先吃 LS；若無則暫用內建預設
+function _loadExamPeriods(){
+  try{
+    var raw=localStorage.getItem(LS_EXAM);
+    if(raw){EXAM_PERIODS=JSON.parse(raw);return;}
+  }catch(e){}
+  EXAM_PERIODS=JSON.parse(JSON.stringify(DEFAULT_EXAM_PERIODS));
+}
+
+// 非同步：fetch Strategy.txt，若 LS 無覆蓋則以檔案為準
+function _fetchStrategyFile(){
+  fetch('Strategy.txt?v='+Date.now(),{cache:'no-store'})
+    .then(function(r){return r.ok?r.text():null;})
+    .then(function(txt){
+      if(!txt)return;
+      try{
+        var parsed=JSON.parse(txt.trim());
+        if(!Array.isArray(parsed))return;
+        STRATEGY_FILE_PERIODS=parsed;
+        // 只有在 LS 沒有使用者覆蓋版本時，才以檔案取代內建預設
+        if(!localStorage.getItem(LS_EXAM)){
+          EXAM_PERIODS=parsed;
+          var ec=el('examCount');if(ec)ec.textContent=EXAM_PERIODS.length;
+          if(SC&&el('vc').style.display!=='none')buildExamBands();
+        }
+      }catch(e){}
+    })
+    .catch(function(){});
+}
+
+// ─── 跨日 Band 遮罩繪製 ──────────────────────────────────
+function buildExamBands(){
+  var wrapper=el('calWrapper');
+  if(!wrapper)return;
+  // 清除舊 bands
+  wrapper.querySelectorAll('.exam-band').forEach(function(b){b.remove();});
+  if(!SHOW_EXAM||!SC)return;
+  var S=SC;
+  var cells=wrapper.querySelectorAll('.day:not(.emp)');
+  if(!cells.length)return;
+  var wRect=wrapper.getBoundingClientRect();
+  var GAP=4; // grid gap px（與 CSS .grid gap:4px 一致）
+  var HALF=GAP/2;
+
+  EXAM_PERIODS.forEach(function(p){
+    if(p.year!==S.year||p.month!==S.month)return;
+    var d1=Math.max(p.d1,1),d2=Math.min(p.d2,S.totalDays);
+    if(d1>d2)return;
+
+    // 拆成週列段
+    var segments=[],cur=null;
+    for(var d=d1;d<=d2;d++){
+      var gridPos=S.fdw-1+(d-1); // 0-indexed position in grid
+      var col=gridPos%7;
+      if(!cur||col===0){
+        if(cur)segments.push(cur);
+        cur={startDay:d,endDay:d,first:segments.length===0};
+      }else{cur.endDay=d;}
+    }
+    if(cur)segments.push(cur);
+
+    segments.forEach(function(seg,si){
+      var sc=cells[seg.startDay-1],ec=cells[seg.endDay-1];
+      if(!sc||!ec)return;
+      var sr=sc.getBoundingClientRect(),er=ec.getBoundingClientRect();
+      var left=sr.left-wRect.left-HALF;
+      var top=sr.top-wRect.top-HALF;
+      var width=(er.right-wRect.left+HALF)-left;
+      var height=(er.bottom-wRect.top+HALF)-top;
+
+      var band=document.createElement('div');
+      band.className='exam-band eb-'+p.type;
+      band.style.cssText='left:'+left+'px;top:'+top+'px;width:'+width+'px;height:'+height+'px;';
+
+      // 文字：只在第一段顯示，或唯一段
+      var totalDays=d2-d1+1;
+      var isFirst=(si===0);
+      if(isFirst){
+        var span=document.createElement('span');
+        span.className='exam-band-label';
+        span.textContent=p.label+(totalDays>1?' ('+totalDays+'天)':'');
+        band.appendChild(span);
+      }
+      wrapper.appendChild(band);
+    });
+  });
+}
+
+function toggleExamOverlay(){
+  SHOW_EXAM=!SHOW_EXAM;
+  var btn=el('examToggleBtn');
+  if(btn){
+    btn.style.background=SHOW_EXAM?'#FFECEC':'';
+    btn.style.borderColor=SHOW_EXAM?'#E74C3C':'';
+    btn.style.color=SHOW_EXAM?'#C0392B':'';
+  }
+  ['examLegend','examLegend2','examLegend3'].forEach(function(id){
+    var e=el(id);if(e)e.style.display=SHOW_EXAM?'flex':'none';
+  });
+  buildExamBands();
+}
+
+// ─── 設定頁：欄位編輯器 ──────────────────────────────────
+var _stratOpen=false;
+
+var EF_TYPE_OPTS=[
+  {v:'exam', label:'🔴 段考地雷'},
+  {v:'major',label:'🟣 升學大考'},
+  {v:'good', label:'🟢 銷售黃金'}
+];
+
+function stratToggle(){
+  _stratOpen=!_stratOpen;
+  var d=el('stratDetail'),lnk=el('stratToggleLink');
+  if(d)d.style.display=_stratOpen?'block':'none';
+  if(lnk)lnk.textContent=_stratOpen?'▲ 收合':'▼ 展開';
+}
+
+// 開啟編輯器 → 用現有 EXAM_PERIODS 填入表格
+function stratOpenJson(){
+  var wrap=el('jsonEditorWrap');
+  if(!wrap)return;
+  wrap.style.display='block';
+  examFormRender(EXAM_PERIODS);
+  el('jsonEditorSt').textContent='';
+}
+
+function stratCloseJson(){
+  var wrap=el('jsonEditorWrap');
+  if(wrap)wrap.style.display='none';
+}
+
+// 把資料渲染成 <tr> 列
+function examFormRender(periods){
+  var tbody=el('examFormBody');
+  if(!tbody)return;
+  tbody.innerHTML='';
+  periods.forEach(function(p,i){
+    tbody.appendChild(_examFormMakeRow(p,i));
+  });
+}
+
+function _examFormMakeRow(p,i){
+  var tr=document.createElement('tr');
+  tr.dataset.idx=i;
+
+  var selHtml=EF_TYPE_OPTS.map(function(o){
+    return '<option value="'+o.v+'"'+(p.type===o.v?' selected':'')+'>'+o.label+'</option>';
+  }).join('');
+
+  tr.innerHTML=
+    '<td><input class="ef-inp" type="number" name="year" value="'+p.year+'" min="2020" max="2035" style="width:54px"></td>'+
+    '<td><input class="ef-inp" type="number" name="month" value="'+p.month+'" min="1" max="12" style="width:38px"></td>'+
+    '<td><input class="ef-inp" type="number" name="d1" value="'+p.d1+'" min="1" max="31" style="width:38px"></td>'+
+    '<td><input class="ef-inp" type="number" name="d2" value="'+p.d2+'" min="1" max="31" style="width:38px"></td>'+
+    '<td><select class="ef-sel" name="type" style="min-width:90px">'+selHtml+'</select></td>'+
+    '<td><input class="ef-inp ef-label-inp" type="text" name="label" value="'+p.label+'" maxlength="20" style="width:90px"></td>'+
+    '<td><button class="ef-del" title="刪除此列" onclick="examFormDelRow(this)">×</button></td>';
+  return tr;
+}
+
+// 新增空白列
+function examFormAddRow(){
+  var tbody=el('examFormBody');
+  if(!tbody)return;
+  var now=new Date();
+  var blank={year:now.getFullYear(),month:now.getMonth()+1,d1:1,d2:1,type:'exam',label:'新項目'};
+  var tr=_examFormMakeRow(blank,tbody.rows.length);
+  tr.classList.add('ef-row-new');
+  tbody.appendChild(tr);
+  // 自動 focus 到 label 欄
+  var labelInp=tr.querySelector('[name="label"]');
+  if(labelInp){labelInp.select();}
+  el('jsonEditorSt').textContent='';
+}
+
+// 刪除列
+function examFormDelRow(btn){
+  var tr=btn.closest('tr');
+  if(tr)tr.remove();
+  el('jsonEditorSt').textContent='';
+}
+
+// 讀取表單資料 → 轉 JSON → 存 LS → 套用
+function examFormSave(){
+  var tbody=el('examFormBody'),st=el('jsonEditorSt');
+  if(!tbody)return;
+  var rows=tbody.querySelectorAll('tr');
+  var result=[],errors=[];
+  rows.forEach(function(tr,i){
+    var year=parseInt(tr.querySelector('[name="year"]').value,10);
+    var month=parseInt(tr.querySelector('[name="month"]').value,10);
+    var d1=parseInt(tr.querySelector('[name="d1"]').value,10);
+    var d2=parseInt(tr.querySelector('[name="d2"]').value,10);
+    var type=tr.querySelector('[name="type"]').value;
+    var label=(tr.querySelector('[name="label"]').value||'').trim();
+    if(isNaN(year)||isNaN(month)||isNaN(d1)||isNaN(d2)){errors.push('第'+(i+1)+'列：數字欄位不完整');return;}
+    if(month<1||month>12){errors.push('第'+(i+1)+'列：月份須 1–12');return;}
+    if(d1<1||d1>31||d2<1||d2>31){errors.push('第'+(i+1)+'列：日期須 1–31');return;}
+    if(d1>d2){errors.push('第'+(i+1)+'列：起日不可大於迄日');return;}
+    if(!label){errors.push('第'+(i+1)+'列：標籤不可空白');return;}
+    result.push({year:year,month:month,d1:d1,d2:d2,type:type,label:label});
+  });
+  if(errors.length){
+    st.style.color='#C0392B';
+    st.textContent='⚠️ '+errors[0]+(errors.length>1?' 等 '+errors.length+' 個錯誤':'');
+    return;
+  }
+  EXAM_PERIODS=result;
+  localStorage.setItem(LS_EXAM,JSON.stringify(result));
+  var ec=el('examCount');if(ec)ec.textContent=result.length;
+  st.style.color='#27AE60';
+  st.textContent='✅ 已儲存 '+result.length+' 筆，遮罩已更新';
+  // 套用遮罩
+  if(SC)buildExamBands();
+}
+
+// 重置：優先用 Strategy.txt 的內容，其次才用內建預設
+function examFormReset(){
+  if(!confirm('確定重置？（將清除 localStorage 覆蓋，以 Strategy.txt 為準）'))return;
+  localStorage.removeItem(LS_EXAM);
+  var st=el('jsonEditorSt');
+  if(STRATEGY_FILE_PERIODS){
+    // 已抓到檔案
+    EXAM_PERIODS=JSON.parse(JSON.stringify(STRATEGY_FILE_PERIODS));
+    examFormRender(EXAM_PERIODS);
+    var ec=el('examCount');if(ec)ec.textContent=EXAM_PERIODS.length;
+    if(st){st.style.color='#27AE60';st.textContent='✅ 已從 Strategy.txt 重置（'+EXAM_PERIODS.length+' 筆）';}
+    if(SC)buildExamBands();
+  }else{
+    // 嘗試重新 fetch
+    if(st){st.style.color='#6B7A99';st.textContent='⏳ 讀取 Strategy.txt…';}
+    fetch('Strategy.txt?v='+Date.now(),{cache:'no-store'})
+      .then(function(r){return r.ok?r.text():null;})
+      .then(function(txt){
+        var parsed=null;
+        try{if(txt){parsed=JSON.parse(txt.trim());if(!Array.isArray(parsed))parsed=null;}}catch(e){}
+        if(parsed){
+          STRATEGY_FILE_PERIODS=parsed;
+          EXAM_PERIODS=JSON.parse(JSON.stringify(parsed));
+        }else{
+          EXAM_PERIODS=JSON.parse(JSON.stringify(DEFAULT_EXAM_PERIODS));
+        }
+        examFormRender(EXAM_PERIODS);
+        var ec=el('examCount');if(ec)ec.textContent=EXAM_PERIODS.length;
+        if(st){st.style.color='#27AE60';st.textContent='✅ 已重置（'+EXAM_PERIODS.length+' 筆，來源：'+(parsed?'Strategy.txt':'內建預設')+'）';}
+        if(SC)buildExamBands();
+      })
+      .catch(function(){
+        EXAM_PERIODS=JSON.parse(JSON.stringify(DEFAULT_EXAM_PERIODS));
+        examFormRender(EXAM_PERIODS);
+        if(st){st.style.color='#27AE60';st.textContent='✅ 已重置為內建預設（'+EXAM_PERIODS.length+' 筆）';}
+        if(SC)buildExamBands();
+      });
+  }
+}
+
+// 下載 Strategy.txt → 純 JSON
+function downloadStrategy(){
+  dlText(JSON.stringify(EXAM_PERIODS,null,2),'Strategy.txt','application/json');
+}
+
+function downloadStrategyJson(){
+  dlText(JSON.stringify(EXAM_PERIODS,null,2),'Strategy.txt','application/json');
+}
+
+function downloadStrategy(){
+  var lines=['# ETalking 銷售策略・學生常年行事曆','# 114學年度（2025年9月 ～ 2026年7月）','# type: exam=段考地雷 | major=升學大考 | good=銷售黃金期','# ──────────────────────────────────────',''];
+  var typeMap={exam:'[地雷]',major:'[升學]',good:'[黃金]'};
+  EXAM_PERIODS.forEach(function(p){
+    var days=p.d2-p.d1+1;
+    lines.push((typeMap[p.type]||'[其他]')+' '+p.year+'/'+String(p.month).padStart(2,'0')+'/'+String(p.d1).padStart(2,'0')+'~'+String(p.d2).padStart(2,'0')+' '+p.label+' ('+days+'天)');
+  });
+  lines.push('','# Generated by ET v14');
+  dlText(lines.join('\n'),'Strategy.txt','text/plain');
+}
+
+// ─── DOM 工具 ────────────────────────────────────────────
+function el(id){return document.getElementById(id);}
+function setSt(id,msg,cls){var e=el(id);if(!e)return;e.className='stxt'+(cls?' '+cls:'');e.textContent=msg;}
+function setHst(msg,cls){setSt('hst',msg,cls);}
+
+// ─── 假日邏輯 ────────────────────────────────────────────
+function nthSun(y,m,n){var d=new Date(y,m-1,1);while(d.getDay()!==0)d.setDate(d.getDate()+1);d.setDate(d.getDate()+(n-1)*7);return d.getDate();}
+
+function holMeta(y,m){
+  var r={};
+  if(HOL_SRC==='file'){
+    // TXT 來源：只讀 holidays.txt，無資料就空白
+    if(HOL_FILE[y])Object.keys(HOL_FILE[y]).forEach(function(k){var p=k.split('-');if(+p[0]===m)r[+p[1]]=HOL_FILE[y][k];});
+  }else{
+    // API 來源：只讀 localStorage，無資料就空白
+    try{var lh=JSON.parse(localStorage.getItem(LS_HOL)||'{}'),sh=lh[y];if(sh)Object.keys(sh).forEach(function(k){var p=k.split('-');if(+p[0]===m)r[+p[1]]=sh[k];});}catch(e){}
+  }
+  return r;
+}
+
+// ─── 假日來源狀態 ────────────────────────────────────────
+function hasHolFile(y){return HOL_FILE&&Object.keys(HOL_FILE).length>0;}
+function hasHolApi(){try{var d=JSON.parse(localStorage.getItem(LS_HOL)||'{}');return Object.keys(d).length>0;}catch(e){return false;}}
+
+function renderHolSwitcher(){
+  // 只更新輸入頁假日切換器
+  var fileOk=HOL_FILE&&Object.keys(HOL_FILE).length>0;
+  var apiOk=hasHolApi();
+  var apiTs=localStorage.getItem(LS_HOL_TS)||'';
+  var fileLabel='📄 holidays.txt'+(fileOk?'':' (無資料)');
+  var apiLabel='🌐 localStorage'+(apiTs?' ('+apiTs+')':apiOk?' (有快取)':' (無資料)');
+  var mkOpt=function(src,label,hasData){
+    var cls='src-opt'+(src===HOL_SRC?' active':'')+(hasData?'':' nodata');
+    return '<span class="'+cls+'" onclick="switchHolSrc(\''+src+'\')">'+label+'</span>';
+  };
+  el('holOpts').innerHTML=mkOpt('file',fileLabel,fileOk)+mkOpt('api',apiLabel,apiOk);
+  var warn=el('holWarn');
+  if(HOL_SRC==='file'&&!fileOk){warn.textContent='⚠️ holidays.txt 無資料，日曆不顯示任何假日';warn.classList.add('show');}
+  else if(HOL_SRC==='api'&&!apiOk){warn.textContent='⚠️ localStorage 無假日快取，日曆不顯示任何假日';warn.classList.add('show');}
+  else{warn.classList.remove('show');}
+  // 下載按鈕
+  var showDl=HOL_SRC==='api'&&apiOk;
+  [el('dlHolBtn'),el('dlHolBtnCal')].forEach(function(b){if(b)b.style.display=showDl?'inline-flex':'none';});
+}
+
+function renderCalHolBar(){
+  // 永遠顯示假日狀態列，讓使用者清楚知道目前吃哪個來源
+  var cb=el('calHolBar');if(!cb)return;
+  var apiOk=hasHolApi();
+  var apiTs=localStorage.getItem(LS_HOL_TS)||'';
+  var fileOk=HOL_FILE&&Object.keys(HOL_FILE).length>0;
+  cb.style.display='flex';
+  var mkBtn=function(src,label,hasData){
+    var cls='src-opt'+(src===HOL_SRC?' active':'')+(hasData?'':' nodata');
+    return '<span class="'+cls+'" onclick="calSwitchHol(\''+src+'\')">'+label+'</span>';
+  };
+  var dlBtn=(HOL_SRC==='api'&&apiOk)
+    ?'<button class="btn-sm dl-btn" onclick="downloadHolidays()" style="padding:2px 8px;font-size:10px;margin-left:4px">⬇ 下載</button>':'';
+  cb.innerHTML='<span style="color:#8892A4;white-space:nowrap;margin-right:2px">🗓 假日：</span>'
+    +mkBtn('file','📄 .txt'+(fileOk?'':' (無)'),fileOk)
+    +mkBtn('api','🌐 LS'+(apiTs?' ('+apiTs+')':' (無快取)'),apiOk)
+    +dlBtn;
+}
+
+// ─── 更新假日 ────────────────────────────────────────────
+function fetchHolidays(){
+  setHst('⏳ 抓取假日資料中…');
+  var calSt=el('holCalSt');if(calSt)calSt.textContent='⏳ 更新假日中…';
+  var now=new Date(),curY=now.getFullYear(),nextY=curY+1,base=HOL_API_URL;
+  function fetchYear(y){
+    return fetch(base+y+'.json?t='+Date.now(),{cache:'no-store'})
+      .then(function(r){if(!r.ok)return r.text().then(function(t){throw 'HTTP '+r.status+' ('+y+'): '+t.trim();});return r.json().then(function(j){return{year:y,data:j};});});
+  }
+  var p1=fetchYear(curY).catch(function(e){return{year:curY,error:e};});
+  var p2=fetchYear(nextY).catch(function(e){return{year:nextY,error:e};});
+  Promise.all([p1,p2]).then(function(res){
+    var stored={},errors=[];
+    res.forEach(function(r){
+      if(r.error){
+        // 只有當年失敗才視為嚴重錯誤；明年失敗僅記錄警告
+        errors.push((r.year===nextY?'⚠️ 明年（'+nextY+'）':'❌ 當年（'+r.year+'）')+' 載入失敗：'+String(r.error));
+        return;
+      }
+      stored[r.year]={};
+      r.data.forEach(function(item){
+        var hv=String(item.isHoliday);
+        var desc=(item.description||'').trim();
+        // 純工作日（'0'）且無名稱 → 跳過
+        // 其他（'1'週末含假日名、'2'假日、'3'補假）有名稱 → 保留
+        if(hv==='0'||!desc)return;
+        var ds=String(item.date),mo=+ds.slice(4,6),da=+ds.slice(6,8);
+        var type=hv==='3'?'m':'h'; // '3'補假→橘色, 其餘→紅色假日
+        stored[r.year][mo+'-'+da]={t:type,l:desc};
+      });
+    });
+    // 若當年載入失敗才完全放棄；明年失敗不影響當年
+    var curYStored=stored[curY]&&Object.keys(stored[curY]).length>0;
+    var curYFailed=errors.some(function(e){return e.indexOf('當年')>=0;});
+    if(curYFailed&&!curYStored){
+      var errMsg='⚠️ 假日更新失敗\n'+errors.join('\n');
+      setHst(errMsg,'err');
+      var calSt2=el('holCalSt');if(calSt2)calSt2.textContent='⚠️ 更新失敗';
+      return;
+    }
+    try{var old=JSON.parse(localStorage.getItem(LS_HOL)||'{}');Object.keys(old).forEach(function(y){if(!stored[y])stored[y]=old[y];});}catch(e){}
+    localStorage.setItem(LS_HOL,JSON.stringify(stored));
+    var ts=new Date().toLocaleString('zh-TW',{hour12:false});
+    localStorage.setItem(LS_HOL_TS,ts);
+    latestHolJson=stored;
+    var msg='✅ 假日資料已更新（'+ts+'）';
+    if(errors.length)msg+='\n'+errors.join('\n');
+    setHst(msg,errors.length?'err':'');
+    // 更新行事曆頁狀態列
+    var calSt3=el('holCalSt');
+    if(calSt3){
+      calSt3.textContent=errors.length?'✅ 已更新（含警告）':'✅ 已更新（'+ts+'）';
+      setTimeout(function(){if(calSt3)calSt3.textContent='';},3500);
+    }
+    // 切換至 api 來源並重新渲染
+    HOL_SRC='api';
+    renderHolSwitcher();
+    renderCalHolBar();
+    if(SC){buildGrid();}  // 日曆頁：立即重繪以套用新假日
+  }).catch(function(e){
+    var errMsg='⚠️ 假日更新發生錯誤：'+String(e);
+    setHst(errMsg,'err');
+    var calSt4=el('holCalSt');if(calSt4)calSt4.textContent='⚠️ 更新失敗';
+  });
+}
+
+function downloadHolidays(){
+  var data=latestHolJson;
+  if(!data){try{data=JSON.parse(localStorage.getItem(LS_HOL));}catch(e){}}
+  if(!data){alert('無假日快取資料可下載');return;}
+  dlText(JSON.stringify(data,null,2),'holidays.txt','application/json');
+}
+
+// ─── 班表來源狀態 ────────────────────────────────────────
+function renderSchedSwitcher(){
+  var fileOk=FILE_SCHED_RAW!==null;
+  var lsOk=LS_SCHED_RAW!==null;
+  var manualOk=MANUAL_SCHED_RAW!==null;
+  var lsSubLabel=LS_SCHED_SUBSRC==='manual'?'・手動':LS_SCHED_SUBSRC==='sheets'?'・Sheets':'';
+  var fileLabel='📄 schedule.txt'+(FILE_SCHED_MON?' ('+formatMon(FILE_SCHED_MON)+')':' (無資料)');
+  var lsLabel='💾 LS'+lsSubLabel+(LS_SCHED_MON_VAL?' ('+formatMon(LS_SCHED_MON_VAL)+')':' (無資料)');
+  var manualLabel='📋 手動貼上'+(manualOk?' (已產出)':' (尚未產出)');
+  var mkOpt=function(src,label,hasData){
+    var cls='src-opt'+(src===SCHED_SRC?' active':'')+(hasData?'':' nodata');
+    return '<span class="'+cls+'" onclick="switchSchedSrc(\''+src+'\')">'+label+'</span>';
+  };
+  el('schedOpts').innerHTML=mkOpt('file',fileLabel,fileOk)+mkOpt('ls',lsLabel,lsOk)+mkOpt('manual',manualLabel,manualOk);
+  var warn=el('schedWarn');
+  if(SCHED_SRC==='file'&&!fileOk){warn.textContent='⚠️ schedule.txt 無資料';warn.classList.add('show');}
+  else if(SCHED_SRC==='ls'&&!lsOk){warn.textContent='⚠️ localStorage 無班表資料';warn.classList.add('show');}
+  else if(SCHED_SRC==='manual'&&!manualOk){warn.textContent='⚠️ 尚未手動產出任何班表';warn.classList.add('show');}
+  else{warn.classList.remove('show');}
+}
+
+function renderCalSchedBar(){
+  var cb=el('calSchedBar');var wrap=el('calStatusWrap');
+  if(!cb||!wrap)return;
+  wrap.style.display='flex';
+  var fileOk=FILE_SCHED_RAW!==null,lsOk=LS_SCHED_RAW!==null,manualOk=MANUAL_SCHED_RAW!==null;
+  var lsSubLabel=LS_SCHED_SUBSRC==='manual'?'・手動':LS_SCHED_SUBSRC==='sheets'?'・Sheets':'';
+  var mkBtn=function(src,icon,label,hasData,mon){
+    var active=src===SCHED_SRC;
+    var cls='src-opt'+(active?' active':'')+(hasData?'':' nodata');
+    var title=icon+' '+label+(mon?' ('+formatMon(mon)+')':hasData?'':' (無)');
+    return '<span class="'+cls+'" title="'+title+'" onclick="calSwitchSched(\''+src+'\')">'+title+'</span>';
+  };
+  // Config 按鈕：有 config 才顯示，直接呈現 sched_label 文字
+  var cfgBtn=CONFIG_LOADED
+    ?'<span class="src-opt'+(SCHED_SRC==='config'?' active':'')+'" onclick="calRefetchConfig()" title="重新從 Config 抓取">🔗 '+SCHED_LABEL+'</span>'
+    :'';
+  cb.innerHTML='<span style="color:#8892A4;white-space:nowrap;margin-right:2px">📊 班表：</span>'
+    +cfgBtn
+    +mkBtn('file','📄','.txt',fileOk,FILE_SCHED_MON)
+    +mkBtn('ls','💾','LS'+lsSubLabel,lsOk,LS_SCHED_MON_VAL)
+    +mkBtn('manual','📋','手動',manualOk,null);
+  // Config 資訊列：有 Config 但當前不是 config 來源時才顯示
+  _renderCalConfigInfoBar();
+}
+
+// Config 按鈕點擊：重新從 config URL 抓取
+function calRefetchConfig(){
+  var now=new Date(),curMon=now.getFullYear()+'-'+(now.getMonth()+1);
+  el('warnbox').innerHTML='<div class="warn" style="background:#EEF3FF;border-color:#B0BCDC;color:#334480">⏳ 重新從 Config 載入班表…</div>';
+  _autoFetchDefaultSheet(curMon);
+}
+
+function switchSchedSrc(src){
+  SCHED_SRC=src;
+  renderSchedSwitcher();
+  var raw=null;
+  if(src==='file')raw=FILE_SCHED_RAW;
+  else if(src==='ls')raw=LS_SCHED_RAW;
+  else if(src==='manual')raw=MANUAL_SCHED_RAW;
+  if(!raw){
+    var label={'file':'schedule.txt','ls':'localStorage','manual':'手動貼上（尚未產出）'}[src]||src;
+    setSt('st','⚠️ 選定的來源（'+label+'）無資料','err');
+    return;
+  }
+  try{
+    var sched=parseSched(raw,'auto');
+    sched.dataSource=src;
+    SC=sched;selPs=new Set();selD=null;el('pa').value=raw;
+    if(el('vc').style.display!=='none'){showCal();}
+    else setSt('st','✅ 已切換至 '+({'file':'schedule.txt','ls':'LS','manual':'手動貼上'}[src]||src)+'，點「產出」重新顯示');
+  }catch(e){setSt('st','解析失敗：'+e,'err');}
+}
+
+function switchHolSrc(src){
+  HOL_SRC=src;
+  renderHolSwitcher();
+  if(el('vc').style.display!=='none'){renderCalHolBar();buildGrid();}
+}
+
+// 行事曆頁專用切換 — 直接重新載入日曆
+function calSwitchSched(src){
+  SCHED_SRC=src;
+  renderSchedSwitcher();
+  var raw=null;
+  if(src==='file')raw=FILE_SCHED_RAW;
+  else if(src==='ls')raw=LS_SCHED_RAW;
+  else if(src==='manual')raw=MANUAL_SCHED_RAW;
+  if(!raw){
+    var label={'file':'schedule.txt','ls':'localStorage','manual':'手動貼上'}[src]||src;
+    // 清空日曆，顯示空狀態
+    SC=null;selPs=new Set();selD=null;
+    el('warnbox').innerHTML='<div class="warn">⚠️ 選定來源（'+label+'）無資料，班表已清空</div>';
+    el('cal').innerHTML='';
+    el('chips').innerHTML='';
+    el('pills').innerHTML='';
+    el('panel').innerHTML='<div class="est">目前無班表資料</div>';
+    renderCalSchedBar();
+    return;
+  }
+  try{
+    var sched=parseSched(raw,'auto');
+    sched.dataSource=src;
+    SC=sched;selPs=new Set();selD=null;
+    if(src==='manual')el('pa').value=raw;
+    showCal();
+  }catch(e){
+    el('warnbox').innerHTML='<div class="warn">⚠️ 解析失敗：'+e+'</div>';
+    renderCalSchedBar();
+  }
+}
+
+function calSwitchHol(src){
+  HOL_SRC=src;
+  renderHolSwitcher();
+  renderCalHolBar();
+  buildGrid();
+  // 視覺回饋
+  var srcName={'file':'📄 holidays.txt','api':'🌐 localStorage'}[src]||src;
+  var apiOk=hasHolApi(),fileOk=HOL_FILE&&Object.keys(HOL_FILE).length>0;
+  var hasData=(src==='file'?fileOk:apiOk);
+  el('warnbox').innerHTML=hasData
+    ?'<div class="warn" style="background:#EAFAF1;border-color:#A9DFBF;color:#1E8449">✅ 已套用 '+srcName+' 假日資料</div>'
+    :'<div class="warn">⚠️ 選定來源（'+srcName+'）無假日資料，日曆不顯示任何假日</div>';
+  setTimeout(function(){
+    var wb=el('warnbox');
+    if(wb&&wb.innerHTML.indexOf('✅')>=0)wb.innerHTML='';
+  },2500);
+  // 更新 topbar 右側小狀態文字
+  var cst=el('holCalSt');
+  if(cst){
+    cst.textContent=hasData?'✅ '+srcName+'（已套用）':'⚠️ '+srcName+'（無資料）';
+    setTimeout(function(){if(cst)cst.textContent='';},2500);
+  }
+}
+function parseSheetUrl(url){
+  var idM=url.match(/\/spreadsheets\/d\/([^\/\?#]+)/),gidM=url.match(/[?&#]gid=(\d+)/);
+  if(!idM)return null;
+  return{id:idM[1],gid:gidM?gidM[1]:'0'};
+}
+
+function doFetchSheets(url,stId,onSuccess){
+  var parsed=parseSheetUrl(url);
+  if(!parsed){setSt(stId,'⚠️ 網址格式不正確','err');return;}
+  setSt(stId,'⏳ 抓取中…');
+  var csvUrl='https://docs.google.com/spreadsheets/d/'+parsed.id+'/export?format=tsv&gid='+parsed.gid+'&t='+Date.now();
+  fetch(csvUrl,{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw '伺服器回應 '+r.status+'，請確認試算表已公開分享';return r.text();})
+    .then(function(txt){
+      txt=txt.trim();if(!txt)throw '抓回的資料是空的';
+      var sched;try{sched=parseSched(txt,'sheets');}catch(e){throw '班表解析失敗：'+e;}
+      saveSched(txt,'sheets',sched);
+      el('pa').value=txt;
+      setSt(stId,'✅ 班表已抓取（'+sched.year+'年'+sched.month+'月）');
+      onSuccess(sched);
+    })
+    .catch(function(e){setSt(stId,'⚠️ '+e,'err');console.error(e);});
+}
+
+function fetchSheets(){
+  var url=(el('sheetUrl').value||'').trim();
+  if(!url){setSt('shSt','請先貼上 Google Sheets 網址','err');return;}
+  el('shBtn').disabled=true;
+  doFetchSheets(url,'shSt',function(sched){
+    el('shBtn').disabled=false;
+    sched.dataSource='sheets';
+    SC=sched;selPs=new Set();selD=null;dismissAlert();
+    try{showCal();}catch(e){setSt('shSt','顯示失敗：'+e,'err');}
+  });
+}
+
+function fetchSheetsFromAlert(){
+  var url=(el('alertSheetUrl').value||'').trim();
+  if(!url){setSt('alertSt','請貼上網址','err');return;}
+  doFetchSheets(url,'alertSt',function(sched){
+    sched.dataSource='sheets';
+    SC=sched;selPs=new Set();selD=null;dismissAlert();
+    try{showCal();}catch(e){}
+  });
+}
+
+// ─── 班表儲存與下載 ──────────────────────────────────────
+function saveSched(raw,source,sched,forceSrc){
+  latestSchedRaw=raw;latestSchedSource=source;
+  sched.dataSource=source;
+  LS_SCHED_RAW=raw;
+  LS_SCHED_MON_VAL=sched.year+'-'+sched.month;
+  LS_SCHED_SUBSRC=source; // 'manual' | 'sheets'
+  SCHED_SRC=forceSrc||'ls'; // 呼叫端可指定來源（如 'config'），否則預設 'ls'
+  localStorage.setItem(LS_SCHED,raw);
+  localStorage.setItem(LS_SCHED_MON,sched.year+'-'+sched.month);
+  localStorage.setItem('et_sched_src',source);
+  el('dlSchedBtn').style.display='inline-flex';
+  renderSchedSwitcher();
+}
+
+function downloadSched(){
+  if(!latestSchedRaw){alert('尚無班表資料');return;}
+  var ts=new Date().toLocaleString('zh-TW',{hour12:false});
+  var header='# ETalking 班表資料\n# SOURCE: '+latestSchedSource+'\n# FETCHED: '+ts+'\n# 此檔案由程式產生，請勿手動編輯\n';
+  dlText(header+latestSchedRaw,'schedule.txt','text/plain');
+}
+
+function dlText(content,filename,mime){
+  var blob=new Blob([content],{type:mime+';charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;
+  document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(a.href);},500);
+}
+
+// ─── 班表解析（雙模式）──────────────────────────────────
+function parseSched(raw,mode){
+  raw=raw.split(/\r?\n/).filter(function(l){return l.charAt(0)!=='#';}).join('\n');
+  var hasTabs=(raw.indexOf('\t')>=0);
+  var m1=raw.match(/(\d{1,2})\u6708.{0,3}(\d{4})/);
+  if(!m1)throw '找不到月份年份';
+  var m2=raw.match(/總天數\D{0,2}(\d+)/),totalDays=m2?+m2[1]:0;
+  if(!totalDays){var dms=raw.match(/\d+月(\d+)日/g)||[];dms.forEach(function(s){var n=+s.match(/月(\d+)日/)[1];if(n>totalDays)totalDays=n;});}
+  if(!totalDays&&hasTabs){raw.split(/\r?\n/).forEach(function(line){var cols=line.split('\t'),cnt=0;cols.forEach(function(c){if(WDMAP[c.trim()])cnt++;});if(cnt>totalDays)totalDays=cnt;});}
+  if(!totalDays)throw '找不到總天數';
+  var month=+m1[1],year=+m1[2],fdw=1,emps=[],partial=false;
+  if(hasTabs){
+    var rows=raw.split(/\r?\n/).map(function(r){return r.split('\t');});
+    if(!mode||mode==='auto'){var hasEmpCol=rows.some(function(r){return /^WH\d+/.test((r[0]||'').trim());});mode=hasEmpCol?'manual':'sheets';}
+    var dsc=-1;
+    for(var ri=0;ri<rows.length&&dsc<0;ri++){for(var ci=0;ci<rows[ri].length;ci++){if(WDMAP[rows[ri][ci].trim()]){fdw=WDMAP[rows[ri][ci].trim()];dsc=ci;break;}}}
+    if(dsc<0)dsc=(mode==='manual')?4:3;
+    var cnRe=/^[\u4e00-\u9fff]{2,5}$/,enRe=/^[A-Za-z]{2,15}$/,scanLimit=mode==='manual'?8:6;
+    for(var ri2=0;ri2<rows.length;ri2++){
+      var row=rows[ri2];
+      var hasW=row.some(function(c){return c.trim()==='12點半';});if(!hasW)continue;
+      var ci2=-1;
+      for(var i=0;i<Math.min(row.length-1,scanLimit);i++){if(cnRe.test(row[i].trim())&&enRe.test((row[i+1]||'').trim())&&row[i].trim()!=='姓名'){ci2=i;break;}}
+      if(ci2<0)continue;
+      var attStart=Math.max(ci2+2,dsc),att=[];
+      for(var d=0;d<totalDays;d++)att.push((row[attStart+d]||'').trim()?1:0);
+      if(att.indexOf(1)<0)continue;
+      emps.push({chn:row[ci2].trim(),eng:row[ci2+1].trim(),att:att,wkCount:0});
+    }
+    if(!emps.length)throw '找不到員工資料（模式：'+mode+'）';
+  }else{
+    partial=true;
+    var wdm=raw.match(/英文名(星期[一二三四五六日])/);if(wdm)fdw=WDMAP[wdm[1]]||1;
+    var er=/(WH\d+\s*)?(OK)([\u4e00-\u9fff]{2,5})([A-Za-z]{2,15})((?:12點半)*)/g,em;
+    while((em=er.exec(raw))!==null)if(em[3]!=='姓名')emps.push({chn:em[3],eng:em[4],att:null,wkCount:em[5].split('12點半').length-1});
+    if(!emps.length)throw '找不到員工資料';
+  }
+  return{month:month,year:year,totalDays:totalDays,fdw:fdw,emps:emps,partial:partial,mode:mode};
+}
+
+// ─── 手動貼上 ────────────────────────────────────────────
+function go(){
+  var raw=(el('pa').value||'').trim();
+  if(!raw){setSt('st','請先貼入班表資料','err');return;}
+  el('gobtn').disabled=true;
+  var sched;
+  try{sched=parseSched(raw,'auto');}catch(e){setSt('st','解析失敗：'+e,'err');el('gobtn').disabled=false;return;}
+  sched.dataSource='manual';
+  MANUAL_SCHED_RAW=raw; // 只有用戶明確手動產出才設值
+  SC=sched;selPs=new Set();selD=null;
+  saveSched(raw,'manual',sched);dismissAlert();
+  try{showCal();}catch(e){el('vc').style.display='none';el('vi').style.display='';setSt('st','顯示失敗：'+e,'err');}
+  el('gobtn').disabled=false;
+}
+
+// ─── 月份警告 ────────────────────────────────────────────
+function formatMon(s){if(!s)return'（無）';var p=s.split('-');return p[0]+'年'+p[1]+'月';}
+function showMonthAlert(cur,old){el('alertCurMonth').textContent=formatMon(cur);el('alertOldMonth').textContent=formatMon(old);el('monthAlert').classList.add('show');}
+function dismissAlert(){el('monthAlert').classList.remove('show');}
+
+function dismissAlertLoadFile(){
+  setSt('alertSt','⏳ 讀取 schedule.txt…');
+  fetch('schedule.txt?v='+Date.now())
+    .then(function(r){if(!r.ok)throw 'schedule.txt 回應 '+r.status;return r.text();})
+    .then(function(txt){
+      var body=(txt||'').split(/\r?\n/).filter(function(l){return l.charAt(0)!=='#'&&l.trim();}).join('\n').trim();
+      if(!body)throw 'schedule.txt 是空白的，無舊資料可用';
+      var sched=parseSched(body,'auto');
+      sched.dataSource='file';
+      FILE_SCHED_RAW=body;FILE_SCHED_MON=sched.year+'-'+sched.month;
+      SCHED_SRC='file';SC=sched;selPs=new Set();selD=null;
+      el('pa').value=body;
+      renderSchedSwitcher();dismissAlert();
+      try{showCal();}catch(e){setSt('alertSt','顯示失敗：'+e,'err');}
+    })
+    .catch(function(e){setSt('alertSt','⚠️ '+e,'err');});
+}
+
+// ─── Config 月份雙重判斷 helper ──────────────────────────
+// 回傳 { ok, lines }
+// ok: true = 兩項都符合；false = 至少一項不符或無法解析
+// lines: 每個檢查項目的文字陣列，供 info bar 逐行顯示
+function _cfgMonChecks(curMon){
+  var labelMon=_parseLabelMon(SCHED_LABEL);
+  var fetchMon=CONFIG_SCHED_MON; // fetch + parse 成功後才有值
+  var lines=[];
+  var allOk=true;
+
+  // ① sched_label 最後編輯日
+  if(SCHED_LABEL){
+    if(labelMon){
+      var match=labelMon===curMon;
+      if(!match)allOk=false;
+      lines.push({label:'最後編輯日',mon:formatMon(labelMon),ok:match});
+    }else{
+      allOk=false;
+      lines.push({label:'最後編輯日',mon:'（格式無法解析）',ok:false});
+    }
+  }else{
+    allOk=false;
+    lines.push({label:'最後編輯日',mon:'（未設定）',ok:false});
+  }
+
+  // ② URL fetch 後 parse 結果
+  if(fetchMon){
+    var match2=fetchMon===curMon;
+    if(!match2)allOk=false;
+    lines.push({label:'URL 班表月份',mon:formatMon(fetchMon),ok:match2});
+  }else{
+    // fetch 尚未完成或失敗
+    lines.push({label:'URL 班表月份',mon:'（尚未抓取或失敗）',ok:null});
+    // null = 未知，不計入 allOk 的失敗（不強制蓋掉）
+  }
+
+  return{ok:allOk,lines:lines};
+}
+
+function _renderCfgInfoContent(monEl,hintEl,linkEl,curMon){
+  var checks=_cfgMonChecks(curMon);
+  // 月份欄：顯示兩項結果
+  monEl.innerHTML=checks.lines.map(function(c){
+    var icon=c.ok===true?'✅':c.ok===false?'⚠️':'❓';
+    var col=c.ok===true?'#27AE60':c.ok===false?'#C0392B':'#8892A4';
+    return '<span style="display:inline-flex;align-items:center;gap:4px;margin-right:10px">'
+      +'<span style="color:'+col+';font-size:11px">'+icon+'</span>'
+      +'<span style="color:#8892A4;font-size:11px">'+c.label+'</span>'
+      +'<span style="font-weight:700;color:'+(c.ok===false?'#C0392B':'#1C2340')+'">'+c.mon+'</span>'
+      +'</span>';
+  }).join('');
+  // hint 欄：整體結論
+  if(checks.ok){hintEl.textContent='✅ 兩項均與本月（'+formatMon(curMon)+'）相符';hintEl.style.color='#27AE60';}
+  else{hintEl.textContent='⚠️ 有項目與本月（'+formatMon(curMon)+'）不符，請確認 config.txt';hintEl.style.color='#C0392B';}
+  // URL 連結
+  if(DEFAULT_SHEET_URL){
+    var short=DEFAULT_SHEET_URL.length>55?DEFAULT_SHEET_URL.slice(0,52)+'…':DEFAULT_SHEET_URL;
+    linkEl.href=DEFAULT_SHEET_URL;linkEl.textContent='🔗 '+short;linkEl.title=DEFAULT_SHEET_URL;
+    var parsed=parseSheetUrl(DEFAULT_SHEET_URL);
+    if(!parsed){linkEl.style.borderColor='#FFAAAA';linkEl.style.color='#C0392B';}
+    else{linkEl.style.borderColor='';linkEl.style.color='';}
+  }else{linkEl.href='#';linkEl.textContent='（未設定）';}
+}
+
+// ─── Config 資訊列 ───────────────────────────────────────
+function renderConfigInfoBar(){
+  var bar=el('configInfoBar');
+  if(!bar)return;
+  if(!DEFAULT_SHEET_URL&&!SCHED_LABEL){bar.classList.remove('show');return;}
+  bar.classList.add('show');
+  var now=new Date(),curMon=now.getFullYear()+'-'+(now.getMonth()+1);
+  var monEl=el('cfgMon'),hintEl=el('cfgMonHint'),linkEl=el('cfgUrlLink'),warnEl=el('cfgWarn');
+  _renderCfgInfoContent(monEl,hintEl,linkEl,curMon);
+  warnEl.classList.remove('show'); // 細節已整合進 monEl
+}
+
+function _renderCalConfigInfoBar(){
+  var bar=el('calConfigInfoBar');if(!bar)return;
+  if(!CONFIG_LOADED||SCHED_SRC==='config'){bar.style.display='none';return;}
+  bar.style.display='flex';
+  var now=new Date(),curMon=now.getFullYear()+'-'+(now.getMonth()+1);
+  _renderCfgInfoContent(el('calCfgMon'),el('calCfgMonHint'),el('calCfgUrlLink'),curMon);
+}
+
+// ─── 啟動 ────────────────────────────────────────────────
+window.addEventListener('load',function(){
+  _loadExamPeriods();
+  var ec=el('examCount');if(ec)ec.textContent=EXAM_PERIODS.length;
+  _fetchStrategyFile(); // 非同步補抓 Strategy.txt（若 LS 無覆蓋則更新）
+  var now=new Date(),curMon=now.getFullYear()+'-'+(now.getMonth()+1);
+  fetch('config.txt?v='+Date.now()).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})
+    .then(function(cfg){
+      if(cfg&&cfg.holiday_api)HOL_API_URL=cfg.holiday_api;
+      if(cfg&&cfg.sheet_url){DEFAULT_SHEET_URL=cfg.sheet_url;}
+      if(cfg&&cfg.sched_label)SCHED_LABEL=cfg.sched_label;
+      // Config 有效：標記成功，預填 URL
+      CONFIG_LOADED=!!(DEFAULT_SHEET_URL&&SCHED_LABEL);
+      el('sheetUrl').value=DEFAULT_SHEET_URL;
+      renderConfigInfoBar(); // 顯示 Config 讀取結果（月份 + URL）
+      return fetch('holidays.txt?v='+Date.now()).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
+    })
+    .then(function(data){
+      if(data&&Object.keys(data).length>0){HOL_FILE=data;HOL_SRC='file';}
+      else if(hasHolApi()){HOL_SRC='api';}
+      else{HOL_SRC='file';}
+      renderHolSwitcher();
+      return fetch('schedule.txt?v='+Date.now()).then(function(r){return r.ok?r.text():null;}).catch(function(){return null;});
+    })
+    .then(function(txt){
+      if(txt){
+        var body=txt.split(/\r?\n/).filter(function(l){return l.charAt(0)!=='#'&&l.trim();}).join('\n').trim();
+        if(body){try{var fs=parseSched(body,'auto');FILE_SCHED_RAW=body;FILE_SCHED_MON=fs.year+'-'+fs.month;}catch(e){}}
+      }
+      if(CONFIG_LOADED){
+        // ✅ Config 有效 → 直接 fetch，不預載 LS（LS 只做 fallback）
+        _autoFetchDefaultSheet(curMon);
+      }else{
+        // Config 無效 → 讀 LS 做 fallback
+        var lsRaw=localStorage.getItem(LS_SCHED),lsMon=localStorage.getItem(LS_SCHED_MON)||'';
+        if(lsRaw){LS_SCHED_RAW=lsRaw;LS_SCHED_MON_VAL=lsMon;LS_SCHED_SUBSRC=localStorage.getItem('et_sched_src')||'';}
+        _initSched();
+        hideLoading();
+      }
+    }).catch(function(){_initSched();hideLoading();});
+});
+
+// ─── 自動抓取預設 Sheets 班表 ────────────────────────────
+// ─── 自動抓取預設 Sheets 班表 ────────────────────────────
+function _parseLabelMon(label){
+  // 從 sched_label 取出 "YYYY-M"，例如 "本表最後更新日 = 2026/04/06" → "2026-4"
+  var m=(label||'').match(/(\d{4})[\/\-](\d{1,2})/);
+  return m?m[1]+'-'+parseInt(m[2],10):null;
+}
+
+function _autoFetchDefaultSheet(curMon){
+  if(!DEFAULT_SHEET_URL){
+    setSt('st','⚠️ 未設定班表來源，請確認 config.txt 的 sheet_url 欄位','err');
+    // fallback：才讀 LS
+    var lsRaw=localStorage.getItem(LS_SCHED),lsMon=localStorage.getItem(LS_SCHED_MON)||'';
+    if(lsRaw){LS_SCHED_RAW=lsRaw;LS_SCHED_MON_VAL=lsMon;LS_SCHED_SUBSRC=localStorage.getItem('et_sched_src')||'';}
+    _initSched();hideLoading();return;
+  }
+  var parsed=parseSheetUrl(DEFAULT_SHEET_URL);
+  if(!parsed){
+    var lsRaw2=localStorage.getItem(LS_SCHED),lsMon2=localStorage.getItem(LS_SCHED_MON)||'';
+    if(lsRaw2){LS_SCHED_RAW=lsRaw2;LS_SCHED_MON_VAL=lsMon2;LS_SCHED_SUBSRC=localStorage.getItem('et_sched_src')||'';}
+    _initSched();hideLoading();return;
+  }
+
+  var labelMon=_parseLabelMon(SCHED_LABEL);
+  var labelMatchesCur=labelMon&&labelMon===curMon;
+
+  // label 明確過期 → 不發 fetch，直接維護頁
+  if(labelMon&&!labelMatchesCur){
+    renderSchedSwitcher();renderCalSchedBar();
+    setSt('st','⚠️ 班表（'+formatMon(labelMon)+'）已過期，目前為 '+formatMon(curMon)+'，請聯繫管理員更新班表','err');
+    hideLoading();return;
+  }
+
+  var csvUrl='https://docs.google.com/spreadsheets/d/'+parsed.id+'/export?format=tsv&gid='+parsed.gid+'&t='+Date.now();
+  fetch(csvUrl,{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw '伺服器回應 '+r.status+'，請確認試算表已公開分享';return r.text();})
+    .then(function(txt){
+      txt=txt.trim();if(!txt)throw '班表資料為空';
+      var sched;try{sched=parseSched(txt,'sheets');}catch(e){throw '班表解析失敗：'+e;}
+      var schedMon=sched.year+'-'+sched.month;
+      CONFIG_SCHED_MON=schedMon; // 記錄 fetch 後 parse 到的實際月份
+      renderConfigInfoBar();     // 更新輸入頁 info bar（URL 班表月份現在有值了）
+      sched.dataSource='config';
+      SC=sched;selPs=new Set();selD=null;
+      el('pa').value=txt;
+      saveSched(txt,'sheets',sched,'config'); // forceSrc='config' → SCHED_SRC 不會被蓋回 'ls'
+      renderSchedSwitcher();
+      if(labelMatchesCur||schedMon===curMon){
+        dismissAlert();
+        try{showCal();}catch(e){setSt('st','顯示失敗：'+e,'err');}
+      }else{
+        setSt('st','⚠️ 班表（'+formatMon(schedMon)+'）已過期，目前為 '+formatMon(curMon)+'，請聯繫管理員更新班表','err');
+      }
+      hideLoading();
+    })
+    .catch(function(e){
+      // fetch 失敗 → 才讀 LS 做 fallback
+      console.warn('Config fetch 失敗，fallback 至 LS：',e);
+      var lsRaw=localStorage.getItem(LS_SCHED),lsMon=localStorage.getItem(LS_SCHED_MON)||'';
+      if(lsRaw){LS_SCHED_RAW=lsRaw;LS_SCHED_MON_VAL=lsMon;LS_SCHED_SUBSRC=localStorage.getItem('et_sched_src')||'';}
+      _initSched();
+      hideLoading();
+    });
+}
+
+function _initSched(){
+  var now=new Date(),curMon=now.getFullYear()+'-'+(now.getMonth()+1);
+  // 決定預設來源：優先當月，file > ls
+  var useRaw=null,useSrc=null,useMon=null;
+  if(FILE_SCHED_MON===curMon){useRaw=FILE_SCHED_RAW;useSrc='file';useMon=FILE_SCHED_MON;}
+  else if(LS_SCHED_MON_VAL===curMon){useRaw=LS_SCHED_RAW;useSrc='ls';useMon=LS_SCHED_MON_VAL;}
+  else if(FILE_SCHED_RAW){useRaw=FILE_SCHED_RAW;useSrc='file';useMon=FILE_SCHED_MON;}
+  else if(LS_SCHED_RAW){useRaw=LS_SCHED_RAW;useSrc='ls';useMon=LS_SCHED_MON_VAL;}
+  SCHED_SRC=useSrc||'file';
+  renderSchedSwitcher();
+  if(useMon!==curMon){showMonthAlert(curMon,useMon||null);if(useRaw)_tryLoad(useRaw,useSrc,true);}
+  else{if(useRaw)_tryLoad(useRaw,useSrc,false);else showMonthAlert(curMon,null);}
+  hideLoading();
+}
+
+function _tryLoad(raw,src,isOld){
+  try{
+    var sched=parseSched(raw,'auto');
+    sched.dataSource=src==='file'?'file':(localStorage.getItem('et_sched_src')||src);
+    SC=sched;selPs=new Set();selD=null;el('pa').value=raw;
+    if(!isOld){try{showCal();}catch(e){setSt('st','顯示失敗：'+e,'err');}}
+    else setSt('st','⚠️ 目前顯示的是舊月份班表（'+formatMon(src==='file'?FILE_SCHED_MON:LS_SCHED_MON_VAL)+'）');
+  }catch(e){setSt('st','班表解析失敗：'+e,'err');}
+}
+
+function back(){el('vc').style.display='none';el('vi').style.display='';selPs=new Set();selD=null;}
+
+// ─── 行事曆顯示 ──────────────────────────────────────────
+function showCal(){
+  el('vi').style.display='none';el('vc').style.display='block';
+  var ec=el('examCount');if(ec)ec.textContent=EXAM_PERIODS.length;
+  // 初始化段考遮罩按鈕狀態
+  var btn=el('examToggleBtn');
+  if(btn){btn.style.background=SHOW_EXAM?'#FFECEC':'';btn.style.borderColor=SHOW_EXAM?'#E74C3C':'';btn.style.color=SHOW_EXAM?'#C0392B':'';}
+  ['examLegend','examLegend2','examLegend3'].forEach(function(id){var e=el(id);if(e)e.style.display=SHOW_EXAM?'flex':'none';});
+  var S=SC;
+  el('ctitle').textContent=S.year+'年'+S.month+'月出勤表';
+  el('warnbox').innerHTML=S.partial?'<div class="warn">⚠ 純文字格式（無 Tab）— 僅顯示人員名單與月工作天數。</div>':'';
+  renderCalSchedBar(); // 行事曆頁班表狀態列（獨立）
+  renderCalHolBar();   // 行事曆頁假日狀態列（獨立，只在 LS 介入時顯示）
+  if(!S.partial){
+    var cnts=[];for(var d=0;d<S.totalDays;d++)cnts.push(S.emps.reduce(function(s,e){return s+e.att[d];},0));
+    var avg=(cnts.reduce(function(a,b){return a+b;},0)/S.totalDays).toFixed(1);
+    el('pills').innerHTML='<div class="pill">平均 <b>'+avg+'</b> 人</div><div class="pill">最多 <b>'+Math.max.apply(null,cnts)+'</b></div><div class="pill">最少 <b>'+Math.min.apply(null,cnts)+'</b></div>';
+  }else el('pills').innerHTML='';
+  buildChips();buildGrid();
+  el('panel').innerHTML='<div class="est">▲ 點選日期或人員查看出勤明細</div>';
+  if(!S.partial){var td=new Date(),ti=(td.getFullYear()===S.year&&td.getMonth()===S.month-1)?td.getDate()-1:-1;if(ti>=0)setTimeout(function(){var cs=document.querySelectorAll('.day:not(.emp)');if(cs[ti])clickDay(ti,cs[ti]);},80);}
+}
+
+function buildChips(){
+  var S=SC,cont=el('chips');cont.innerHTML='';
+  S.emps.forEach(function(emp,i){
+    var c=PAL[i%PAL.length];emp.color=c;
+    var wk=S.partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
+    var ch=document.createElement('div');ch.className='chip';
+    ch.innerHTML='<div class="cav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div><div><div class="ccn">'+emp.chn+'</div><div class="cen">'+emp.eng+'</div></div><span class="cwk" style="background:'+c.bg+';color:'+c.av+'">'+wk+'天</span>';
+    ch.onclick=(function(idx){return function(){clickChip(idx);};})(i);
+    cont.appendChild(ch);
+  });
+  _updateSelAllBtn();
+}
+
+function allSelOn(d){var ok=true;selPs.forEach(function(i){if(!SC.emps[i].att[d])ok=false;});return ok;}
+
+function buildGrid(){
+  var S=SC,hm=holMeta(S.year,S.month),td=new Date(),ti=(td.getFullYear()===S.year&&td.getMonth()===S.month-1)?td.getDate()-1:-1;
+  var cal=el('cal');cal.innerHTML='';
+  ['一','二','三','四','五','六','日'].forEach(function(h,i){var d=document.createElement('div');d.className='gh'+(i>=5?' wk':'');d.textContent=h;cal.appendChild(d);});
+  for(var e=0;e<S.fdw-1;e++){var ec=document.createElement('div');ec.className='day emp';cal.appendChild(ec);}
+  var cnts=S.partial?null:[];
+  if(!S.partial)for(var dc=0;dc<S.totalDays;dc++)cnts.push(S.emps.reduce(function(s,e){return s+e.att[dc];},0));
+  var hasFilter=selPs.size>0&&!S.partial;
+  for(var d=0;d<S.totalDays;d++){
+    var meta=hm[d+1],isT=(d===ti),wdi=(S.fdw-1+d)%7,isW=(wdi>=5&&!meta);
+    var cls='day';
+    if(isT)cls+=' tod';else if(meta)cls+=(meta.t==='h'?' hol':meta.t==='m'?' mkup':' spc');else if(isW)cls+=' wknd';
+    if(hasFilter)cls+=(allSelOn(d)?' pon':' poff');
+    if(selD===d)cls+=' sel';
+    var lbl=meta?'<div class="hlb">'+meta.l+'</div>':'';if(isT)lbl+='<div class="hlb">今日</div>';
+    var dots=S.partial?'':S.emps.map(function(emp,i){if(!emp.att[d])return'';if(hasFilter&&!selPs.has(i))return'';return'<div class="dot" style="background:'+PAL[i%PAL.length].av+'"></div>';}).join('');
+    var cntH=cnts?'<div class="dfoot">'+(hasFilter?([...selPs].filter(function(i){return S.emps[i].att[d];}).length+'/'+selPs.size):cnts[d])+' 人</div>':'';
+    var cell=document.createElement('div');cell.className=cls;
+    cell.innerHTML='<div class="dn">'+(d+1)+'</div>'+lbl+'<div class="dots">'+dots+'</div>'+cntH;
+    if(!S.partial)(function(idx,c){c.onclick=function(){clickDay(idx,c);};})(d,cell);
+    cal.appendChild(cell);
+  }
+  // 跨日 band 遮罩（非同步：等 DOM reflow 後量測格子位置）
+  requestAnimationFrame(function(){buildExamBands();});
+}
+
+function clickChip(idx){
+  if(selPs.has(idx))selPs.delete(idx);else selPs.add(idx);
+  selD=null;
+  document.querySelectorAll('.chip').forEach(function(ch,i){if(selPs.has(i)){var c=PAL[i%PAL.length];ch.classList.add('on');ch.style.borderColor=c.av;}else{ch.classList.remove('on');ch.style.borderColor='';}});
+  buildGrid();
+  _updateSelAllBtn();
+  if(selPs.size===0)el('panel').innerHTML='<div class="est">▲ 點選日期或人員查看出勤明細</div>';
+  else if(selPs.size===1)showPersonPanel([...selPs][0]);
+  else showMultiPanel();
+}
+
+function clickAllChips(){
+  if(!SC)return;
+  selPs=new Set();
+  SC.emps.forEach(function(_,i){selPs.add(i);}); // 永遠全選
+  selD=null;
+  document.querySelectorAll('.chip').forEach(function(ch,i){var c=PAL[i%PAL.length];ch.classList.add('on');ch.style.borderColor=c.av;});
+  buildGrid();
+  _updateSelAllBtn();
+  showMultiPanel();
+}
+
+function clickClearChips(){
+  if(!SC)return;
+  selPs=new Set();selD=null;
+  document.querySelectorAll('.chip').forEach(function(ch){ch.classList.remove('on');ch.style.borderColor='';});
+  buildGrid();
+  _updateSelAllBtn();
+  el('panel').innerHTML='<div class="est">▲ 點選日期或人員查看出勤明細</div>';
+}
+
+function _updateSelAllBtn(){
+  var clearBtn=el('clearSelBtn'),allBtn=el('selAllBtn');
+  if(!SC)return;
+  // 「取消所有已選」：有選才顯示
+  if(clearBtn)clearBtn.style.display=selPs.size>0?'inline-flex':'none';
+  // 「全選」：全部已選時 dim，未全選時正常
+  if(allBtn){allBtn.style.opacity=(selPs.size===SC.emps.length)?'0.4':'1';allBtn.style.pointerEvents=(selPs.size===SC.emps.length)?'none':'auto';}
+}
+
+function clickDay(di,cell){selD=di;document.querySelectorAll('.day').forEach(function(c){c.classList.remove('sel');});cell.classList.add('sel');showDayPanel(di);}
+
+function showDayPanel(idx){
+  var S=SC,hm=holMeta(S.year,S.month)[idx+1],td=new Date(),isT=(td.getFullYear()===S.year&&td.getMonth()===S.month-1&&td.getDate()===idx+1);
+  var wdn=['一','二','三','四','五','六','日'],wdi=(S.fdw-1+idx)%7,isW=(wdi>=5);
+  var present=S.emps.filter(function(e,i){return e.att&&e.att[idx]===1&&(selPs.size===0||selPs.has(i));});
+  var badges=isT?'<span class="bdg bt">今日</span>':'';
+  if(hm)badges+='<span class="bdg '+(hm.t==='h'?'bh':hm.t==='m'?'bm':'bs')+'">'+hm.l+'</span>';
+  else if(isW)badges+='<span class="bdg bw">週末</span>';
+  if(selPs.size>0)badges+='<span class="bdg" style="background:#EEF3FF;color:#4F6EF7">篩選'+selPs.size+'人</span>';
+  var cards=present.map(function(p){var ei=S.emps.indexOf(p);var c=PAL[ei%PAL.length];return'<div class="pc"><div class="pav" style="background:'+c.av+';color:#fff">'+p.chn.slice(-1)+'</div><div><div class="pcn">'+p.chn+'</div><div class="pen">'+p.eng+'</div></div></div>';}).join('');
+  el('panel').innerHTML='<div class="ptitle">'+S.month+'月'+(idx+1)+'日（星期'+wdn[wdi]+'）'+badges+'<span style="margin-left:auto;font-size:12px;font-weight:400;color:#6B7A99">共'+present.length+'人</span></div><div class="pgrid">'+cards+'</div>';
+}
+
+function showMultiPanel(){
+  var S=SC,wdn=['一','二','三','四','五','六','日'],idxs=[...selPs].sort(function(a,b){return a-b;});
+  var interSet=new Set();
+  if(!S.partial&&idxs.length>1)for(var d=0;d<S.totalDays;d++){if(idxs.every(function(i){return S.emps[i].att[d]===1;}))interSet.add(d);}
+  var rows=idxs.map(function(idx){
+    var emp=S.emps[idx],c=PAL[idx%PAL.length],wk=S.partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
+    var tags=S.partial?'':emp.att.map(function(v,d){if(!v)return'';var ii=interSet.has(d);return'<span class="pdtag" style="background:'+(ii?'#C0392B':c.av)+';font-weight:'+(ii?700:600)+'">'+(d+1)+'('+wdn[(S.fdw-1+d)%7]+')</span>';}).join('');
+    return'<div style="background:#F8F9FF;border-radius:10px;padding:10px 12px;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div class="psav" style="background:'+c.av+';color:#fff;width:34px;height:34px;font-size:12px">'+emp.chn.slice(-1)+'</div><div style="flex:1"><div class="psn" style="font-size:14px">'+emp.chn+'</div><div class="pse">'+emp.eng+'</div></div><div style="text-align:center"><div class="psnum" style="color:'+c.av+';font-size:20px">'+wk+'</div><div class="pslb">出勤天</div></div></div>'+(S.partial?'':'<div class="pdlist" style="margin-top:2px">'+tags+'</div>')+'</div>';
+  }).join('');
+  var common=interSet.size>0?'<div style="background:#FFECEC;border:1px solid #FFAAAA;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;color:#C0392B;margin-bottom:8px">📅 共同出勤 '+interSet.size+' 天（紅底標示）</div>':(!S.partial&&idxs.length>1?'<div style="background:#F8F9FF;border-radius:8px;padding:8px 14px;font-size:12px;color:#8892A4;margin-bottom:8px">無共同出勤日</div>':'');
+  el('panel').innerHTML='<div class="ptitle">已選 '+idxs.length+' 人</div>'+common+rows;
+}
+
+function showPersonPanel(idx){
+  var S=SC,emp=S.emps[idx],c=PAL[idx%PAL.length],wk=S.partial?emp.wkCount:emp.att.reduce(function(s,v){return s+v;},0);
+  var wdn=['一','二','三','四','五','六','日'];
+  var tags=S.partial?'':emp.att.map(function(v,d){if(!v)return'';return'<span class="pdtag" style="background:'+c.av+'">'+(d+1)+'('+wdn[(S.fdw-1+d)%7]+')</span>';}).join('');
+  el('panel').innerHTML='<div class="psh"><div class="psav" style="background:'+c.av+';color:#fff">'+emp.chn.slice(-1)+'</div><div><div class="psn">'+emp.chn+'</div><div class="pse">'+emp.eng+'</div></div><div class="pss"><div class="ps"><div class="psnum" style="color:'+c.av+'">'+wk+'</div><div class="pslb">出勤天數</div></div><div class="ps"><div class="psnum">'+(S.totalDays-wk)+'</div><div class="pslb">休假天數</div></div></div></div>'+(S.partial?'<div class="warn">純文字格式無法顯示每日出勤日</div>':'<div class="pdlbl">'+S.month+'月出勤日</div><div class="pdlist">'+tags+'</div>');
+}
+
+function hideLoading(){
+  var o=el('loadingOverlay');
+  o.classList.add('fade');
+  setTimeout(function(){o.style.display='none';},320);
+}
+function devToggle(){var p=el('devPanel');p.classList.toggle('open');}
+
+function devShowLS(){
+  var keys=[LS_HOL_TS,LS_SCHED_MON,'et_sched_src'];
+  var out=keys.map(function(k){return k+': '+(localStorage.getItem(k)||'(空)');}).join('\n');
+  try{var h=JSON.parse(localStorage.getItem(LS_HOL)||'{}');
+    if(Object.keys(h).length){var detail=Object.keys(h).map(function(y){return y+'年（'+Object.keys(h[y]).length+'筆）';}).join(', ');out+='\n'+LS_HOL+': '+detail;}
+    else{out+='\n'+LS_HOL+': (空)';}
+  }catch(e){out+='\n'+LS_HOL+': (parse error)';}
+  var sr=localStorage.getItem(LS_SCHED);out+='\n'+LS_SCHED+': '+(sr?'('+sr.length+' 字元)':'(空)');
+  out+='\nFILE_SCHED_MON: '+(FILE_SCHED_MON||'(無)');
+  out+='\nLS_SCHED_MON: '+(LS_SCHED_MON_VAL||'(無)');
+  out+='\nSCHED_SRC: '+SCHED_SRC+' | HOL_SRC: '+HOL_SRC;
+  el('devSt').textContent=out;
+}
+
+function devResetMonth(){
+  localStorage.setItem(LS_SCHED_MON,'1900-1');
+  LS_SCHED_MON_VAL='1900-1';
+  el('devSt').textContent='✅ 月份時間戳已重置，重新整理頁面即可觸發月份警告';
+}
+
+function devClearLS(){
+  var st=el('devSt');
+  if(el('devConfirmRow')){el('devConfirmRow').remove();return;}
+  var row=document.createElement('div');
+  row.id='devConfirmRow';
+  row.style.cssText='display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap';
+  row.innerHTML='<span style="font-size:12px;color:#E74C3C">⚠️ 確定清除全部 localStorage？</span>'
+    +'<button class="btn-dev danger" id="devConfirmYes">確定清除</button>'
+    +'<button class="btn-dev" id="devConfirmNo">取消</button>';
+  st.parentNode.insertBefore(row,st);
+  el('devConfirmYes').onclick=function(){
+    [LS_HOL,LS_HOL_TS,LS_SCHED,LS_SCHED_MON,'et_sched_src',LS_EXAM].forEach(function(k){localStorage.removeItem(k);});
+    row.remove();
+    st.textContent='✅ localStorage 已清除，重新整理中…';
+    setTimeout(function(){location.reload();},800);
+  };
+  el('devConfirmNo').onclick=function(){row.remove();st.textContent='';};
+}
+
+// 視窗縮放時重繪 bands
+var _resizeTimer=null;
+window.addEventListener('resize',function(){
+  clearTimeout(_resizeTimer);
+  _resizeTimer=setTimeout(function(){if(SC&&el('vc').style.display!=='none')buildExamBands();},150);
+});
+</script>
+
+</body>
+</html>
